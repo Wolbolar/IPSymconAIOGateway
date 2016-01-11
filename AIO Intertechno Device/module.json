@@ -1,0 +1,11 @@
+{
+    "id": "{C45FF6B3-92E9-4930-B722-0A6193C7FFB5}",
+    "name": "AIOITDevice",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Intertechno Device"],
+    "parentRequirements": ["{2E262F47-7706-479D-B826-CCCA503A59E2}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOIT"
+}

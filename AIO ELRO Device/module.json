@@ -1,0 +1,11 @@
+{
+    "id": "{1B755DCC-7F12-4136-8D14-2ED86E6609B7}",
+    "name": "AIOELRODevice",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO ELRO Device"],
+    "parentRequirements": ["{84F51839-8056-4E3D-AB29-FEFE9D300036}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOELRO"
+}

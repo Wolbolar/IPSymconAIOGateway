@@ -1,0 +1,56 @@
+{
+    "elements":
+            [
+                {
+                    "name": "Open",
+                    "type": "CheckBox",
+                    "caption": "Open"
+                },
+				{ "type": "Label", "label": "IP Adresse des AIO Gateway / Port Standard 80" },
+                {
+                    "name": "Host",
+                    "type": "ValidationTextBox",
+                    "caption": "IP Adresse"
+                },
+				{
+                    "name": "Port",
+                    "type": "NumberSpinner",
+                    "caption": "Gateway Port"
+                },
+				{ "type": "Label", "label": "LED im Gehäuse des AIO Gateway V4+" },
+				{ "type": "CheckBox", "name": "GatewayLED", "caption": "V4+ LED" }
+            ],
+    "status":
+            [
+                {
+                    "code": 101,
+                    "icon": "inactive",
+                    "caption": "Die Instanz wird erstellt."
+                },
+				{
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "AIO Gateway ereichbar."
+                },
+                {
+                    "code": 104,
+                    "icon": "inactive",
+                    "caption": "Interface geschlossen."
+                },
+                {
+                    "code": 202,
+                    "icon": "error",
+                    "caption": "AIO Gateway IP Adresse darf nicht leer sein."
+                },
+				{
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Keine gültige IP Adresse."
+                },
+                {
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Verbindung zum AIO Gateway verloren."
+                }
+            ]
+}

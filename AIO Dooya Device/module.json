@@ -1,0 +1,11 @@
+{
+    "id": "{BFD0DE8E-5A3C-458C-828B-C26B53220B8C}",
+    "name": "AIODooyaDevice",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Dooya Device"],
+    "parentRequirements": ["{EED83D19-52A7-4714-8ADE-899159EEAF3B}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIODooya"
+}

@@ -1,0 +1,11 @@
+{
+    "id": "{488F8C6E-9448-44AD-8015-DF9DAD3232F3}",
+    "name": "AIOLightmanager1",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Lightmanager 1"],
+    "parentRequirements": ["{8086DAFF-9DB4-4E74-9F1E-451C03C73522}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOLight1"
+}

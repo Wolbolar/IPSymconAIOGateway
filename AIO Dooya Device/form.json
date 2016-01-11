@@ -1,0 +1,69 @@
+{
+    "elements":
+            [
+				{ "type": "Label", "label": "Werte im AIO NEO nachschauen" },
+				{
+                    "name": "Adresse",
+                    "type": "ValidationTextBox",
+                    "caption": "Adresse"
+                }	
+            ],
+    "actions":
+            [
+                {
+                    "type": "Button",
+                    "label": "Up",
+                    "onClick": "AIODooya_Up($id);"
+                },
+       
+                {
+                    "type": "Button",
+                    "label": "Down",
+                    "onClick": "AIODooya_Down($id);"
+                }
+
+            ],
+    "status":
+            [
+                {
+                    "code": 101,
+                    "icon": "inactive",
+                    "caption": "Die Instanz wird erstellt."
+                },
+				{
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "Konfiguration gültig."
+                },
+                {
+                    "code": 104,
+                    "icon": "inactive",
+                    "caption": "AIO Gateway is inactive."
+                },
+                {
+                    "code": 202,
+                    "icon": "error",
+                    "caption": "Angaben ungültig. Felder dürfen nicht leer sein."
+                },
+                {
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Verbindung zum AIO Gateway verloren."
+                },
+				{
+                    "code": 206,
+                    "icon": "error",
+                    "caption": "Adresse darf nur aus 4 Zahlen bestehen."
+                },
+				{
+                    "code": 207,
+                    "icon": "error",
+                    "caption": "Adresse darf nur aus 8 Zeichen bestehen."
+                },
+				{
+                    "code": 208,
+                    "icon": "error",
+                    "caption": "Berechnete Adresse und Eingabe stimmen nicht überein."
+                }
+            ]
+}

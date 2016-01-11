@@ -1,0 +1,11 @@
+{
+    "id": "{8C7554CA-2530-4E6B-98DB-AC59CD6215A6}",
+    "name": "AIOFS20Device",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO FS20 Device"],
+    "parentRequirements": ["{141CC31D-FB5C-47BF-ACC7-897B7EAA73B1}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOFS20"
+}

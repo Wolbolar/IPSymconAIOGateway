@@ -1,0 +1,11 @@
+{
+    "id": "{4B0D8167-2932-4AD0-8455-26DC0C74485C}",
+    "name": "AIOIRDevice",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO IR Device"],
+    "parentRequirements": ["{35DE1449-FED2-4DE5-9E2C-13A619ACC210}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOIR"
+}

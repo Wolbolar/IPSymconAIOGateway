@@ -1,0 +1,11 @@
+{
+    "id": "{0F83D875-4737-4244-8234-4CF08E6F2626}",
+    "name": "AIOSomfyRTSDevice",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Somfy RTS Device"],
+    "parentRequirements": ["{96D852F3-845B-4BAA-AF02-171C7CF33039}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOSOMFYRTS"
+}

@@ -1,0 +1,50 @@
+{
+    "elements":
+			[
+				{ "type": "Label", "label": "Adresse des LED Controllers aus NEO" },
+				{
+                    "name": "LEDAdresse",
+                    "type": "ValidationTextBox",
+                    "caption": "LED Adresse"
+                },
+				{ "type": "Label", "label": "Anlernen (Haken setzen wenn die Adresse angelernt werden soll" },
+				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die Power Taste der Fernbedienung gedrückt werden." },
+				{ "type": "CheckBox", "name": "LearnAddressLED", "caption": "Adresse des LED Controllers anlernen" }	
+			],
+    "actions":
+            [
+                {
+                    "type": "Button",
+                    "label": "Power",
+                    "onClick": "AIOLight2_Power($id);"
+                }
+            ],
+    "status":
+            [
+                {
+                    "code": 101,
+                    "icon": "inactive",
+                    "caption": "Die Instanz wird erstellt."
+                },
+				{
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "Konfiguration gültig."
+                },
+                {
+                    "code": 104,
+                    "icon": "inactive",
+                    "caption": "AIO Gateway is inactive."
+                },
+                {
+                    "code": 202,
+                    "icon": "error",
+                    "caption": "Adresse ungültig. Die Adresse muss aus 6 Zeichen bestehen."
+                },
+                {
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Verbindung zum AIO Gateway verloren."
+                }
+            ]
+}

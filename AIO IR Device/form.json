@@ -1,0 +1,1473 @@
+{
+    "elements":
+			[
+				{ "type": "Label", "label": "IR Code 1 z.B. PowerOn" },
+				{
+						"name": "IRLabel1",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode1",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 1"
+				},
+				{ "type": "Label", "label": "IR Code 2 z.B. PowerOff" },
+				{
+						"name": "IRLabel2",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+				},
+				{
+						"name": "IRCode2",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 2"
+				},
+				{ "name": "IRStatus",  "type": "CheckBox",          "caption": "Power Statusanzeige" },
+				{ "type": "Select", "name": "PowerOnCode", "caption": "PowerOn Code",
+						"options": [
+									{ "value": 1, "label": "IR Code 1" },
+									{ "value": 2, "label": "IR Code 2" },
+									{ "value": 3, "label": "IR Code 3" },
+									{ "value": 4, "label": "IR Code 4" },
+									{ "value": 5, "label": "IR Code 5" },
+									{ "value": 6, "label": "IR Code 6" },
+									{ "value": 7, "label": "IR Code 7" },
+									{ "value": 8, "label": "IR Code 8" },
+									{ "value": 9, "label": "IR Code 9" },
+									{ "value": 10, "label": "IR Code 10" },
+									{ "value": 11, "label": "IR Code 11" },
+									{ "value": 12, "label": "IR Code 12" },
+									{ "value": 13, "label": "IR Code 13" },
+									{ "value": 14, "label": "IR Code 14" },
+									{ "value": 15, "label": "IR Code 15" },
+									{ "value": 16, "label": "IR Code 16" },
+									{ "value": 17, "label": "IR Code 17" },
+									{ "value": 18, "label": "IR Code 18" },
+									{ "value": 19, "label": "IR Code 19" },
+									{ "value": 20, "label": "IR Code 20" },
+									{ "value": 21, "label": "IR Code 21" },
+									{ "value": 22, "label": "IR Code 22" },
+									{ "value": 23, "label": "IR Code 23" },
+									{ "value": 24, "label": "IR Code 24" },
+									{ "value": 25, "label": "IR Code 25" },
+									{ "value": 26, "label": "IR Code 26" },
+									{ "value": 27, "label": "IR Code 27" },
+									{ "value": 28, "label": "IR Code 28" },
+									{ "value": 29, "label": "IR Code 29" },
+									{ "value": 30, "label": "IR Code 30" },
+									{ "value": 31, "label": "IR Code 31" },
+									{ "value": 32, "label": "IR Code 32" },
+									{ "value": 33, "label": "IR Code 33" },
+									{ "value": 34, "label": "IR Code 34" },
+									{ "value": 35, "label": "IR Code 35" },
+									{ "value": 36, "label": "IR Code 36" },
+									{ "value": 37, "label": "IR Code 37" },
+									{ "value": 38, "label": "IR Code 38" },
+									{ "value": 39, "label": "IR Code 39" },
+									{ "value": 40, "label": "IR Code 40" },
+									{ "value": 41, "label": "IR Code 41" },
+									{ "value": 42, "label": "IR Code 42" },
+									{ "value": 43, "label": "IR Code 43" },
+									{ "value": 44, "label": "IR Code 44" },
+									{ "value": 45, "label": "IR Code 45" },
+									{ "value": 46, "label": "IR Code 46" },
+									{ "value": 47, "label": "IR Code 47" },
+									{ "value": 48, "label": "IR Code 48" },
+									{ "value": 49, "label": "IR Code 49" },
+									{ "value": 50, "label": "IR Code 50" },
+									{ "value": 51, "label": "IR Code 51" },
+									{ "value": 52, "label": "IR Code 52" },
+									{ "value": 53, "label": "IR Code 53" },
+									{ "value": 54, "label": "IR Code 54" },
+									{ "value": 55, "label": "IR Code 55" },
+									{ "value": 56, "label": "IR Code 56" },
+									{ "value": 57, "label": "IR Code 57" },
+									{ "value": 58, "label": "IR Code 58" },
+									{ "value": 59, "label": "IR Code 59" },
+									{ "value": 60, "label": "IR Code 60" },
+									{ "value": 61, "label": "IR Code 61" },
+									{ "value": 62, "label": "IR Code 62" },
+									{ "value": 63, "label": "IR Code 63" },
+									{ "value": 64, "label": "IR Code 64" },
+									{ "value": 65, "label": "IR Code 65" },
+									{ "value": 66, "label": "IR Code 66" },
+									{ "value": 67, "label": "IR Code 67" },
+									{ "value": 68, "label": "IR Code 68" },
+									{ "value": 69, "label": "IR Code 69" },
+									{ "value": 70, "label": "IR Code 70" },
+									{ "value": 71, "label": "IR Code 71" },
+									{ "value": 72, "label": "IR Code 72" },
+									{ "value": 73, "label": "IR Code 73" },
+									{ "value": 74, "label": "IR Code 74" },
+									{ "value": 75, "label": "IR Code 75" },
+									{ "value": 76, "label": "IR Code 76" },
+									{ "value": 77, "label": "IR Code 77" },
+									{ "value": 78, "label": "IR Code 78" },
+									{ "value": 79, "label": "IR Code 79" },
+									{ "value": 80, "label": "IR Code 80" },
+									{ "value": 81, "label": "IR Code 81" },
+									{ "value": 82, "label": "IR Code 82" },
+									{ "value": 83, "label": "IR Code 83" },
+									{ "value": 84, "label": "IR Code 84" },
+									{ "value": 85, "label": "IR Code 85" },
+									{ "value": 86, "label": "IR Code 86" },
+									{ "value": 87, "label": "IR Code 87" },
+									{ "value": 88, "label": "IR Code 88" },
+									{ "value": 89, "label": "IR Code 89" },
+									{ "value": 90, "label": "IR Code 90" },
+									{ "value": 91, "label": "IR Code 91" },
+									{ "value": 92, "label": "IR Code 92" },
+									{ "value": 93, "label": "IR Code 93" },
+									{ "value": 94, "label": "IR Code 94" },
+									{ "value": 95, "label": "IR Code 95" },
+									{ "value": 96, "label": "IR Code 96" },
+									{ "value": 97, "label": "IR Code 97" },
+									{ "value": 98, "label": "IR Code 98" },
+									{ "value": 99, "label": "IR Code 99" },
+									{ "value": 100, "label": "IR Code 100" }
+								  ]
+				},
+				{ "type": "Select", "name": "PowerOffCode", "caption": "PowerOff Code",
+						"options": [
+																{ "value": 1, "label": "IR Code 1" },
+									{ "value": 2, "label": "IR Code 2" },
+									{ "value": 3, "label": "IR Code 3" },
+									{ "value": 4, "label": "IR Code 4" },
+									{ "value": 5, "label": "IR Code 5" },
+									{ "value": 6, "label": "IR Code 6" },
+									{ "value": 7, "label": "IR Code 7" },
+									{ "value": 8, "label": "IR Code 8" },
+									{ "value": 9, "label": "IR Code 9" },
+									{ "value": 10, "label": "IR Code 10" },
+									{ "value": 11, "label": "IR Code 11" },
+									{ "value": 12, "label": "IR Code 12" },
+									{ "value": 13, "label": "IR Code 13" },
+									{ "value": 14, "label": "IR Code 14" },
+									{ "value": 15, "label": "IR Code 15" },
+									{ "value": 16, "label": "IR Code 16" },
+									{ "value": 17, "label": "IR Code 17" },
+									{ "value": 18, "label": "IR Code 18" },
+									{ "value": 19, "label": "IR Code 19" },
+									{ "value": 20, "label": "IR Code 20" },
+									{ "value": 21, "label": "IR Code 21" },
+									{ "value": 22, "label": "IR Code 22" },
+									{ "value": 23, "label": "IR Code 23" },
+									{ "value": 24, "label": "IR Code 24" },
+									{ "value": 25, "label": "IR Code 25" },
+									{ "value": 26, "label": "IR Code 26" },
+									{ "value": 27, "label": "IR Code 27" },
+									{ "value": 28, "label": "IR Code 28" },
+									{ "value": 29, "label": "IR Code 29" },
+									{ "value": 30, "label": "IR Code 30" },
+									{ "value": 31, "label": "IR Code 31" },
+									{ "value": 32, "label": "IR Code 32" },
+									{ "value": 33, "label": "IR Code 33" },
+									{ "value": 34, "label": "IR Code 34" },
+									{ "value": 35, "label": "IR Code 35" },
+									{ "value": 36, "label": "IR Code 36" },
+									{ "value": 37, "label": "IR Code 37" },
+									{ "value": 38, "label": "IR Code 38" },
+									{ "value": 39, "label": "IR Code 39" },
+									{ "value": 40, "label": "IR Code 40" },
+									{ "value": 41, "label": "IR Code 41" },
+									{ "value": 42, "label": "IR Code 42" },
+									{ "value": 43, "label": "IR Code 43" },
+									{ "value": 44, "label": "IR Code 44" },
+									{ "value": 45, "label": "IR Code 45" },
+									{ "value": 46, "label": "IR Code 46" },
+									{ "value": 47, "label": "IR Code 47" },
+									{ "value": 48, "label": "IR Code 48" },
+									{ "value": 49, "label": "IR Code 49" },
+									{ "value": 50, "label": "IR Code 50" },
+									{ "value": 51, "label": "IR Code 51" },
+									{ "value": 52, "label": "IR Code 52" },
+									{ "value": 53, "label": "IR Code 53" },
+									{ "value": 54, "label": "IR Code 54" },
+									{ "value": 55, "label": "IR Code 55" },
+									{ "value": 56, "label": "IR Code 56" },
+									{ "value": 57, "label": "IR Code 57" },
+									{ "value": 58, "label": "IR Code 58" },
+									{ "value": 59, "label": "IR Code 59" },
+									{ "value": 60, "label": "IR Code 60" },
+									{ "value": 61, "label": "IR Code 61" },
+									{ "value": 62, "label": "IR Code 62" },
+									{ "value": 63, "label": "IR Code 63" },
+									{ "value": 64, "label": "IR Code 64" },
+									{ "value": 65, "label": "IR Code 65" },
+									{ "value": 66, "label": "IR Code 66" },
+									{ "value": 67, "label": "IR Code 67" },
+									{ "value": 68, "label": "IR Code 68" },
+									{ "value": 69, "label": "IR Code 69" },
+									{ "value": 70, "label": "IR Code 70" },
+									{ "value": 71, "label": "IR Code 71" },
+									{ "value": 72, "label": "IR Code 72" },
+									{ "value": 73, "label": "IR Code 73" },
+									{ "value": 74, "label": "IR Code 74" },
+									{ "value": 75, "label": "IR Code 75" },
+									{ "value": 76, "label": "IR Code 76" },
+									{ "value": 77, "label": "IR Code 77" },
+									{ "value": 78, "label": "IR Code 78" },
+									{ "value": 79, "label": "IR Code 79" },
+									{ "value": 80, "label": "IR Code 80" },
+									{ "value": 81, "label": "IR Code 81" },
+									{ "value": 82, "label": "IR Code 82" },
+									{ "value": 83, "label": "IR Code 83" },
+									{ "value": 84, "label": "IR Code 84" },
+									{ "value": 85, "label": "IR Code 85" },
+									{ "value": 86, "label": "IR Code 86" },
+									{ "value": 87, "label": "IR Code 87" },
+									{ "value": 88, "label": "IR Code 88" },
+									{ "value": 89, "label": "IR Code 89" },
+									{ "value": 90, "label": "IR Code 90" },
+									{ "value": 91, "label": "IR Code 91" },
+									{ "value": 92, "label": "IR Code 92" },
+									{ "value": 93, "label": "IR Code 93" },
+									{ "value": 94, "label": "IR Code 94" },
+									{ "value": 95, "label": "IR Code 95" },
+									{ "value": 96, "label": "IR Code 96" },
+									{ "value": 97, "label": "IR Code 97" },
+									{ "value": 98, "label": "IR Code 98" },
+									{ "value": 99, "label": "IR Code 99" },
+									{ "value": 100, "label": "IR Code 100" }
+								  ]
+				},
+				{ "type": "Label", "label": "Sendediode des AIO Gateways (Intern / Extern):"},
+				{ "name": "IRDiode",   "type": "Select",            "caption": "IR Sendediode", 
+                    "options": [ 
+                                 { "label": "Interne Sendediode",                   "value": "01" },
+								 { "label": "Externe Sendediode 1",                 "value": "02" },
+                                 { "label": "Externe Sendediode 2",        			"value": "04" }
+                  ] },
+				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein IR Code angelernt werden soll" },
+				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die entsprechnde Taste der Fernbedienung gedrückt werden." },
+				{ "type": "CheckBox", "name": "LearnIRCode", "caption": "IR Code anlernen" },
+				{ "type": "Label", "label": "IR Code auswählen der angelernt werden soll." },
+				{ "type": "Select", "name": "LearnIRCodeID", "caption": "Anzulernender IR Code",
+						"options": [
+									{ "value": 1, "label": "IR Code 1" },
+									{ "value": 2, "label": "IR Code 2" },
+									{ "value": 3, "label": "IR Code 3" },
+									{ "value": 4, "label": "IR Code 4" },
+									{ "value": 5, "label": "IR Code 5" },
+									{ "value": 6, "label": "IR Code 6" },
+									{ "value": 7, "label": "IR Code 7" },
+									{ "value": 8, "label": "IR Code 8" },
+									{ "value": 9, "label": "IR Code 9" },
+									{ "value": 10, "label": "IR Code 10" },
+									{ "value": 11, "label": "IR Code 11" },
+									{ "value": 12, "label": "IR Code 12" },
+									{ "value": 13, "label": "IR Code 13" },
+									{ "value": 14, "label": "IR Code 14" },
+									{ "value": 15, "label": "IR Code 15" },
+									{ "value": 16, "label": "IR Code 16" },
+									{ "value": 17, "label": "IR Code 17" },
+									{ "value": 18, "label": "IR Code 18" },
+									{ "value": 19, "label": "IR Code 19" },
+									{ "value": 20, "label": "IR Code 20" },
+									{ "value": 21, "label": "IR Code 21" },
+									{ "value": 22, "label": "IR Code 22" },
+									{ "value": 23, "label": "IR Code 23" },
+									{ "value": 24, "label": "IR Code 24" },
+									{ "value": 25, "label": "IR Code 25" },
+									{ "value": 26, "label": "IR Code 26" },
+									{ "value": 27, "label": "IR Code 27" },
+									{ "value": 28, "label": "IR Code 28" },
+									{ "value": 29, "label": "IR Code 29" },
+									{ "value": 30, "label": "IR Code 30" },
+									{ "value": 31, "label": "IR Code 31" },
+									{ "value": 32, "label": "IR Code 32" },
+									{ "value": 33, "label": "IR Code 33" },
+									{ "value": 34, "label": "IR Code 34" },
+									{ "value": 35, "label": "IR Code 35" },
+									{ "value": 36, "label": "IR Code 36" },
+									{ "value": 37, "label": "IR Code 37" },
+									{ "value": 38, "label": "IR Code 38" },
+									{ "value": 39, "label": "IR Code 39" },
+									{ "value": 40, "label": "IR Code 40" },
+									{ "value": 41, "label": "IR Code 41" },
+									{ "value": 42, "label": "IR Code 42" },
+									{ "value": 43, "label": "IR Code 43" },
+									{ "value": 44, "label": "IR Code 44" },
+									{ "value": 45, "label": "IR Code 45" },
+									{ "value": 46, "label": "IR Code 46" },
+									{ "value": 47, "label": "IR Code 47" },
+									{ "value": 48, "label": "IR Code 48" },
+									{ "value": 49, "label": "IR Code 49" },
+									{ "value": 50, "label": "IR Code 50" },
+									{ "value": 51, "label": "IR Code 51" },
+									{ "value": 52, "label": "IR Code 52" },
+									{ "value": 53, "label": "IR Code 53" },
+									{ "value": 54, "label": "IR Code 54" },
+									{ "value": 55, "label": "IR Code 55" },
+									{ "value": 56, "label": "IR Code 56" },
+									{ "value": 57, "label": "IR Code 57" },
+									{ "value": 58, "label": "IR Code 58" },
+									{ "value": 59, "label": "IR Code 59" },
+									{ "value": 60, "label": "IR Code 60" },
+									{ "value": 61, "label": "IR Code 61" },
+									{ "value": 62, "label": "IR Code 62" },
+									{ "value": 63, "label": "IR Code 63" },
+									{ "value": 64, "label": "IR Code 64" },
+									{ "value": 65, "label": "IR Code 65" },
+									{ "value": 66, "label": "IR Code 66" },
+									{ "value": 67, "label": "IR Code 67" },
+									{ "value": 68, "label": "IR Code 68" },
+									{ "value": 69, "label": "IR Code 69" },
+									{ "value": 70, "label": "IR Code 70" },
+									{ "value": 71, "label": "IR Code 71" },
+									{ "value": 72, "label": "IR Code 72" },
+									{ "value": 73, "label": "IR Code 73" },
+									{ "value": 74, "label": "IR Code 74" },
+									{ "value": 75, "label": "IR Code 75" },
+									{ "value": 76, "label": "IR Code 76" },
+									{ "value": 77, "label": "IR Code 77" },
+									{ "value": 78, "label": "IR Code 78" },
+									{ "value": 79, "label": "IR Code 79" },
+									{ "value": 80, "label": "IR Code 80" },
+									{ "value": 81, "label": "IR Code 81" },
+									{ "value": 82, "label": "IR Code 82" },
+									{ "value": 83, "label": "IR Code 83" },
+									{ "value": 84, "label": "IR Code 84" },
+									{ "value": 85, "label": "IR Code 85" },
+									{ "value": 86, "label": "IR Code 86" },
+									{ "value": 87, "label": "IR Code 87" },
+									{ "value": 88, "label": "IR Code 88" },
+									{ "value": 89, "label": "IR Code 89" },
+									{ "value": 90, "label": "IR Code 90" },
+									{ "value": 91, "label": "IR Code 91" },
+									{ "value": 92, "label": "IR Code 92" },
+									{ "value": 93, "label": "IR Code 93" },
+									{ "value": 94, "label": "IR Code 94" },
+									{ "value": 95, "label": "IR Code 95" },
+									{ "value": 96, "label": "IR Code 96" },
+									{ "value": 97, "label": "IR Code 97" },
+									{ "value": 98, "label": "IR Code 98" },
+									{ "value": 99, "label": "IR Code 99" },
+									{ "value": 100, "label": "IR Code 100" }
+								  ]
+				},		
+				{ "type": "Label", "label": "IR Code 3" },
+				{
+						"name": "IRLabel3",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode3",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 3"
+				},
+				{ "type": "Label", "label": "IR Code 4" },
+				{
+						"name": "IRLabel4",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode4",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 4"
+				},
+				{ "type": "Label", "label": "IR Code 5" },
+				{
+						"name": "IRLabel5",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode5",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 5"
+				},
+				{ "type": "Label", "label": "IR Code 6" },
+				{
+						"name": "IRLabel6",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode6",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 6"
+				},
+				{ "type": "Label", "label": "IR Code 7" },
+				{
+						"name": "IRLabel7",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode7",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 7"
+				},
+				{ "type": "Label", "label": "IR Code 8" },
+				{
+						"name": "IRLabel8",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode8",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 8"
+				},
+				{ "type": "Label", "label": "IR Code 9" },
+				{
+						"name": "IRLabel9",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode9",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 9"
+				},
+				{ "type": "Label", "label": "IR Code 10" },
+				{
+						"name": "IRLabel10",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode10",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 10"
+				},
+				{ "type": "Label", "label": "IR Code 11" },
+				{
+						"name": "IRLabel11",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode11",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 11"
+				},
+				{ "type": "Label", "label": "IR Code 12" },
+				{
+						"name": "IRLabel12",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode12",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 12"
+				},
+				{ "type": "Label", "label": "IR Code 13" },
+				{
+						"name": "IRLabel13",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode13",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 13"
+				},
+				{ "type": "Label", "label": "IR Code 14" },
+				{
+						"name": "IRLabel14",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode14",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 14"
+				},
+				{ "type": "Label", "label": "IR Code 15" },
+				{
+						"name": "IRLabel15",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode15",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 15"
+				},
+				{ "type": "Label", "label": "IR Code 16" },
+				{
+						"name": "IRLabel16",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode16",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 16"
+				},
+				{ "type": "Label", "label": "IR Code 17" },
+				{
+						"name": "IRLabel17",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode17",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 17"
+				},
+				{ "type": "Label", "label": "IR Code 18" },
+				{
+						"name": "IRLabel18",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode18",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 18"
+				},
+				{ "type": "Label", "label": "IR Code 19" },
+				{
+						"name": "IRLabel19",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode19",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 19"
+				},
+				{ "type": "Label", "label": "IR Code 20" },
+				{
+						"name": "IRLabel20",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode20",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 20"
+				},
+				{ "type": "Label", "label": "IR Code 21" },
+				{
+						"name": "IRLabel21",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode21",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 21"
+				},
+				{ "type": "Label", "label": "IR Code 22" },
+				{
+						"name": "IRLabel22",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode22",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 22"
+				},
+				{ "type": "Label", "label": "IR Code 23" },
+				{
+						"name": "IRLabel23",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode23",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 23"
+				},
+				{ "type": "Label", "label": "IR Code 24" },
+				{
+						"name": "IRLabel24",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode24",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 24"
+				},
+				{ "type": "Label", "label": "IR Code 25" },
+				{
+						"name": "IRLabel25",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode25",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 25"
+				},
+				{ "type": "Label", "label": "IR Code 26" },
+				{
+						"name": "IRLabel26",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode26",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 26"
+				},
+				{ "type": "Label", "label": "IR Code 27" },
+				{
+						"name": "IRLabel27",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode27",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 27"
+				},
+				{ "type": "Label", "label": "IR Code 28" },
+				{
+						"name": "IRLabel28",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode28",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 28"
+				},
+				{ "type": "Label", "label": "IR Code 29" },
+				{
+						"name": "IRLabel29",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode29",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 29"
+				},
+				{ "type": "Label", "label": "IR Code 30" },
+				{
+						"name": "IRLabel30",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode30",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 30"
+				},
+				{ "type": "Label", "label": "IR Code 31" },
+				{
+						"name": "IRLabel31",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode31",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 31"
+				},
+				{ "type": "Label", "label": "IR Code 32" },
+				{
+						"name": "IRLabel32",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode32",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 32"
+				},
+				{ "type": "Label", "label": "IR Code 33" },
+				{
+						"name": "IRLabel33",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode33",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 33"
+				},
+				{ "type": "Label", "label": "IR Code 34" },
+				{
+						"name": "IRLabel34",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode34",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 34"
+				},
+				{ "type": "Label", "label": "IR Code 35" },
+				{
+						"name": "IRLabel35",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode35",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 35"
+				},
+				{ "type": "Label", "label": "IR Code 36" },
+				{
+						"name": "IRLabel36",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode36",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 36"
+				},
+				{ "type": "Label", "label": "IR Code 37" },
+				{
+						"name": "IRLabel37",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode37",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 37"
+				},
+				{ "type": "Label", "label": "IR Code 38" },
+				{
+						"name": "IRLabel38",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode38",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 38"
+				},
+				{ "type": "Label", "label": "IR Code 39" },
+				{
+						"name": "IRLabel39",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode39",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 39"
+				},
+				{ "type": "Label", "label": "IR Code 40" },
+				{
+						"name": "IRLabel40",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode40",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 40"
+				},
+				{ "type": "Label", "label": "IR Code 41" },
+				{
+						"name": "IRLabel41",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode41",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 41"
+				},
+				{ "type": "Label", "label": "IR Code 42" },
+				{
+						"name": "IRLabel42",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode42",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 42"
+				},
+				{ "type": "Label", "label": "IR Code 43" },
+				{
+						"name": "IRLabel43",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode43",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 43"
+				},
+				{ "type": "Label", "label": "IR Code 44" },
+				{
+						"name": "IRLabel44",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode44",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 44"
+				},
+				{ "type": "Label", "label": "IR Code 45" },
+				{
+						"name": "IRLabel45",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode45",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 45"
+				},
+				{ "type": "Label", "label": "IR Code 46" },
+				{
+						"name": "IRLabel46",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode46",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 46"
+				},
+				{ "type": "Label", "label": "IR Code 47" },
+				{
+						"name": "IRLabel47",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode47",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 47"
+				},
+				{ "type": "Label", "label": "IR Code 48" },
+				{
+						"name": "IRLabel48",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode48",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 48"
+				},
+				{ "type": "Label", "label": "IR Code 49" },
+				{
+						"name": "IRLabel49",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode49",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 49"
+				},
+				{ "type": "Label", "label": "IR Code 50" },
+				{
+						"name": "IRLabel50",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode50",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 50"
+				},
+				{ "type": "Label", "label": "IR Code 51" },
+				{
+						"name": "IRLabel51",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode51",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 51"
+				},
+				{ "type": "Label", "label": "IR Code 52" },
+				{
+						"name": "IRLabel52",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode52",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 52"
+				},
+				{ "type": "Label", "label": "IR Code 53" },
+				{
+						"name": "IRLabel53",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode53",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 53"
+				},
+				{ "type": "Label", "label": "IR Code 54" },
+				{
+						"name": "IRLabel54",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode54",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 54"
+				},
+				{ "type": "Label", "label": "IR Code 55" },
+				{
+						"name": "IRLabel55",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode55",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 55"
+				},
+				{ "type": "Label", "label": "IR Code 56" },
+				{
+						"name": "IRLabel56",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode56",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 56"
+				},
+				{ "type": "Label", "label": "IR Code 57" },
+				{
+						"name": "IRLabel57",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode57",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 57"
+				},
+				{ "type": "Label", "label": "IR Code 58" },
+				{
+						"name": "IRLabel58",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode58",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 58"
+				},
+				{ "type": "Label", "label": "IR Code 59" },
+				{
+						"name": "IRLabel59",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode59",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 59"
+				},
+				{ "type": "Label", "label": "IR Code 60" },
+				{
+						"name": "IRLabel60",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode60",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 60"
+				},
+				{ "type": "Label", "label": "IR Code 61" },
+				{
+						"name": "IRLabel61",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode61",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 61"
+				},
+				{ "type": "Label", "label": "IR Code 62" },
+				{
+						"name": "IRLabel62",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode62",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 62"
+				},
+				{ "type": "Label", "label": "IR Code 63" },
+				{
+						"name": "IRLabel63",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode63",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 63"
+				},
+				{ "type": "Label", "label": "IR Code 64" },
+				{
+						"name": "IRLabel64",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode64",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 64"
+				},
+				{ "type": "Label", "label": "IR Code 65" },
+				{
+						"name": "IRLabel65",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode65",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 65"
+				},
+				{ "type": "Label", "label": "IR Code 66" },
+				{
+						"name": "IRLabel66",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode66",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 66"
+				},
+				{ "type": "Label", "label": "IR Code 67" },
+				{
+						"name": "IRLabel67",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode67",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 67"
+				},
+				{ "type": "Label", "label": "IR Code 68" },
+				{
+						"name": "IRLabel68",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode68",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 68"
+				},
+				{ "type": "Label", "label": "IR Code 69" },
+				{
+						"name": "IRLabel69",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode69",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 69"
+				},
+				{ "type": "Label", "label": "IR Code 70" },
+				{
+						"name": "IRLabel70",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode70",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 70"
+				},
+				{ "type": "Label", "label": "IR Code 71" },
+				{
+						"name": "IRLabel71",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode71",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 71"
+				},
+				{ "type": "Label", "label": "IR Code 72" },
+				{
+						"name": "IRLabel72",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode72",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 72"
+				},
+				{ "type": "Label", "label": "IR Code 73" },
+				{
+						"name": "IRLabel73",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode73",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 73"
+				},
+				{ "type": "Label", "label": "IR Code 74" },
+				{
+						"name": "IRLabel74",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode74",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 74"
+				},
+				{ "type": "Label", "label": "IR Code 75" },
+				{
+						"name": "IRLabel75",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode75",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 75"
+				},
+				{ "type": "Label", "label": "IR Code 76" },
+				{
+						"name": "IRLabel76",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode76",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 76"
+				},
+				{ "type": "Label", "label": "IR Code 77" },
+				{
+						"name": "IRLabel77",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode77",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 77"
+				},
+				{ "type": "Label", "label": "IR Code 78" },
+				{
+						"name": "IRLabel78",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode78",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 78"
+				},
+				{ "type": "Label", "label": "IR Code 79" },
+				{
+						"name": "IRLabel79",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode79",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 79"
+				},
+				{ "type": "Label", "label": "IR Code 80" },
+				{
+						"name": "IRLabel80",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode80",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 80"
+				},
+				{ "type": "Label", "label": "IR Code 81" },
+				{
+						"name": "IRLabel81",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode81",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 81"
+				},
+				{ "type": "Label", "label": "IR Code 82" },
+				{
+						"name": "IRLabel82",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode82",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 82"
+				},
+				{ "type": "Label", "label": "IR Code 83" },
+				{
+						"name": "IRLabel83",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode83",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 83"
+				},
+				{ "type": "Label", "label": "IR Code 84" },
+				{
+						"name": "IRLabel84",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode84",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 84"
+				},
+				{ "type": "Label", "label": "IR Code 85" },
+				{
+						"name": "IRLabel85",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode85",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 85"
+				},
+				{ "type": "Label", "label": "IR Code 86" },
+				{
+						"name": "IRLabel86",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode86",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 86"
+				},
+				{ "type": "Label", "label": "IR Code 87" },
+				{
+						"name": "IRLabel87",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode87",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 87"
+				},
+				{ "type": "Label", "label": "IR Code 88" },
+				{
+						"name": "IRLabel88",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode88",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 88"
+				},
+				{ "type": "Label", "label": "IR Code 89" },
+				{
+						"name": "IRLabel89",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode89",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 89"
+				},
+				{ "type": "Label", "label": "IR Code 90" },
+				{
+						"name": "IRLabel90",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode90",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 90"
+				},
+				{ "type": "Label", "label": "IR Code 91" },
+				{
+						"name": "IRLabel91",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode91",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 91"
+				},
+				{ "type": "Label", "label": "IR Code 92" },
+				{
+						"name": "IRLabel92",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode92",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 92"
+				},
+				{ "type": "Label", "label": "IR Code 93" },
+				{
+						"name": "IRLabel93",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode93",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 93"
+				},
+				{ "type": "Label", "label": "IR Code 94" },
+				{
+						"name": "IRLabel94",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode94",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 94"
+				},
+				{ "type": "Label", "label": "IR Code 95" },
+				{
+						"name": "IRLabel95",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode95",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 95"
+				},
+				{ "type": "Label", "label": "IR Code 96" },
+				{
+						"name": "IRLabel96",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode96",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 96"
+				},
+				{ "type": "Label", "label": "IR Code 97" },
+				{
+						"name": "IRLabel97",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode97",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 97"
+				},
+				{ "type": "Label", "label": "IR Code 98" },
+				{
+						"name": "IRLabel98",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode98",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 98"
+				},
+				{ "type": "Label", "label": "IR Code 99" },
+				{
+						"name": "IRLabel99",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode99",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 99"
+				},
+				{ "type": "Label", "label": "IR Code 100" },
+				{
+						"name": "IRLabel100",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "IRCode100",
+						"type": "ValidationTextBox",
+						"caption": "IR Code 100"
+				}
+				
+								
+            ],
+    "actions":
+            [
+                {
+                    "type": "Button",
+                    "label": "IR Code 1 senden",
+                    "onClick": "AIOIR_SendIR1($id);"
+                },
+                {
+                    "type": "Button",
+                    "label": "IR Code 2 senden",
+                    "onClick": "AIOIR_SendIR2($id);"
+                }
+
+            ],
+    "status":
+            [
+                {
+                    "code": 101,
+                    "icon": "inactive",
+                    "caption": "Die Instanz wird erstellt."
+                },
+				{
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "Konfiguration gültig."
+                },
+                {
+                    "code": 104,
+                    "icon": "inactive",
+                    "caption": "AIO Device is inaktiv."
+                },
+                {
+                    "code": 202,
+                    "icon": "error",
+                    "caption": "Felder dürfen nicht leer sein."
+                },
+                {
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Verbindung zum AIO Gateway verloren."
+                }
+            ]
+}
