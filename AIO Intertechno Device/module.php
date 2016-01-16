@@ -367,7 +367,8 @@ class AIOITDevice extends IPSModule
 		IPS_SetProperty($instance, "ITDeviceCode", $ITDeviceCode); //ITDeviceCode setzten.
 		IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.
 		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "IT Adresse hinzugefügt:" , $address );
+		IPS_LogMessage( "IT FamilyCode hinzugefügt:" , $ITFamilyCode );
+		IPS_LogMessage( "IT DeviceCode hinzugefügt:" , $ITDeviceCode );
 		// Status aktiv
 		$this->SetStatus(102);
 		$this->SetupVar();
