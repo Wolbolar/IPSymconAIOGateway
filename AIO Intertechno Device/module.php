@@ -347,7 +347,7 @@ class AIOITDevice extends IPSModule
 				//echo "Adresse des IT Geräts: ".$address;
 				// Anpassen der Daten
 				$address = str_split($address);
-				$ITDeviceCode = $address[1]+1; //Devicecode auf Original umrechen +1
+				$ITDeviceCode = ($address[1])+1; //Devicecode auf Original umrechen +1
 				$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
 				$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
