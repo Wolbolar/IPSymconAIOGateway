@@ -343,7 +343,7 @@ class AIOITDevice extends IPSModule
 				//Adresse auswerten {XC_SUC}
 				//bei Erfolg {XC_SUC}{"CODE":"03"} 
 				(string)$address = substr($address, 17, 2);
-				IPS_LogMessage( "IT Adresse:" , $address );
+				IPS_LogMessage( "IT Adresse vom Gateway:" , $address );
 				//echo "Adresse des IT Geräts: ".$address;
 				// Anpassen der Daten
 				$address = str_split($address);
@@ -352,6 +352,8 @@ class AIOITDevice extends IPSModule
 				$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 				$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+				IPS_LogMessage( "IT Familiencode hinzugefügt:" , $ITFamilyCode );
+				IPS_LogMessage( "IT Devicecoe hinzugefügt:" , $ITDeviceCode );
 				$this->AddAddress($ITFamilyCode, $ITDeviceCode);
 				$this->response = true;	
 			}
