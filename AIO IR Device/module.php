@@ -1156,6 +1156,10 @@ class AIOIRDevice extends IPSModule
 			{
 				IPS_SetProperty($this->InstanceID, $label, "Neuer Code"); //IRLabel provisorisch setzten.
 			}
+		$NumberIRCodes = $this->ReadPropertyString("NumberIRCodes");
+		$NumberIRCodes = $NumberIRCodes + 1;
+		$this->CreateProfileIR($NumberIRCodes);
+		IPS_SetProperty($this->InstanceID, "NumberIRCodes", $NumberIRCodes); //IRCode setzten.	
 		IPS_SetProperty($this->InstanceID, "LearnIRCode", false); //Haken entfernen.
 		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
 		IPS_LogMessage( "IRCode".$irid." hinzugefügt:" , $ircode );
