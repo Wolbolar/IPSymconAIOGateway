@@ -340,11 +340,29 @@ class AIOITDevice extends IPSModule
 			}
 		else
 			{
-				//Adresse auswerten {XC_SUC}
-				//bei Erfolg {XC_SUC}{"CODE":"03"} 
+			//Adresse auswerten {XC_SUC}
+			//bei Erfolg {XC_SUC}{"CODE":"03"}
+			//bei machen Rückmeldung {XC_SUC}{"CODE":"010006"}	 //FC 01 = B DC 00 = 1 und an/aus
+			$length = strlen($address);
+			if ($length == 25)
+				{
+				(string)$address = substr($address, 17, 4);
+				IPS_LogMessage( "IT Adresse:" , $address );
+				// Anpassen der Daten
+				$address = str_split($address);
+				$ITDeviceCode = $address[2].$address[3]; //Devicecode 
+				$ITFamilyCode = $address[0].$address[1]; // Familencode
+				$hexsfc = array("00", "01", "02", "03", "04", "05", "06", "07", "08", "09");
+				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+				$ITFamilyCode = str_replace($hexsfc, $itfc, $ITFamilyCode);
+				$hexsdc = array("00", "01", "02", "03", "04", "05", "06", "07", "08", "09");
+				$itdc = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+				$ITDeviceCode = str_replace($hexsdc, $itdc, $ITDeviceCode);
+				}
+			elseif ($length == 21)
+				{
 				(string)$address = substr($address, 17, 2);
-				IPS_LogMessage( "IT Adresse vom Gateway:" , $address );
-				//echo "Adresse des IT Geräts: ".$address;
+				IPS_LogMessage( "IT Adresse:" , $address );
 				// Anpassen der Daten
 				$address = str_split($address);
 				$ITDeviceCode = ($address[1])+1; //Devicecode auf Original umrechen +1
@@ -352,8 +370,9 @@ class AIOITDevice extends IPSModule
 				$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 				$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
-				$this->AddAddress($ITFamilyCode, $ITDeviceCode);
-				$this->response = true;	
+				}
+			$this->AddAddress($ITFamilyCode, $ITDeviceCode);
+			$this->response = true;	
 			}
 		
 		return $this->response;
