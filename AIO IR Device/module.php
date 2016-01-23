@@ -219,6 +219,7 @@ class AIOIRDevice extends IPSModule
 		
 		$this->RegisterPropertyBoolean("IRStatus", false);
 		$this->RegisterPropertyString("IRDiode", "01");
+		$this->RegisterPropertyString("EXTIRDiode", "00");
 		$this->RegisterPropertyInteger("PowerOnCode", 1);
 		$this->RegisterPropertyInteger("PowerOffCode", 2);
 		$this->RegisterPropertyInteger("NumberIRCodes", 0);
@@ -946,6 +947,12 @@ class AIOIRDevice extends IPSModule
 		return $IRDiode;
 	}
 	
+	//Extender abfragen
+	protected function GetExtIRDiode(){
+		$EXTIRDiode = $this->ReadPropertyString("EXTIRDiode");
+		return $EXTIRDiode;
+	}
+	
 	protected function PowerSetState ($state){
 	SetValueBoolean($this->GetIDForIdent('Status'), $state);
 	return $this->SetPowerState($state);	
@@ -972,12 +979,12 @@ class AIOIRDevice extends IPSModule
 	//Senden eines IR Befehls über das a.i.o. Gateway
 	public function SendIR1() {
             $IR_send = $this->ReadPropertyString("IRCode1");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
         }
 		
 	public function SendIR2() {
             $IR_send = $this->ReadPropertyString("IRCode2");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
         }
 		
 	public function SendIRCode($Value) {
@@ -1004,16 +1011,16 @@ class AIOIRDevice extends IPSModule
 			SetValueInteger($this->GetIDForIdent('IRCODES4'), $setvalue);	
 			}
 			$IR_send = $this->ReadPropertyString($IRCode);
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
         }	
 	
 	//IR Code senden
 	private	$response = false;
-	protected function Send_IR($ir_code, $ip_aiogateway, $IRDiode)
+	protected function Send_IR($ir_code, $ip_aiogateway, $IRDiode, $EXTIRDiode)
 		{
 		//Sendestring zum Senden eines IR Befehls {IP Gateway}/command?code={IR Code}&XC_FNC=Send2&ir={Sendediode}&rf=00
 			
-			$AIO_Code = $ip_aiogateway."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=00";
+			$AIO_Code = $ip_aiogateway."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode;
 			$gwcheck = file_get_contents("http://$AIO_Code");
 			if ($gwcheck == "{XC_SUC}")
 				{

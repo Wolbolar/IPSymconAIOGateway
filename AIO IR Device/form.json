@@ -237,8 +237,30 @@
                     "options": [ 
                                  { "label": "Interne Sendediode",                   "value": "01" },
 								 { "label": "Externe Sendediode 1",                 "value": "02" },
-                                 { "label": "Externe Sendediode 2",        			"value": "04" }
+                                 { "label": "Externe Sendediode 2",        			"value": "04" },
+								 { "label": "Externe Sendediode 3",        			"value": "08" }
                   ] },
+				{ "type": "Label", "label": "Extender des AIO Gateways Sendediode(Intern / Extern):"},
+				{ "name": "EXTIRDiode",   "type": "Select",            "caption": "Extender Sendediode", 
+                    "options": [ 
+                                 { "label": "kein Extender",                   "value": "00" },
+								 { "label": "Extender 1 Interne Sendediode",                   "value": "02" },
+								 { "label": "Extender 1 Externe Sendediode 1",                 "value": "12" },
+                                 { "label": "Extender 1 Externe Sendediode 2",        		   "value": "22" },
+								 { "label": "Extender 1 Externe Sendediode 3",        		   "value": "32" },
+								 { "label": "Extender 2 Interne Sendediode",                   "value": "03" },
+								 { "label": "Extender 2 Externe Sendediode 1",                 "value": "13" },
+                                 { "label": "Extender 2 Externe Sendediode 2",        		   "value": "23" },
+								 { "label": "Extender 2 Externe Sendediode 3",        		   "value": "33" },
+								 { "label": "Extender 3 Interne Sendediode",                   "value": "04" },
+								 { "label": "Extender 3 Externe Sendediode 1",                 "value": "14" },
+                                 { "label": "Extender 3 Externe Sendediode 2",        		   "value": "24" },
+								 { "label": "Extender 3 Externe Sendediode 3",        		   "value": "34" },
+								 { "label": "Extender 4 Interne Sendediode",                   "value": "05" },
+								 { "label": "Extender 4 Externe Sendediode 1",                 "value": "15" },
+                                 { "label": "Extender 4 Externe Sendediode 2",        		   "value": "25" },
+								 { "label": "Extender 4 Externe Sendediode 3",        		   "value": "35" }
+                  ] },  
 				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein IR Code angelernt werden soll" },
 				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die entsprechnde Taste der Fernbedienung gedrückt werden." },
 				{ "type": "CheckBox", "name": "LearnIRCode", "caption": "IR Code anlernen" },
