@@ -1019,6 +1019,92 @@ class AIOIRDevice extends IPSModule
 	protected function Send_IR($ir_code, $ip_aiogateway, $IRDiode, $EXTIRDiode)
 		{
 		//Sendestring zum Senden eines IR Befehls {IP Gateway}/command?code={IR Code}&XC_FNC=Send2&ir={Sendediode}&rf=00
+			switch ($EXTIRDiode)
+				{
+				case "02":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Interne Sendediode" );
+					break;
+
+				case "12":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 1" );
+					break;
+
+				case "22":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 2" );
+					break;
+
+				case "32":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 3" );
+					break;	
+
+				case "03":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Interne Sendediode" );
+					break;	
+
+				case "13":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 1" );
+					break;	
+
+				case "23":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 2" );
+					break;	
+
+				case "33":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 3" );
+					break;	
+
+				case "04":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Interne Sendediode" );
+					break;	
+
+				case "14":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 1" );
+					break;	
+
+				case "24":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 2" );
+					break;	
+
+				case "34":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 3" );
+					break;
+
+				case "05":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Interne Sendediode" );
+					break;
+
+				case "15":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 1" );
+					break;
+
+				case "25":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 2" );
+					break;
+
+				case "35":
+					$IRDiode = "00";
+					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 3" );
+					break;
+
+				case "00":
+					IPS_LogMessage( "IR Command über AIO Gateway senden:" , "Sendediode ".$IRDiode );
+					break;								
+				}
 			
 			$AIO_Code = $ip_aiogateway."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode;
 			$gwcheck = file_get_contents("http://$AIO_Code");
