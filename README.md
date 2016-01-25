@@ -368,6 +368,10 @@ Weiß
 `AIOLight2_Orange(integer $InstanceID)`
 Orange
 
+#### IR Device:
+AIOIR_SendIRCode(integer $InstanceID, integer $IRCodenumber)
+Sendet einen IR Code der Instanz mit der InstanceID und dem IR Code [Nummer]
+
 ###  b. GUIDs und Datenaustausch:
 
 #### AIOGatewaySplitter:
