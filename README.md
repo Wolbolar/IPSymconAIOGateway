@@ -146,8 +146,8 @@ Auswahlfelder:
 
 ### aioGatewaySplitter:
 
-| Eigenschaft | Typ     | Standardwert | Funktion                           |
-| :---------: | :-----: | :----------: | :--------------------------------: |
+| Eigenschaft | Typ     | Standardwert | Funktion                                  |
+| :---------: | :-----: | :----------: | :---------------------------------------: |
 | Open        | boolean | true         | Verbindung zum aioGateway aktiv / deaktiv |
 | Host        | string  |              | Adresse des aioGateway                    |
 
@@ -369,7 +369,7 @@ Weiß
 Orange
 
 #### IR Device:
-AIOIR_SendIRCode(integer $InstanceID, integer $IRCodenumber)
+AIOIR_SendIRCode(integer $InstanceID, variant $IRCodenumber)
 Sendet einen IR Code der Instanz mit der InstanceID und dem IR Code [Nummer]
 
 ###  b. GUIDs und Datenaustausch:
