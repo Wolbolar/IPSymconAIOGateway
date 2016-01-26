@@ -312,7 +312,7 @@ class AIOImport extends IPSModule
 		}
 	
 	//AIOITDevice Instanz erstellen 
-	public function ITCreateInstance($InstName, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID)
+	public function ITCreateInstance(string $InstName, string $ITFamilyCode, string $ITDeviceCode, string $ITType, integer $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -339,7 +339,7 @@ class AIOImport extends IPSModule
 	}	
 	
 	//AIOFS20 Instanz erstellen 
-	public function FS20CreateInstance($InstName, $AIOFS20Adresse, $FS20Type, $CategoryID)
+	public function FS20CreateInstance(string $InstName, string $AIOFS20Adresse, string $FS20Type, integer $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -365,7 +365,7 @@ class AIOImport extends IPSModule
 	}	
 	
 	//AIOIR Instanz erstellen 
-	public function IRCreateInstance($InstName, $CategoryID)
+	public function IRCreateInstance(string $InstName, integer $CategoryID)
 	{
 	//echo "Instanz IR anlegen";
 	//Prüfen ob Instanz schon existiert
@@ -429,7 +429,7 @@ class AIOImport extends IPSModule
 	}
 	
 	//AIOELRO Instanz erstellen 
-	public function ELROCreateInstance($InstName, $ELROFamilyCode, $ELRODeviceCode, $CategoryID)
+	public function ELROCreateInstance(string $InstName, string $ELROFamilyCode, string $ELRODeviceCode, integer $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -455,7 +455,7 @@ class AIOImport extends IPSModule
 	}
 		
 	//AIOLight1 Instanz erstellen 
-	public function Light1CreateInstance($InstName, $LEDAdresse, $CategoryID)
+	public function Light1CreateInstance(string $InstName, string $LEDAdresse, integer $CategoryID)
 		{
 		//Prüfen ob Instanz schon existiert
 		$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -480,7 +480,7 @@ class AIOImport extends IPSModule
 		}
 
 	//AIOLight2 Instanz erstellen 
-	public function Light2CreateInstance($InstName, $LEDAdresse, $CategoryID)
+	public function Light2CreateInstance(string $InstName, string $LEDAdresse, string $CategoryID)
 		{
 		//Prüfen ob Instanz schon existiert
 		$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);

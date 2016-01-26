@@ -183,12 +183,12 @@ class AIOLightmanager2 extends IPSModule
 			return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
 		}
 		
-	protected function LMPowerSetState ($state){
+	protected function LMPowerSetState (boolean $state){
 			SetValueBoolean($this->GetIDForIdent('Status'), $state);
 			return $this->SetPowerState($state);	
 		}
 		
-	protected function SetPowerState($state) {
+	protected function SetPowerState(boolean $state) {
 			if ($state === true)
 			{
 			$address = $this->ReadPropertyString("LEDAdresse");
@@ -343,7 +343,7 @@ class AIOLightmanager2 extends IPSModule
         }
 		
 		
-	public function Colorselect($Value)
+	public function Colorselect(integer $Value)
 		{
             SetValueInteger($this->GetIDForIdent('Farbauswahl'), $Value);
 			
@@ -460,7 +460,7 @@ class AIOLightmanager2 extends IPSModule
 	 *        H Wert:                   0-360°
 	 *        H Wert: 0-199
 	 */
-	public function RGBtoHSV($R, $G, $B)
+	protected function RGBtoHSV($R, $G, $B)
 		{
 			$R = ($R / 255);
 			$G = ($G / 255);
@@ -523,7 +523,7 @@ class AIOLightmanager2 extends IPSModule
 		}
 	
 	//LED Adresse hinzufügen
-	protected function AddAddress($address)
+	protected function AddAddress(string $address)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "LEDAdresse", $address); //Adresse setzten.

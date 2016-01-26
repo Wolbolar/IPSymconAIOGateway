@@ -953,12 +953,12 @@ class AIOIRDevice extends IPSModule
 		return $EXTIRDiode;
 	}
 	
-	protected function PowerSetState ($state){
+	protected function PowerSetState (boolean $state){
 	SetValueBoolean($this->GetIDForIdent('Status'), $state);
 	return $this->SetPowerState($state);	
 	}
 	
-	protected function SetPowerState($state) {
+	public function SetPowerState(boolean $state) {
 		if ($state === true)
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
@@ -987,7 +987,7 @@ class AIOIRDevice extends IPSModule
 			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
         }
 		
-	public function SendIRCode($Value) {
+	public function SendIRCode(integer $Value) {
 			//IR Code auslesen Value 0 entspricht IRCode 1
 			$IRCode = "IRCode".$Value;
 			if($Value <= 32 && !null == ($this->GetIDForIdent('IRCODES1')))
@@ -1206,7 +1206,7 @@ class AIOIRDevice extends IPSModule
 	
 	//Anlernen eines IR Codes über das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
-	public function Learn($irid)
+	public function Learn(integer $irid)
 		{
 		$ip_aiogateway = $this->GetIPGateway();
 		$ircode = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=Learn");

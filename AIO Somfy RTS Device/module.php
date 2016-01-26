@@ -108,13 +108,14 @@ class AIOSomfyRTSDevice extends IPSModule
                 switch($Value) {
                     case 0: //Down
 						$state = false; 
-                        SetValueBoolean($this->GetIDForIdent('Status'), $state);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
-						$this->SetPowerState($state);
+						$this->Down();
+						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
                         break;
                     case 1: //Up
-                        $this->Set10();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
+					    $state = true;
+						
+                        $this->Up();
+						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
                         break;
                 }
                 break;	
@@ -123,12 +124,12 @@ class AIOSomfyRTSDevice extends IPSModule
         }
     }
 	
-	protected function PowerSetState ($state){
+	protected function PowerSetState (boolean $state){
 	SetValueBoolean($this->GetIDForIdent('Status'), $state);
 	return $this->SetPowerState($state);	
 	}
 	
-	protected function SetPowerState($state) {
+	protected function SetPowerState(boolean $state) {
 		if ($state === true)
 		{
 		$action = "1000";
