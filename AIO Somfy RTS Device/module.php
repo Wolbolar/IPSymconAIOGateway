@@ -86,7 +86,8 @@ class AIOSomfyRTSDevice extends IPSModule
 			// Profile anlegen
 			$this->RegisterProfileIntegerEx("Somfy.AIORTS", "Information", "", "", Array(
                                              Array(0, "Down",  "", -1),
-                                             Array(1, "Up",  "", -1)
+											 Array(1, "Stop",  "", -1),
+                                             Array(2, "Up",  "", -1)
 						));
 		}
 	
@@ -111,12 +112,18 @@ class AIOSomfyRTSDevice extends IPSModule
 						$this->Down();
 						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
                         break;
-                    case 1: //Up
+                    case 1: //Stop
+					    $state = true;
+						
+                        $this->Stop();
+						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
+                        break;
+					case 2: //Up
 					    $state = true;
 						
                         $this->Up();
 						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
-                        break;
+                        break;	
                 }
                 break;	
             default:
