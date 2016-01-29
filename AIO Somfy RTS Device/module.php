@@ -179,7 +179,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	protected function SendCommand($address, $command, $ip_aiogateway) {
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
-        $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$address.$command);
+        $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
