@@ -84,7 +84,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	protected function SetupProfiles()
 		{
 			// Profile anlegen
-			$this->RegisterProfileIntegerEx("Somfy.AIORTS", "Information", "", "", Array(
+			$this->RegisterProfileIntegerEx("Somfy.AIORTS", "Jalousie", "", "", Array(
                                              Array(0, "Down",  "", -1),
 											 Array(1, "Stop",  "", -1),
                                              Array(2, "Up",  "", -1)
