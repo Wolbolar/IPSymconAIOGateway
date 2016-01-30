@@ -51,15 +51,15 @@ class AIOSplitter extends IPSModule
 			$ParentID = $this->GetParent();
 				if (!($ParentID === false))
 				{
-					if (IPS_GetProperty($ParentID, 'Sende-Host') <> $this->ReadPropertyString('Host'))
+					if (IPS_GetProperty($ParentID, 'Host') <> $this->ReadPropertyString('Host'))
 					{
-						IPS_SetProperty($ParentID, 'Sende-Host', $this->ReadPropertyString('Host'));
+						IPS_SetProperty($ParentID, 'Host', $this->ReadPropertyString('Host'));
 						$change = true;
 					}
-					if (IPS_GetProperty($ParentID, 'Sende-Port') <> $this->ReadPropertyInteger('Port'))
+					if (IPS_GetProperty($ParentID, 'Port') <> $this->ReadPropertyInteger('Port'))
 					{
-						IPS_SetProperty($ParentID, 'Sende-Port', $this->ReadPropertyInteger('Port'));
-						IPS_SetProperty($ParentID, 'Empf.-Port', $this->ReadPropertyInteger('Port'));
+						IPS_SetProperty($ParentID, 'Port', $this->ReadPropertyInteger('Port'));
+						IPS_SetProperty($ParentID, 'BindPort', $this->ReadPropertyInteger('Port'));
 						$change = true;
 					}
 					$ParentOpen = $this->ReadPropertyBoolean('Open');

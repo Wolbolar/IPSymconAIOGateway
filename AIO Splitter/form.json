@@ -6,7 +6,7 @@
                     "type": "CheckBox",
                     "caption": "Open"
                 },
-				{ "type": "Label", "label": "IP Adresse des AIO Gateway / Port Standard 80" },
+				{ "type": "Label", "label": "IP Adresse des AIO Gateway / Port Standard 1902" },
                 {
                     "name": "Host",
                     "type": "ValidationTextBox",
