@@ -369,8 +369,18 @@ Weiß
 Orange
 
 #### IR Device:
-AIOIR_SendIRCode(integer $InstanceID, integer $IRCodenumber)
+`AIOIR_SendIRCode(integer $InstanceID, integer $IRCodenumber)`
 Sendet einen IR Code der Instanz mit der InstanceID und dem IR Code [Nummer]
+
+#### Somfy RTS Device:
+`AIOSOMFYRTS_Up(integer $InstanceID)`
+Up
+
+`AIOSOMFYRTS_Stop(integer $InstanceID)`
+Stop
+
+`AIOSOMFYRTS_Down(integer $InstanceID)`
+Down
 
 ###  b. GUIDs und Datenaustausch:
 
