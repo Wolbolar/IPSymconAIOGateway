@@ -545,7 +545,7 @@ class AIOImport extends IPSModule
 				$InsID = IPS_CreateInstance("{0F83D875-4737-4244-8234-4CF08E6F2626}");
 				IPS_SetName($InsID, $InstName); // Instanz benennen
 				IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
-				IPS_SetProperty($InsID, "Adresse", $Adresse); //Adresse setzten.
+				IPS_SetProperty($InsID, "Adresse", $AIOSomfyAdresse); //Adresse setzten.
 				IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
 				IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );		
 				return $InsID;	

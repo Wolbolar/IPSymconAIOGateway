@@ -85,9 +85,9 @@ class AIOSomfyRTSDevice extends IPSModule
 		{
 			// Profile anlegen
 			$this->RegisterProfileIntegerEx("Somfy.AIORTS", "Jalousie", "", "", Array(
-                                             Array(0, "Down",  "", -1),
+                                             Array(0, "Down",  "HollowArrowDown", -1),
 											 Array(1, "Stop",  "", -1),
-                                             Array(2, "Up",  "", -1)
+                                             Array(2, "Up",  "HollowArrowUp", -1)
 						));
 		}
 	
