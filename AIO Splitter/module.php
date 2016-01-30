@@ -13,10 +13,11 @@ class AIOSplitter extends IPSModule
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
 		// ClientSocket benötigt
-        $this->RequireParent("{3CFF0FD9-E306-41DB-9B5A-9D06D38576C3}", "AIO Gateway");
+        //$this->RequireParent("{3CFF0FD9-E306-41DB-9B5A-9D06D38576C3}", "AIO Gateway"); //client Socket
+		$this->RequireParent("{82347F20-F541-41E1-AC5B-A636FD3AE2D8}", "AIO Gateway"); //UDP Socket
 
         $this->RegisterPropertyString("Host", "");
-		$this->RegisterPropertyInteger("Port", 80);
+		$this->RegisterPropertyInteger("Port", 1902);
         $this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyBoolean("GatewayLED", false);
      
@@ -50,14 +51,15 @@ class AIOSplitter extends IPSModule
 			$ParentID = $this->GetParent();
 				if (!($ParentID === false))
 				{
-					if (IPS_GetProperty($ParentID, 'Host') <> $this->ReadPropertyString('Host'))
+					if (IPS_GetProperty($ParentID, 'Sende-Host') <> $this->ReadPropertyString('Host'))
 					{
-						IPS_SetProperty($ParentID, 'Host', $this->ReadPropertyString('Host'));
+						IPS_SetProperty($ParentID, 'Sende-Host', $this->ReadPropertyString('Host'));
 						$change = true;
 					}
-					if (IPS_GetProperty($ParentID, 'Port') <> $this->ReadPropertyInteger('Port'))
+					if (IPS_GetProperty($ParentID, 'Sende-Port') <> $this->ReadPropertyInteger('Port'))
 					{
-						IPS_SetProperty($ParentID, 'Port', $this->ReadPropertyInteger('Port'));
+						IPS_SetProperty($ParentID, 'Sende-Port', $this->ReadPropertyInteger('Port'));
+						IPS_SetProperty($ParentID, 'Empf.-Port', $this->ReadPropertyInteger('Port'));
 						$change = true;
 					}
 					$ParentOpen = $this->ReadPropertyBoolean('Open');

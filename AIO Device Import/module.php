@@ -23,6 +23,7 @@ class AIOImport extends IPSModule
 		$this->RegisterPropertyBoolean("FS20Import", false);
 		$this->RegisterPropertyBoolean("LM1Import", false);
 		$this->RegisterPropertyBoolean("LM2Import", false);
+		$this->RegisterPropertyBoolean("SomfyImport", false);
 		
     }
 
@@ -88,6 +89,7 @@ class AIOImport extends IPSModule
 		$FS20Import = $this->ReadPropertyBoolean('FS20Import');
 		$LM1Import = $this->ReadPropertyBoolean('LM1Import');
 		$LM2Import = $this->ReadPropertyBoolean('LM2Import');
+		$SomfyImport = $this->ReadPropertyBoolean('SomfyImport');
 		
 		//Auswahl Prüfen
 		if ($IRImport === false && $ITImport === false && $ELROImport === false && $FS20Import === false && $LM1Import === false && $LM2Import === false )
@@ -141,7 +143,15 @@ class AIOImport extends IPSModule
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "LM2Import", false); //Haken entfernen.
 				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
-			}	
+			}
+		if ($SomfyImport === true)
+			{
+				//Somfy Import
+				$this->SomfyImport($Version);
+				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
+				IPS_SetProperty($this->InstanceID, "SomfyImport", false); //Haken entfernen.
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+			}		
 			//$this->SetStatus(102); //IP Adresse ist gültig -> aktiv
 	
 	}
@@ -310,6 +320,25 @@ class AIOImport extends IPSModule
 				}
 			
 		}
+		
+	protected function SomfyImport($Version)
+		{
+			$CategoryID = $this->SetupCategory("Somfy Geräte");
+						
+			//Datei nach Version einlesen
+			if ($Version === 0)	
+				{
+					//NEO device_db JSON
+					$this->SomfyImportNeo($CategoryID);
+					
+				}
+			else
+				{
+					//AIO Creator ircodes.xml, devices.xml
+					$this->SomfyImportCreator($CategoryID);
+				}
+			
+		}	
 	
 	//AIOITDevice Instanz erstellen 
 	public function ITCreateInstance(string $InstName, string $ITFamilyCode, string $ITDeviceCode, string $ITType, integer $CategoryID)
@@ -504,6 +533,31 @@ class AIOImport extends IPSModule
 			}		
 		}		
 	
+	//Somfy Instanz erstellen 
+	public function SomfyCreateInstance(string $InstName, string $AIOSomfyAdresse, string $SomfyType, string $CategoryID)
+		{
+		//Prüfen ob Instanz schon existiert
+		$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
+		if ($InstanzID === false)
+			{
+				//echo "Instanz nicht gefunden!";
+				//Neue Instanz anlegen
+				$InsID = IPS_CreateInstance("{0F83D875-4737-4244-8234-4CF08E6F2626}");
+				IPS_SetName($InsID, $InstName); // Instanz benennen
+				IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
+				IPS_SetProperty($InsID, "Adresse", $Adresse); //Adresse setzten.
+				IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+				IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );		
+				return $InsID;	
+			}
+			
+		else
+			{
+				//echo "Die Instanz-ID lautet: ". $InstanzID;
+				return $InstanzID;
+			}		
+		}	
+	
 	
 	/********************************************************
 	*Import
@@ -583,6 +637,43 @@ class AIOImport extends IPSModule
 				exit("Datei ".$file." konnte nicht geöffnet werden.");
 				}
 		}	
+	
+	//Somfy	
+	protected function SomfyImportNeo($CategoryID)
+		{
+			$directory = $this->ReadPropertyString('directory');
+			$devicetype = "RT";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID);			
+		}
+		
+	protected function SomfyImportCreator($CategoryID)
+		{
+			$directory = $this->ReadPropertyString('directory');
+			$file = IPS_GetKernelDir().$directory.'devices.xml';
+			$type = "RT";
+						
+			if (file_exists($file))
+				{
+				//echo "Datei wurde gefunden";
+				$xml = new SimpleXMLElement(file_get_contents($file));
+					foreach($xml->xpath("//device[@type='".$type."']") as $device)
+					{
+					 $AIOSomfyAdresse = (string) $device['address'];
+					 $SomfyType = (string) $device['data'];
+					 $InstName = (string) $device['id'];
+						
+					// Anpassen der Daten
+					$SomfyType = ucfirst($SomfyType); //erster Buchstabe groß
+					$AIOSomfyAdresse = str_replace(".", "", $AIOSomfyAdresse);
+					$this->SomfyCreateInstance($InstName, $AIOSomfyAdresse, $SomfyType, $CategoryID);
+					}
+				}
+			else
+				{
+				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				}
+		}	
+	
 	
 	//IR	
 	protected function IRImportNeo($CategoryID)
@@ -777,7 +868,7 @@ class AIOImport extends IPSModule
 		{
 	   $name = $device->name; //Device name
 		$sys = $device->info->sys; //System
-	     //sys ist aio beim AIO Gateway und type IT (Intertechno), FS20, CODE (IR) , Lightmanager LEDS, L2
+	     //sys ist aio beim AIO Gateway und type IT (Intertechno), FS20, CODE (IR)oder (RF:01) , Lightmanager LEDS, L2, RT (Somfy), 
 	   if ($sys == "aio" && isset($device->info->type))
 			{
 			$type = $device->info->type; //Type
@@ -787,7 +878,7 @@ class AIOImport extends IPSModule
 				    $address = $device->info->address; //Adress
 					}
 				if (isset($device->info->data)) {
-				    $data = $device->info->data; //Switch / Dimmer
+				    $data = $device->info->data; //Switch / Dimmer / shutter
 				    }
 				if (isset($device->info->address) && isset($device->info->data)) //Lightmanager hat keinen data typ
 				   {
@@ -800,6 +891,12 @@ class AIOImport extends IPSModule
 								$AIOFS20Adresse = str_replace(".", "", $address);
 								$this->FS20CreateInstance($name, $AIOFS20Adresse, $FS20Type, $CategoryID);
 								 break;
+							case "RT": //Somfy
+								// Anpassen der Daten
+								$SomfyType = $data;
+								$SomfyAdresse = $address;
+								$this->SomfyCreateInstance($name, $address, $data, $CategoryID);
+								 break;	 
 							case "IT": //Intertechno
 								// Anpassen der Daten
 								$adress = str_split($address);

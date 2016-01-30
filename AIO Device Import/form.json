@@ -22,6 +22,7 @@
 				{ "type": "CheckBox", "name": "FS20Import", "caption": "FS20 Geräte importieren" },
 				{ "type": "CheckBox", "name": "LM1Import", "caption": "Light Manager 1 Geräte importieren" },
 				{ "type": "CheckBox", "name": "LM2Import", "caption": "Light Manager 2 Geräte importieren" },
+				{ "type": "CheckBox", "name": "SomfyImport", "caption": "Somfy RTS Geräte importieren" },
 				{ "type": "Label", "label": "Kategorie zum Anlegen der Geräte:" },
 				{ "type": "SelectCategory", "name": "ImportCategoryID", "caption": "Kategorie zum Import" }
             ],
