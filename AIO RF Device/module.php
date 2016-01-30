@@ -289,7 +289,7 @@ class AIORFDevice extends IPSModule
         }
 		
 		// Statusanzeige
-        if ($this->ReadPropertyBoolean("IRStatus")){
+        if ($this->ReadPropertyBoolean("RFStatus")){
             $stateIR = $this->RegisterVariableBoolean("Status", "Status", "~Switch", 1);
 			$this->EnableAction("Status");
         }else{
