@@ -1,0 +1,1466 @@
+{
+    "elements":
+			[
+				{ "type": "Label", "label": "RF Code 1 z.B. PowerOn" },
+				{
+						"name": "RFLabel1",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode1",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 1"
+				},
+				{ "type": "Label", "label": "RF Code 2 z.B. PowerOff" },
+				{
+						"name": "RFLabel2",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+				},
+				{
+						"name": "RFCode2",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 2"
+				},
+				{ "name": "RFStatus",  "type": "CheckBox",          "caption": "Power Statusanzeige" },
+				{ "type": "Select", "name": "PowerOnCode", "caption": "PowerOn Code",
+						"options": [
+									{ "value": 1, "label": "RF Code 1" },
+									{ "value": 2, "label": "RF Code 2" },
+									{ "value": 3, "label": "RF Code 3" },
+									{ "value": 4, "label": "RF Code 4" },
+									{ "value": 5, "label": "RF Code 5" },
+									{ "value": 6, "label": "RF Code 6" },
+									{ "value": 7, "label": "RF Code 7" },
+									{ "value": 8, "label": "RF Code 8" },
+									{ "value": 9, "label": "RF Code 9" },
+									{ "value": 10, "label": "RF Code 10" },
+									{ "value": 11, "label": "RF Code 11" },
+									{ "value": 12, "label": "RF Code 12" },
+									{ "value": 13, "label": "RF Code 13" },
+									{ "value": 14, "label": "RF Code 14" },
+									{ "value": 15, "label": "RF Code 15" },
+									{ "value": 16, "label": "RF Code 16" },
+									{ "value": 17, "label": "RF Code 17" },
+									{ "value": 18, "label": "RF Code 18" },
+									{ "value": 19, "label": "RF Code 19" },
+									{ "value": 20, "label": "RF Code 20" },
+									{ "value": 21, "label": "RF Code 21" },
+									{ "value": 22, "label": "RF Code 22" },
+									{ "value": 23, "label": "RF Code 23" },
+									{ "value": 24, "label": "RF Code 24" },
+									{ "value": 25, "label": "RF Code 25" },
+									{ "value": 26, "label": "RF Code 26" },
+									{ "value": 27, "label": "RF Code 27" },
+									{ "value": 28, "label": "RF Code 28" },
+									{ "value": 29, "label": "RF Code 29" },
+									{ "value": 30, "label": "RF Code 30" },
+									{ "value": 31, "label": "RF Code 31" },
+									{ "value": 32, "label": "RF Code 32" },
+									{ "value": 33, "label": "RF Code 33" },
+									{ "value": 34, "label": "RF Code 34" },
+									{ "value": 35, "label": "RF Code 35" },
+									{ "value": 36, "label": "RF Code 36" },
+									{ "value": 37, "label": "RF Code 37" },
+									{ "value": 38, "label": "RF Code 38" },
+									{ "value": 39, "label": "RF Code 39" },
+									{ "value": 40, "label": "RF Code 40" },
+									{ "value": 41, "label": "RF Code 41" },
+									{ "value": 42, "label": "RF Code 42" },
+									{ "value": 43, "label": "RF Code 43" },
+									{ "value": 44, "label": "RF Code 44" },
+									{ "value": 45, "label": "RF Code 45" },
+									{ "value": 46, "label": "RF Code 46" },
+									{ "value": 47, "label": "RF Code 47" },
+									{ "value": 48, "label": "RF Code 48" },
+									{ "value": 49, "label": "RF Code 49" },
+									{ "value": 50, "label": "RF Code 50" },
+									{ "value": 51, "label": "RF Code 51" },
+									{ "value": 52, "label": "RF Code 52" },
+									{ "value": 53, "label": "RF Code 53" },
+									{ "value": 54, "label": "RF Code 54" },
+									{ "value": 55, "label": "RF Code 55" },
+									{ "value": 56, "label": "RF Code 56" },
+									{ "value": 57, "label": "RF Code 57" },
+									{ "value": 58, "label": "RF Code 58" },
+									{ "value": 59, "label": "RF Code 59" },
+									{ "value": 60, "label": "RF Code 60" },
+									{ "value": 61, "label": "RF Code 61" },
+									{ "value": 62, "label": "RF Code 62" },
+									{ "value": 63, "label": "RF Code 63" },
+									{ "value": 64, "label": "RF Code 64" },
+									{ "value": 65, "label": "RF Code 65" },
+									{ "value": 66, "label": "RF Code 66" },
+									{ "value": 67, "label": "RF Code 67" },
+									{ "value": 68, "label": "RF Code 68" },
+									{ "value": 69, "label": "RF Code 69" },
+									{ "value": 70, "label": "RF Code 70" },
+									{ "value": 71, "label": "RF Code 71" },
+									{ "value": 72, "label": "RF Code 72" },
+									{ "value": 73, "label": "RF Code 73" },
+									{ "value": 74, "label": "RF Code 74" },
+									{ "value": 75, "label": "RF Code 75" },
+									{ "value": 76, "label": "RF Code 76" },
+									{ "value": 77, "label": "RF Code 77" },
+									{ "value": 78, "label": "RF Code 78" },
+									{ "value": 79, "label": "RF Code 79" },
+									{ "value": 80, "label": "RF Code 80" },
+									{ "value": 81, "label": "RF Code 81" },
+									{ "value": 82, "label": "RF Code 82" },
+									{ "value": 83, "label": "RF Code 83" },
+									{ "value": 84, "label": "RF Code 84" },
+									{ "value": 85, "label": "RF Code 85" },
+									{ "value": 86, "label": "RF Code 86" },
+									{ "value": 87, "label": "RF Code 87" },
+									{ "value": 88, "label": "RF Code 88" },
+									{ "value": 89, "label": "RF Code 89" },
+									{ "value": 90, "label": "RF Code 90" },
+									{ "value": 91, "label": "RF Code 91" },
+									{ "value": 92, "label": "RF Code 92" },
+									{ "value": 93, "label": "RF Code 93" },
+									{ "value": 94, "label": "RF Code 94" },
+									{ "value": 95, "label": "RF Code 95" },
+									{ "value": 96, "label": "RF Code 96" },
+									{ "value": 97, "label": "RF Code 97" },
+									{ "value": 98, "label": "RF Code 98" },
+									{ "value": 99, "label": "RF Code 99" },
+									{ "value": 100, "label": "RF Code 100" }
+								  ]
+				},
+				{ "type": "Select", "name": "PowerOffCode", "caption": "PowerOff Code",
+						"options": [
+									{ "value": 1, "label": "RF Code 1" },
+									{ "value": 2, "label": "RF Code 2" },
+									{ "value": 3, "label": "RF Code 3" },
+									{ "value": 4, "label": "RF Code 4" },
+									{ "value": 5, "label": "RF Code 5" },
+									{ "value": 6, "label": "RF Code 6" },
+									{ "value": 7, "label": "RF Code 7" },
+									{ "value": 8, "label": "RF Code 8" },
+									{ "value": 9, "label": "RF Code 9" },
+									{ "value": 10, "label": "RF Code 10" },
+									{ "value": 11, "label": "RF Code 11" },
+									{ "value": 12, "label": "RF Code 12" },
+									{ "value": 13, "label": "RF Code 13" },
+									{ "value": 14, "label": "RF Code 14" },
+									{ "value": 15, "label": "RF Code 15" },
+									{ "value": 16, "label": "RF Code 16" },
+									{ "value": 17, "label": "RF Code 17" },
+									{ "value": 18, "label": "RF Code 18" },
+									{ "value": 19, "label": "RF Code 19" },
+									{ "value": 20, "label": "RF Code 20" },
+									{ "value": 21, "label": "RF Code 21" },
+									{ "value": 22, "label": "RF Code 22" },
+									{ "value": 23, "label": "RF Code 23" },
+									{ "value": 24, "label": "RF Code 24" },
+									{ "value": 25, "label": "RF Code 25" },
+									{ "value": 26, "label": "RF Code 26" },
+									{ "value": 27, "label": "RF Code 27" },
+									{ "value": 28, "label": "RF Code 28" },
+									{ "value": 29, "label": "RF Code 29" },
+									{ "value": 30, "label": "RF Code 30" },
+									{ "value": 31, "label": "RF Code 31" },
+									{ "value": 32, "label": "RF Code 32" },
+									{ "value": 33, "label": "RF Code 33" },
+									{ "value": 34, "label": "RF Code 34" },
+									{ "value": 35, "label": "RF Code 35" },
+									{ "value": 36, "label": "RF Code 36" },
+									{ "value": 37, "label": "RF Code 37" },
+									{ "value": 38, "label": "RF Code 38" },
+									{ "value": 39, "label": "RF Code 39" },
+									{ "value": 40, "label": "RF Code 40" },
+									{ "value": 41, "label": "RF Code 41" },
+									{ "value": 42, "label": "RF Code 42" },
+									{ "value": 43, "label": "RF Code 43" },
+									{ "value": 44, "label": "RF Code 44" },
+									{ "value": 45, "label": "RF Code 45" },
+									{ "value": 46, "label": "RF Code 46" },
+									{ "value": 47, "label": "RF Code 47" },
+									{ "value": 48, "label": "RF Code 48" },
+									{ "value": 49, "label": "RF Code 49" },
+									{ "value": 50, "label": "RF Code 50" },
+									{ "value": 51, "label": "RF Code 51" },
+									{ "value": 52, "label": "RF Code 52" },
+									{ "value": 53, "label": "RF Code 53" },
+									{ "value": 54, "label": "RF Code 54" },
+									{ "value": 55, "label": "RF Code 55" },
+									{ "value": 56, "label": "RF Code 56" },
+									{ "value": 57, "label": "RF Code 57" },
+									{ "value": 58, "label": "RF Code 58" },
+									{ "value": 59, "label": "RF Code 59" },
+									{ "value": 60, "label": "RF Code 60" },
+									{ "value": 61, "label": "RF Code 61" },
+									{ "value": 62, "label": "RF Code 62" },
+									{ "value": 63, "label": "RF Code 63" },
+									{ "value": 64, "label": "RF Code 64" },
+									{ "value": 65, "label": "RF Code 65" },
+									{ "value": 66, "label": "RF Code 66" },
+									{ "value": 67, "label": "RF Code 67" },
+									{ "value": 68, "label": "RF Code 68" },
+									{ "value": 69, "label": "RF Code 69" },
+									{ "value": 70, "label": "RF Code 70" },
+									{ "value": 71, "label": "RF Code 71" },
+									{ "value": 72, "label": "RF Code 72" },
+									{ "value": 73, "label": "RF Code 73" },
+									{ "value": 74, "label": "RF Code 74" },
+									{ "value": 75, "label": "RF Code 75" },
+									{ "value": 76, "label": "RF Code 76" },
+									{ "value": 77, "label": "RF Code 77" },
+									{ "value": 78, "label": "RF Code 78" },
+									{ "value": 79, "label": "RF Code 79" },
+									{ "value": 80, "label": "RF Code 80" },
+									{ "value": 81, "label": "RF Code 81" },
+									{ "value": 82, "label": "RF Code 82" },
+									{ "value": 83, "label": "RF Code 83" },
+									{ "value": 84, "label": "RF Code 84" },
+									{ "value": 85, "label": "RF Code 85" },
+									{ "value": 86, "label": "RF Code 86" },
+									{ "value": 87, "label": "RF Code 87" },
+									{ "value": 88, "label": "RF Code 88" },
+									{ "value": 89, "label": "RF Code 89" },
+									{ "value": 90, "label": "RF Code 90" },
+									{ "value": 91, "label": "RF Code 91" },
+									{ "value": 92, "label": "RF Code 92" },
+									{ "value": 93, "label": "RF Code 93" },
+									{ "value": 94, "label": "RF Code 94" },
+									{ "value": 95, "label": "RF Code 95" },
+									{ "value": 96, "label": "RF Code 96" },
+									{ "value": 97, "label": "RF Code 97" },
+									{ "value": 98, "label": "RF Code 98" },
+									{ "value": 99, "label": "RF Code 99" },
+									{ "value": 100, "label": "RF Code 100" }
+								  ]
+				},
+				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein RF Code angelernt werden soll" },
+				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die entsprechnde Taste der Fernbedienung gedrückt werden." },
+				{ "type": "CheckBox", "name": "LearnRFCode", "caption": "RF Code anlernen" },
+				{ "type": "Label", "label": "RF Code auswählen der angelernt werden soll." },
+				{ "type": "Select", "name": "LearnRFCodeID", "caption": "Anzulernender RF Code",
+						"options": [
+									{ "value": 1, "label": "RF Code 1" },
+									{ "value": 2, "label": "RF Code 2" },
+									{ "value": 3, "label": "RF Code 3" },
+									{ "value": 4, "label": "RF Code 4" },
+									{ "value": 5, "label": "RF Code 5" },
+									{ "value": 6, "label": "RF Code 6" },
+									{ "value": 7, "label": "RF Code 7" },
+									{ "value": 8, "label": "RF Code 8" },
+									{ "value": 9, "label": "RF Code 9" },
+									{ "value": 10, "label": "RF Code 10" },
+									{ "value": 11, "label": "RF Code 11" },
+									{ "value": 12, "label": "RF Code 12" },
+									{ "value": 13, "label": "RF Code 13" },
+									{ "value": 14, "label": "RF Code 14" },
+									{ "value": 15, "label": "RF Code 15" },
+									{ "value": 16, "label": "RF Code 16" },
+									{ "value": 17, "label": "RF Code 17" },
+									{ "value": 18, "label": "RF Code 18" },
+									{ "value": 19, "label": "RF Code 19" },
+									{ "value": 20, "label": "RF Code 20" },
+									{ "value": 21, "label": "RF Code 21" },
+									{ "value": 22, "label": "RF Code 22" },
+									{ "value": 23, "label": "RF Code 23" },
+									{ "value": 24, "label": "RF Code 24" },
+									{ "value": 25, "label": "RF Code 25" },
+									{ "value": 26, "label": "RF Code 26" },
+									{ "value": 27, "label": "RF Code 27" },
+									{ "value": 28, "label": "RF Code 28" },
+									{ "value": 29, "label": "RF Code 29" },
+									{ "value": 30, "label": "RF Code 30" },
+									{ "value": 31, "label": "RF Code 31" },
+									{ "value": 32, "label": "RF Code 32" },
+									{ "value": 33, "label": "RF Code 33" },
+									{ "value": 34, "label": "RF Code 34" },
+									{ "value": 35, "label": "RF Code 35" },
+									{ "value": 36, "label": "RF Code 36" },
+									{ "value": 37, "label": "RF Code 37" },
+									{ "value": 38, "label": "RF Code 38" },
+									{ "value": 39, "label": "RF Code 39" },
+									{ "value": 40, "label": "RF Code 40" },
+									{ "value": 41, "label": "RF Code 41" },
+									{ "value": 42, "label": "RF Code 42" },
+									{ "value": 43, "label": "RF Code 43" },
+									{ "value": 44, "label": "RF Code 44" },
+									{ "value": 45, "label": "RF Code 45" },
+									{ "value": 46, "label": "RF Code 46" },
+									{ "value": 47, "label": "RF Code 47" },
+									{ "value": 48, "label": "RF Code 48" },
+									{ "value": 49, "label": "RF Code 49" },
+									{ "value": 50, "label": "RF Code 50" },
+									{ "value": 51, "label": "RF Code 51" },
+									{ "value": 52, "label": "RF Code 52" },
+									{ "value": 53, "label": "RF Code 53" },
+									{ "value": 54, "label": "RF Code 54" },
+									{ "value": 55, "label": "RF Code 55" },
+									{ "value": 56, "label": "RF Code 56" },
+									{ "value": 57, "label": "RF Code 57" },
+									{ "value": 58, "label": "RF Code 58" },
+									{ "value": 59, "label": "RF Code 59" },
+									{ "value": 60, "label": "RF Code 60" },
+									{ "value": 61, "label": "RF Code 61" },
+									{ "value": 62, "label": "RF Code 62" },
+									{ "value": 63, "label": "RF Code 63" },
+									{ "value": 64, "label": "RF Code 64" },
+									{ "value": 65, "label": "RF Code 65" },
+									{ "value": 66, "label": "RF Code 66" },
+									{ "value": 67, "label": "RF Code 67" },
+									{ "value": 68, "label": "RF Code 68" },
+									{ "value": 69, "label": "RF Code 69" },
+									{ "value": 70, "label": "RF Code 70" },
+									{ "value": 71, "label": "RF Code 71" },
+									{ "value": 72, "label": "RF Code 72" },
+									{ "value": 73, "label": "RF Code 73" },
+									{ "value": 74, "label": "RF Code 74" },
+									{ "value": 75, "label": "RF Code 75" },
+									{ "value": 76, "label": "RF Code 76" },
+									{ "value": 77, "label": "RF Code 77" },
+									{ "value": 78, "label": "RF Code 78" },
+									{ "value": 79, "label": "RF Code 79" },
+									{ "value": 80, "label": "RF Code 80" },
+									{ "value": 81, "label": "RF Code 81" },
+									{ "value": 82, "label": "RF Code 82" },
+									{ "value": 83, "label": "RF Code 83" },
+									{ "value": 84, "label": "RF Code 84" },
+									{ "value": 85, "label": "RF Code 85" },
+									{ "value": 86, "label": "RF Code 86" },
+									{ "value": 87, "label": "RF Code 87" },
+									{ "value": 88, "label": "RF Code 88" },
+									{ "value": 89, "label": "RF Code 89" },
+									{ "value": 90, "label": "RF Code 90" },
+									{ "value": 91, "label": "RF Code 91" },
+									{ "value": 92, "label": "RF Code 92" },
+									{ "value": 93, "label": "RF Code 93" },
+									{ "value": 94, "label": "RF Code 94" },
+									{ "value": 95, "label": "RF Code 95" },
+									{ "value": 96, "label": "RF Code 96" },
+									{ "value": 97, "label": "RF Code 97" },
+									{ "value": 98, "label": "RF Code 98" },
+									{ "value": 99, "label": "RF Code 99" },
+									{ "value": 100, "label": "RF Code 100" }
+								  ]
+				},		
+				{ "type": "Label", "label": "RF Code 3" },
+				{
+						"name": "RFLabel3",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode3",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 3"
+				},
+				{ "type": "Label", "label": "RF Code 4" },
+				{
+						"name": "RFLabel4",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode4",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 4"
+				},
+				{ "type": "Label", "label": "RF Code 5" },
+				{
+						"name": "RFLabel5",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode5",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 5"
+				},
+				{ "type": "Label", "label": "RF Code 6" },
+				{
+						"name": "RFLabel6",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode6",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 6"
+				},
+				{ "type": "Label", "label": "RF Code 7" },
+				{
+						"name": "RFLabel7",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode7",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 7"
+				},
+				{ "type": "Label", "label": "RF Code 8" },
+				{
+						"name": "RFLabel8",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode8",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 8"
+				},
+				{ "type": "Label", "label": "RF Code 9" },
+				{
+						"name": "RFLabel9",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode9",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 9"
+				},
+				{ "type": "Label", "label": "RF Code 10" },
+				{
+						"name": "RFLabel10",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode10",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 10"
+				},
+				{ "type": "Label", "label": "RF Code 11" },
+				{
+						"name": "RFLabel11",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode11",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 11"
+				},
+				{ "type": "Label", "label": "RF Code 12" },
+				{
+						"name": "RFLabel12",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode12",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 12"
+				},
+				{ "type": "Label", "label": "RF Code 13" },
+				{
+						"name": "RFLabel13",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode13",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 13"
+				},
+				{ "type": "Label", "label": "RF Code 14" },
+				{
+						"name": "RFLabel14",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode14",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 14"
+				},
+				{ "type": "Label", "label": "RF Code 15" },
+				{
+						"name": "RFLabel15",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode15",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 15"
+				},
+				{ "type": "Label", "label": "RF Code 16" },
+				{
+						"name": "RFLabel16",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode16",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 16"
+				},
+				{ "type": "Label", "label": "RF Code 17" },
+				{
+						"name": "RFLabel17",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode17",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 17"
+				},
+				{ "type": "Label", "label": "RF Code 18" },
+				{
+						"name": "RFLabel18",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode18",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 18"
+				},
+				{ "type": "Label", "label": "RF Code 19" },
+				{
+						"name": "RFLabel19",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode19",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 19"
+				},
+				{ "type": "Label", "label": "RF Code 20" },
+				{
+						"name": "RFLabel20",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode20",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 20"
+				},
+				{ "type": "Label", "label": "RF Code 21" },
+				{
+						"name": "RFLabel21",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode21",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 21"
+				},
+				{ "type": "Label", "label": "RF Code 22" },
+				{
+						"name": "RFLabel22",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode22",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 22"
+				},
+				{ "type": "Label", "label": "RF Code 23" },
+				{
+						"name": "RFLabel23",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode23",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 23"
+				},
+				{ "type": "Label", "label": "RF Code 24" },
+				{
+						"name": "RFLabel24",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode24",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 24"
+				},
+				{ "type": "Label", "label": "RF Code 25" },
+				{
+						"name": "RFLabel25",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode25",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 25"
+				},
+				{ "type": "Label", "label": "RF Code 26" },
+				{
+						"name": "RFLabel26",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode26",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 26"
+				},
+				{ "type": "Label", "label": "RF Code 27" },
+				{
+						"name": "RFLabel27",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode27",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 27"
+				},
+				{ "type": "Label", "label": "RF Code 28" },
+				{
+						"name": "RFLabel28",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode28",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 28"
+				},
+				{ "type": "Label", "label": "RF Code 29" },
+				{
+						"name": "RFLabel29",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode29",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 29"
+				},
+				{ "type": "Label", "label": "RF Code 30" },
+				{
+						"name": "RFLabel30",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode30",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 30"
+				},
+				{ "type": "Label", "label": "RF Code 31" },
+				{
+						"name": "RFLabel31",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode31",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 31"
+				},
+				{ "type": "Label", "label": "RF Code 32" },
+				{
+						"name": "RFLabel32",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode32",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 32"
+				},
+				{ "type": "Label", "label": "RF Code 33" },
+				{
+						"name": "RFLabel33",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode33",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 33"
+				},
+				{ "type": "Label", "label": "RF Code 34" },
+				{
+						"name": "RFLabel34",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode34",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 34"
+				},
+				{ "type": "Label", "label": "RF Code 35" },
+				{
+						"name": "RFLabel35",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode35",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 35"
+				},
+				{ "type": "Label", "label": "RF Code 36" },
+				{
+						"name": "RFLabel36",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode36",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 36"
+				},
+				{ "type": "Label", "label": "RF Code 37" },
+				{
+						"name": "RFLabel37",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode37",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 37"
+				},
+				{ "type": "Label", "label": "RF Code 38" },
+				{
+						"name": "RFLabel38",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode38",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 38"
+				},
+				{ "type": "Label", "label": "RF Code 39" },
+				{
+						"name": "RFLabel39",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode39",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 39"
+				},
+				{ "type": "Label", "label": "RF Code 40" },
+				{
+						"name": "RFLabel40",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode40",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 40"
+				},
+				{ "type": "Label", "label": "RF Code 41" },
+				{
+						"name": "RFLabel41",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode41",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 41"
+				},
+				{ "type": "Label", "label": "RF Code 42" },
+				{
+						"name": "RFLabel42",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode42",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 42"
+				},
+				{ "type": "Label", "label": "RF Code 43" },
+				{
+						"name": "RFLabel43",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode43",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 43"
+				},
+				{ "type": "Label", "label": "RF Code 44" },
+				{
+						"name": "RFLabel44",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode44",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 44"
+				},
+				{ "type": "Label", "label": "RF Code 45" },
+				{
+						"name": "RFLabel45",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode45",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 45"
+				},
+				{ "type": "Label", "label": "RF Code 46" },
+				{
+						"name": "RFLabel46",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode46",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 46"
+				},
+				{ "type": "Label", "label": "RF Code 47" },
+				{
+						"name": "RFLabel47",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode47",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 47"
+				},
+				{ "type": "Label", "label": "RF Code 48" },
+				{
+						"name": "RFLabel48",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode48",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 48"
+				},
+				{ "type": "Label", "label": "RF Code 49" },
+				{
+						"name": "RFLabel49",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode49",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 49"
+				},
+				{ "type": "Label", "label": "RF Code 50" },
+				{
+						"name": "RFLabel50",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode50",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 50"
+				},
+				{ "type": "Label", "label": "RF Code 51" },
+				{
+						"name": "RFLabel51",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode51",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 51"
+				},
+				{ "type": "Label", "label": "RF Code 52" },
+				{
+						"name": "RFLabel52",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode52",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 52"
+				},
+				{ "type": "Label", "label": "RF Code 53" },
+				{
+						"name": "RFLabel53",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode53",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 53"
+				},
+				{ "type": "Label", "label": "RF Code 54" },
+				{
+						"name": "RFLabel54",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode54",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 54"
+				},
+				{ "type": "Label", "label": "RF Code 55" },
+				{
+						"name": "RFLabel55",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode55",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 55"
+				},
+				{ "type": "Label", "label": "RF Code 56" },
+				{
+						"name": "RFLabel56",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode56",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 56"
+				},
+				{ "type": "Label", "label": "RF Code 57" },
+				{
+						"name": "RFLabel57",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode57",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 57"
+				},
+				{ "type": "Label", "label": "RF Code 58" },
+				{
+						"name": "RFLabel58",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode58",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 58"
+				},
+				{ "type": "Label", "label": "RF Code 59" },
+				{
+						"name": "RFLabel59",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode59",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 59"
+				},
+				{ "type": "Label", "label": "RF Code 60" },
+				{
+						"name": "RFLabel60",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode60",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 60"
+				},
+				{ "type": "Label", "label": "RF Code 61" },
+				{
+						"name": "RFLabel61",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode61",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 61"
+				},
+				{ "type": "Label", "label": "RF Code 62" },
+				{
+						"name": "RFLabel62",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode62",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 62"
+				},
+				{ "type": "Label", "label": "RF Code 63" },
+				{
+						"name": "RFLabel63",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode63",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 63"
+				},
+				{ "type": "Label", "label": "RF Code 64" },
+				{
+						"name": "RFLabel64",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode64",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 64"
+				},
+				{ "type": "Label", "label": "RF Code 65" },
+				{
+						"name": "RFLabel65",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode65",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 65"
+				},
+				{ "type": "Label", "label": "RF Code 66" },
+				{
+						"name": "RFLabel66",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode66",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 66"
+				},
+				{ "type": "Label", "label": "RF Code 67" },
+				{
+						"name": "RFLabel67",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode67",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 67"
+				},
+				{ "type": "Label", "label": "RF Code 68" },
+				{
+						"name": "RFLabel68",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode68",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 68"
+				},
+				{ "type": "Label", "label": "RF Code 69" },
+				{
+						"name": "RFLabel69",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode69",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 69"
+				},
+				{ "type": "Label", "label": "RF Code 70" },
+				{
+						"name": "RFLabel70",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode70",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 70"
+				},
+				{ "type": "Label", "label": "RF Code 71" },
+				{
+						"name": "RFLabel71",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode71",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 71"
+				},
+				{ "type": "Label", "label": "RF Code 72" },
+				{
+						"name": "RFLabel72",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode72",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 72"
+				},
+				{ "type": "Label", "label": "RF Code 73" },
+				{
+						"name": "RFLabel73",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode73",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 73"
+				},
+				{ "type": "Label", "label": "RF Code 74" },
+				{
+						"name": "RFLabel74",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode74",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 74"
+				},
+				{ "type": "Label", "label": "RF Code 75" },
+				{
+						"name": "RFLabel75",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode75",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 75"
+				},
+				{ "type": "Label", "label": "RF Code 76" },
+				{
+						"name": "RFLabel76",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode76",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 76"
+				},
+				{ "type": "Label", "label": "RF Code 77" },
+				{
+						"name": "RFLabel77",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode77",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 77"
+				},
+				{ "type": "Label", "label": "RF Code 78" },
+				{
+						"name": "RFLabel78",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode78",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 78"
+				},
+				{ "type": "Label", "label": "RF Code 79" },
+				{
+						"name": "RFLabel79",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode79",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 79"
+				},
+				{ "type": "Label", "label": "RF Code 80" },
+				{
+						"name": "RFLabel80",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode80",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 80"
+				},
+				{ "type": "Label", "label": "RF Code 81" },
+				{
+						"name": "RFLabel81",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode81",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 81"
+				},
+				{ "type": "Label", "label": "RF Code 82" },
+				{
+						"name": "RFLabel82",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode82",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 82"
+				},
+				{ "type": "Label", "label": "RF Code 83" },
+				{
+						"name": "RFLabel83",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode83",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 83"
+				},
+				{ "type": "Label", "label": "RF Code 84" },
+				{
+						"name": "RFLabel84",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode84",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 84"
+				},
+				{ "type": "Label", "label": "RF Code 85" },
+				{
+						"name": "RFLabel85",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode85",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 85"
+				},
+				{ "type": "Label", "label": "RF Code 86" },
+				{
+						"name": "RFLabel86",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode86",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 86"
+				},
+				{ "type": "Label", "label": "RF Code 87" },
+				{
+						"name": "RFLabel87",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode87",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 87"
+				},
+				{ "type": "Label", "label": "RF Code 88" },
+				{
+						"name": "RFLabel88",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode88",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 88"
+				},
+				{ "type": "Label", "label": "RF Code 89" },
+				{
+						"name": "RFLabel89",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode89",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 89"
+				},
+				{ "type": "Label", "label": "RF Code 90" },
+				{
+						"name": "RFLabel90",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode90",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 90"
+				},
+				{ "type": "Label", "label": "RF Code 91" },
+				{
+						"name": "RFLabel91",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode91",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 91"
+				},
+				{ "type": "Label", "label": "RF Code 92" },
+				{
+						"name": "RFLabel92",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode92",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 92"
+				},
+				{ "type": "Label", "label": "RF Code 93" },
+				{
+						"name": "RFLabel93",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode93",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 93"
+				},
+				{ "type": "Label", "label": "RF Code 94" },
+				{
+						"name": "RFLabel94",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode94",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 94"
+				},
+				{ "type": "Label", "label": "RF Code 95" },
+				{
+						"name": "RFLabel95",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode95",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 95"
+				},
+				{ "type": "Label", "label": "RF Code 96" },
+				{
+						"name": "RFLabel96",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode96",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 96"
+				},
+				{ "type": "Label", "label": "RF Code 97" },
+				{
+						"name": "RFLabel97",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode97",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 97"
+				},
+				{ "type": "Label", "label": "RF Code 98" },
+				{
+						"name": "RFLabel98",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode98",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 98"
+				},
+				{ "type": "Label", "label": "RF Code 99" },
+				{
+						"name": "RFLabel99",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode99",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 99"
+				},
+				{ "type": "Label", "label": "RF Code 100" },
+				{
+						"name": "RFLabel100",
+						"type": "ValidationTextBox",
+						"caption": "Bezeichnung"
+					},
+				{
+						"name": "RFCode100",
+						"type": "ValidationTextBox",
+						"caption": "RF Code 100"
+				}
+				
+								
+            ],
+    "actions":
+            [
+                {
+                    "type": "Button",
+                    "label": "RF Code 1 senden",
+                    "onClick": "AIOIR_SendIR1($id);"
+                },
+                {
+                    "type": "Button",
+                    "label": "RF Code 2 senden",
+                    "onClick": "AIOIR_SendIR2($id);"
+                }
+
+            ],
+    "status":
+            [
+                {
+                    "code": 101,
+                    "icon": "inactive",
+                    "caption": "Die Instanz wird erstellt."
+                },
+				{
+                    "code": 102,
+                    "icon": "active",
+                    "caption": "Konfiguration gültig."
+                },
+                {
+                    "code": 104,
+                    "icon": "inactive",
+                    "caption": "AIO Device is inaktiv."
+                },
+                {
+                    "code": 202,
+                    "icon": "error",
+                    "caption": "Felder dürfen nicht leer sein."
+                },
+                {
+                    "code": 203,
+                    "icon": "error",
+                    "caption": "Verbindung zum AIO Gateway verloren."
+                }
+            ]
+}
