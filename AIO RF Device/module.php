@@ -253,7 +253,7 @@ class AIORFDevice extends IPSModule
         }
 		else 
 		{
-			if ($NumberRFCodes == 0) //bei Manueller Eingabe von IR Codes wenn die Anzahl der Codes nicht gesetzt wurde Anzahl berechnen
+			if ($NumberRFCodes == 0) //bei Manueller Eingabe von RF Codes wenn die Anzahl der Codes nicht gesetzt wurde Anzahl berechnen
 			{
 				$RFCodes = $this->ArrRFCodes();
 				//Anzahl an IR Codes
@@ -266,12 +266,12 @@ class AIORFDevice extends IPSModule
 					}
 					
 				}
-				$this->CreateProfileIR($NumberRFCodes);
+				$this->CreateProfileRF($NumberRFCodes);
 				
 			}
 			else
 			{
-					$this->CreateProfileIR($NumberRFCodes);
+					$this->CreateProfileRF($NumberRFCodes);
 			}
 			
 			// Status aktiv
@@ -305,14 +305,14 @@ class AIORFDevice extends IPSModule
     *
 	* 
     */
-	protected function CreateProfileIR($NumberRFCodes)
+	protected function CreateProfileRF($NumberRFCodes)
 	{
 		//$irprofilname = str_replace(' ','',(trim(IPS_GetName(IPS_GetInstance($this->InstanceID)["InstanceID"])))); //Profilname darf keine Leerzeichen enthalten !!!!
-		$irprofilname = str_replace(' ','',(trim(IPS_GetName($this->InstanceID)))); //Profilname darf keine Leerzeichen enthalten !!!!
-		$profilname1 = $irprofilname."1.AIOIR";	
-		$profilname2 = $irprofilname."2.AIOIR";
-		$profilname3 = $irprofilname."3.AIOIR";
-		$profilname4 = $irprofilname."4.AIOIR";	
+		$rfprofilname = str_replace(' ','',(trim(IPS_GetName($this->InstanceID)))); //Profilname darf keine Leerzeichen enthalten !!!!
+		$profilname1 = $rfprofilname."1.AIORF";	
+		$profilname2 = $rfprofilname."2.AIORF";
+		$profilname3 = $rfprofilname."3.AIORF";
+		$profilname4 = $rfprofilname."4.AIORF";	
 		
 		// Start create profiles
 		if ($NumberRFCodes <=32)
@@ -324,8 +324,8 @@ class AIORFDevice extends IPSModule
 		
 			//Variablen anlegen
 			//Generelle Variablen
-			$this->RegisterVariableInteger("RFCodeS1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("RFCodeS1");	
+			$this->RegisterVariableInteger("RFCODES1", "RF Codes", $profilname1, 29);
+			$this->EnableAction("RFCODES1");	
 			}
 		elseif	($NumberRFCodes <=64 && $NumberRFCodes >32 )
 			{
@@ -335,10 +335,10 @@ class AIORFDevice extends IPSModule
 			
 			//Variablen anlegen
 			//Generelle Variablen
-			$this->RegisterVariableInteger("RFCodeS1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("RFCodeS1");	
-			$this->RegisterVariableInteger("RFCodeS2", "IR Codes", $profilname2, 30);
-			$this->EnableAction("RFCodeS2");	
+			$this->RegisterVariableInteger("RFCODES1", "RF Codes", $profilname1, 29);
+			$this->EnableAction("RFCODES1");	
+			$this->RegisterVariableInteger("RFCODES2", "RF Codes", $profilname2, 30);
+			$this->EnableAction("RFCODES2");	
 			}
 		elseif	($NumberRFCodes <=96 && $NumberRFCodes >64)
 			{
@@ -349,12 +349,12 @@ class AIORFDevice extends IPSModule
 			
 			//Variablen anlegen
 			//Generelle Variablen
-			$this->RegisterVariableInteger("RFCodeS1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("RFCodeS1");	
-			$this->RegisterVariableInteger("RFCodeS2", "IR Codes", $profilname2, 30);
-			$this->EnableAction("RFCodeS2");
-			$this->RegisterVariableInteger("RFCodeS3", "IR Codes", $profilname3, 31);
-			$this->EnableAction("RFCodeS3");				
+			$this->RegisterVariableInteger("RFCODES1", "RF Codes", $profilname1, 29);
+			$this->EnableAction("RFCODES1");	
+			$this->RegisterVariableInteger("RFCODES2", "RF Codes", $profilname2, 30);
+			$this->EnableAction("RFCODES2");
+			$this->RegisterVariableInteger("RFCODES3", "RF Codes", $profilname3, 31);
+			$this->EnableAction("RFCODES3");				
 			}
 		elseif	($NumberRFCodes <=100 && $NumberRFCodes >96)
 			{
@@ -367,14 +367,14 @@ class AIORFDevice extends IPSModule
 			
 			//Variablen anlegen
 			//Generelle Variablen
-			$this->RegisterVariableInteger("RFCodeS1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("RFCodeS1");	
-			$this->RegisterVariableInteger("RFCodeS2", "IR Codes", $profilname2, 30);
-			$this->EnableAction("RFCodeS2");
-			$this->RegisterVariableInteger("RFCodeS3", "IR Codes", $profilname3, 31);
-			$this->EnableAction("RFCodeS3");
-			$this->RegisterVariableInteger("RFCodeS4", "IR Codes", $profilname4, 32);
-			$this->EnableAction("RFCodeS4");		
+			$this->RegisterVariableInteger("RFCODES1", "RF Codes", $profilname1, 29);
+			$this->EnableAction("RFCODES1");	
+			$this->RegisterVariableInteger("RFCODES2", "RF Codes", $profilname2, 30);
+			$this->EnableAction("RFCODES2");
+			$this->RegisterVariableInteger("RFCODES3", "RF Codes", $profilname3, 31);
+			$this->EnableAction("RFCODES3");
+			$this->RegisterVariableInteger("RFCODES4", "RF Codes", $profilname4, 32);
+			$this->EnableAction("RFCODES4");		
 			}
 	}
 			
@@ -595,7 +595,7 @@ class AIORFDevice extends IPSModule
 		{
 			$this->PowerSetState($value);
 		}
-		elseif(!null == ($this->GetIDForIdent('RFCodeS1')) && $Ident == "RFCodeS1" )
+		elseif(!null == ($this->GetIDForIdent('RFCODES1')) && $Ident == "RFCODES1" )
 		{
 			switch($Value)
 				{
@@ -697,7 +697,7 @@ class AIORFDevice extends IPSModule
                         break;			
                 }
 		}
-		elseif(!null == ($this->GetIDForIdent('RFCodeS2')) && $Ident == "RFCodeS2" )
+		elseif(!null == ($this->GetIDForIdent('RFCODES2')) && $Ident == "RFCODES2" )
 		{
 			switch($Value) {
 						case 0: //IR 33
@@ -798,7 +798,7 @@ class AIORFDevice extends IPSModule
 							break;
 				}
 		}
-		elseif(!null == ($this->GetIDForIdent('RFCodeS3')) && $Ident == "RFCodeS3" )
+		elseif(!null == ($this->GetIDForIdent('RFCODES3')) && $Ident == "RFCODES3" )
 		{
 			switch($Value) {
 						case 0: //IR 65
@@ -899,7 +899,7 @@ class AIORFDevice extends IPSModule
 							break;
 				}
 		}
-		elseif(!null == ($this->GetIDForIdent('RFCodeS4')) && $Ident == "RFCodeS4" )
+		elseif(!null == ($this->GetIDForIdent('RFCODES4')) && $Ident == "RFCODES4" )
 		{
 			switch($Value)
 				{
@@ -939,18 +939,7 @@ class AIORFDevice extends IPSModule
 		return $IPGateway;
 	}
 	
-	//IR Diode abfragen
-	protected function GetIRDiode(){
-		$IRDiode = $this->ReadPropertyString("IRDiode");
-		return $IRDiode;
-	}
-	
-	//Extender abfragen
-	protected function GetExtIRDiode(){
-		$EXTIRDiode = $this->ReadPropertyString("EXTIRDiode");
-		return $EXTIRDiode;
-	}
-	
+		
 	protected function PowerSetState (boolean $state){
 	SetValueBoolean($this->GetIDForIdent('Status'), $state);
 	return $this->SetPowerState($state);	
@@ -975,136 +964,49 @@ class AIORFDevice extends IPSModule
 	
 	
 	//Senden eines IR Befehls über das a.i.o. Gateway
-	public function SendIR1() {
-            $IR_send = $this->ReadPropertyString("RFCode1");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+	public function SendRF1() {
+            $RF_send = $this->ReadPropertyString("RFCode1");
+			return $this->Send_RF($RF_send, $this->GetIPGateway());
         }
 		
 	public function SendIR2() {
-            $IR_send = $this->ReadPropertyString("RFCode2");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+            $RF_send = $this->ReadPropertyString("RFCode2");
+			return $this->Send_RF($RF_send, $this->GetIPGateway());
         }
 		
 	public function SendRFCode(integer $Value) {
-			//IR Code auslesen Value 0 entspricht RFCode 1
+			//RF Code auslesen Value 0 entspricht RFCode 1
 			$RFCode = "RFCode".$Value;
-			if($Value <= 32 && !null == ($this->GetIDForIdent('RFCodeS1')))
+			if($Value <= 32 && !null == ($this->GetIDForIdent('RFCODES1')))
 			{
 			$setvalue = $Value-1;	
-			SetValueInteger($this->GetIDForIdent('RFCodeS1'), $setvalue);
+			SetValueInteger($this->GetIDForIdent('RFCODES1'), $setvalue);
 			}
-			elseif($Value <=64 && $Value >32 && !null == ($this->GetIDForIdent('RFCodeS2')))
+			elseif($Value <=64 && $Value >32 && !null == ($this->GetIDForIdent('RFCODES2')))
 			{
 			$setvalue = $Value-33;	
-			SetValueInteger($this->GetIDForIdent('RFCodeS2'), $setvalue);	
+			SetValueInteger($this->GetIDForIdent('RFCODES2'), $setvalue);	
 			}
-			elseif($Value <=96 && $Value >64 && !null == ($this->GetIDForIdent('RFCodeS3')))
+			elseif($Value <=96 && $Value >64 && !null == ($this->GetIDForIdent('RFCODES3')))
 			{
 			$setvalue = $Value-65;
-			SetValueInteger($this->GetIDForIdent('RFCodeS3'), $setvalue);	
+			SetValueInteger($this->GetIDForIdent('RFCODES3'), $setvalue);	
 			}
-			elseif($Value <=100 && $Value >96 && !null == ($this->GetIDForIdent('RFCodeS4')))
+			elseif($Value <=100 && $Value >96 && !null == ($this->GetIDForIdent('RFCODES4')))
 			{
 			$setvalue = $Value-97;	
-			SetValueInteger($this->GetIDForIdent('RFCodeS4'), $setvalue);	
+			SetValueInteger($this->GetIDForIdent('RFCODES4'), $setvalue);	
 			}
-			$IR_send = $this->ReadPropertyString($RFCode);
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+			$RF_send = $this->ReadPropertyString($RFCode);
+			return $this->Send_RF($RF_send, $this->GetIPGateway());
         }	
 	
-	//IR Code senden
+	//RF Code senden
 	private	$response = false;
-	protected function Send_IR($ir_code, $ip_aiogateway, $IRDiode, $EXTIRDiode)
+	protected function Send_RF($rf_code, $ip_aiogateway)
 		{
-		//Sendestring zum Senden eines IR Befehls {IP Gateway}/command?code={IR Code}&XC_FNC=Send2&ir={Sendediode}&rf=00
-			switch ($EXTIRDiode)
-				{
-				case "02":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Interne Sendediode" );
-					break;
-
-				case "12":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 1" );
-					break;
-
-				case "22":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 2" );
-					break;
-
-				case "32":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 3" );
-					break;	
-
-				case "03":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Interne Sendediode" );
-					break;	
-
-				case "13":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 1" );
-					break;	
-
-				case "23":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 2" );
-					break;	
-
-				case "33":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 3" );
-					break;	
-
-				case "04":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Interne Sendediode" );
-					break;	
-
-				case "14":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 1" );
-					break;	
-
-				case "24":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 2" );
-					break;	
-
-				case "34":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 3" );
-					break;
-
-				case "05":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Interne Sendediode" );
-					break;
-
-				case "15":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 1" );
-					break;
-
-				case "25":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 2" );
-					break;
-
-				case "35":
-					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 3" );
-					break;
-
-				case "00":
-					IPS_LogMessage( "IR Command über AIO Gateway senden:" , "Sendediode ".$IRDiode );
-					break;								
-				}
-			
-			$AIO_Code = $ip_aiogateway."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode;
+		//Sendestring zum Senden eines RF Befehls {IP Gateway}/command?code={RF Code}&XC_FNC=Send2&ir=00&rf=01			
+			$AIO_Code = $ip_aiogateway."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01";
 			$gwcheck = file_get_contents("http://$AIO_Code");
 			if ($gwcheck == "{XC_SUC}")
 				{
@@ -1226,9 +1128,9 @@ class AIORFDevice extends IPSModule
 				(string)$RFCode = substr($RFCode, 17);
 				$length = strlen($RFCode);
 				$RFCode = substr($RFCode, 0, ($length-2));
-				IPS_LogMessage( "IR Code:" , $RFCode );
+				IPS_LogMessage( "RF Code:" , $RFCode );
 				$this->AddRFCode($RFCode, $irid);
-				echo "IR Code: ".$RFCode;
+				echo "RF Code: ".$RFCode;
 				$this->response = true;	
 			}
 		
@@ -1236,10 +1138,10 @@ class AIORFDevice extends IPSModule
 		}
 	
 	//IR Code und Label hinzufügen
-	protected function AddRFCode($RFCode, $irid)
+	protected function AddRFCode($RFCode, $rfid)
 	{
-		$code = "RFCode".$irid;
-		$label = "RFLabel".$irid;
+		$code = "RFCode".$rfid;
+		$label = "RFLabel".$rfid;
 		//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($this->InstanceID, $code, $RFCode); //RFCode setzten.
 		$RFLabel = $this->ReadPropertyString($label);
@@ -1253,7 +1155,7 @@ class AIORFDevice extends IPSModule
 		IPS_SetProperty($this->InstanceID, "NumberRFCodes", $NumberRFCodes); //RFCode setzten.	
 		IPS_SetProperty($this->InstanceID, "LearnRFCode", false); //Haken entfernen.
 		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "RFCode".$irid." hinzugefügt:" , $RFCode );
+		IPS_LogMessage( "RFCode".$rfid." hinzugefügt:" , $RFCode );
 		// Status aktiv
         $this->SetStatus(102);	
 	}

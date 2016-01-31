@@ -24,6 +24,7 @@ class AIOImport extends IPSModule
 		$this->RegisterPropertyBoolean("LM1Import", false);
 		$this->RegisterPropertyBoolean("LM2Import", false);
 		$this->RegisterPropertyBoolean("SomfyImport", false);
+		$this->RegisterPropertyBoolean("RFImport", false);
 		
     }
 
@@ -90,9 +91,10 @@ class AIOImport extends IPSModule
 		$LM1Import = $this->ReadPropertyBoolean('LM1Import');
 		$LM2Import = $this->ReadPropertyBoolean('LM2Import');
 		$SomfyImport = $this->ReadPropertyBoolean('SomfyImport');
+		$RFImport = $this->ReadPropertyBoolean('RFImport');
 		
 		//Auswahl Prüfen
-		if ($IRImport === false && $ITImport === false && $ELROImport === false && $FS20Import === false && $LM1Import === false && $LM2Import === false )
+		if ($IRImport === false && $ITImport === false && $ELROImport === false && $FS20Import === false && $LM1Import === false && $LM2Import === false && $SomfyImport === false && $RFImport === false )
 			{
 				//$this->SetStatus(207); //Es wurde nichts zum Importieren ausgewählt
 			}
@@ -152,7 +154,15 @@ class AIOImport extends IPSModule
 				IPS_SetProperty($this->InstanceID, "SomfyImport", false); //Haken entfernen.
 				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
 			}		
-			//$this->SetStatus(102); //IP Adresse ist gültig -> aktiv
+		if ($RFImport === true)
+			{
+				//RF Import
+				$this->RFImport($Version);
+				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
+				IPS_SetProperty($this->InstanceID, "RFImport", false); //Haken entfernen.
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+			}	
+		//$this->SetStatus(102); //IP Adresse ist gültig -> aktiv
 	
 	}
 	
@@ -340,6 +350,25 @@ class AIOImport extends IPSModule
 			
 		}	
 	
+	protected function RFImport($Version)
+		{
+			$CategoryID = $this->SetupCategory("Funk Geräte");
+						
+			//Datei nach Version einlesen
+			if ($Version === 0)	
+				{
+					//NEO device_db JSON
+					$this->RFImportNeo($CategoryID);
+					
+				}
+			else
+				{
+					//AIO Creator ircodes.xml, devices.xml
+					$this->RFImportCreator($CategoryID);
+				}
+			
+		}	
+	
 	//AIOITDevice Instanz erstellen 
 	public function ITCreateInstance(string $InstName, string $ITFamilyCode, string $ITDeviceCode, string $ITType, integer $CategoryID)
 	{
@@ -419,8 +448,8 @@ class AIOImport extends IPSModule
 		}		
 	}
 		
-	//IR Instanz löschen
-	protected function IRDeleteInstance($InsID)
+	//Instanz löschen
+	protected function DeleteInstance($InsID)
 	{
 	//Prüfen ob Instanz existiert
 	$InstanzID = @IPS_GetInstance($InsID);
@@ -455,6 +484,51 @@ class AIOImport extends IPSModule
 		IPS_SetProperty($InsID, "NumberIRCodes", $count); //Anzahl IR Codes setzten.
 		IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
 		IPS_LogMessage( "IR Code hinzugefügt:" , "Name: ".$label );	
+	}
+	
+	//AIORF Instanz erstellen 
+	public function RFCreateInstance(string $InstName, integer $CategoryID)
+	{
+	//echo "Instanz RF anlegen";
+	//Prüfen ob Instanz schon existiert
+	$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
+	if ($InstanzID === false)
+		{
+			//echo "Instanz nicht gefunden!";
+			//Neue Instanz anlegen
+			$InsID = IPS_CreateInstance("{8BFB0E47-BA7E-44B3-A8DE-95243B3DB186}");
+			$InstName = (string)$InstName;
+			IPS_SetName($InsID, $InstName); // Instanz benennen
+			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
+			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
+			return $InsID;	
+		}
+			
+	else
+		{
+			//echo "Die Instanz-ID lautet: ". $InstanzID;
+			return $InstanzID;
+		}		
+	}
+		
+		
+	//RF Code zufügen		
+	protected function RFAddCode($InsID, $rfcodes, $count)
+	{
+		for ($i = 0; $i <= $count-1; $i++)
+			{
+			    $RFLabel = (string)"RFLabel".($i+1);
+				$RFCode = (string)"RFCode".($i+1);
+				$InsID = (integer)$InsID;
+				(string)$label = $rfcodes[$i][0];
+				(string)$code = $rfcodes[$i][1]; 
+				IPS_SetProperty($InsID, $RFLabel, $label); //IR Label setzten.
+				IPS_SetProperty($InsID, $RFCode, $code); //IR Code setzten.
+			}
+		IPS_SetProperty($InsID, "NumberRFCodes", $count); //Anzahl IR Codes setzten.
+		IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+		IPS_LogMessage( "RF Code hinzugefügt:" , "Name: ".$label );	
 	}
 	
 	//AIOELRO Instanz erstellen 
@@ -673,6 +747,59 @@ class AIOImport extends IPSModule
 				exit("Datei ".$file." konnte nicht geöffnet werden.");
 				}
 		}	
+	
+	//RF	
+	protected function RFImportNeo($CategoryID)
+		{
+			//echo "RF Import NEO";
+			$directory = $this->ReadPropertyString('directory');
+			$devicetype = "CODE";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID);
+		}
+	
+	protected function RFImportCreator($CategoryID)
+		{
+			//echo "RF Import Creator in ".$CategoryID;
+			$directory = $this->ReadPropertyString('directory');
+			$file = IPS_GetKernelDir().$directory.'ircodes.xml';
+			$type = "CODE";
+						
+			if (file_exists($file))
+				{
+				//echo "Datei wurde gefunden";
+				$xml = new SimpleXMLElement(file_get_contents($file));
+				foreach($xml->device as $device)
+					{
+					$name = $device['id'];
+					//Prüfen ob IR Code für AIO Gateway
+					$count = $device->key->count();
+					$key = $device->key;
+					$InsID = $this->IRCreateInstance($name, $CategoryID);
+					$ircodes = array();
+					for ($i = 0; $i <= $count-1; $i++)
+						{
+						    $ircodes[$i][0] = (string)$key[$i]['id'];
+							$ircodes[$i][1] = (string)$key[$i]['code'];
+							$valcode = substr(($ircodes[$i][1]), 0, 1);
+							//del instanz
+							if ($valcode == "{" || $valcode == "C")
+								{
+									$this->IRDeleteInstance($InsID);
+									break;
+								}
+						}
+					if($valcode != "{" || $valcode != "C")
+						{
+							$this->IRAddCode($InsID, $ircodes, $count); 
+						}		
+					
+					}
+				}
+			else
+				{
+				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				}
+		}
 	
 	
 	//IR	
@@ -923,29 +1050,56 @@ class AIOImport extends IPSModule
 								 break;			
 						}
 					}
-				//IR Codes adress (IR:01) Sendediode
+				//IR oder RF Codes adress (IR:01) Sendediode oder RF:01
 				if (isset($device->info->ircodes))
 					{
 					$codes = $device->info->ircodes->codes;
-					//Prüfen ob IR Code für AIO Gateway
-					$InsID = $this->IRCreateInstance($name, $CategoryID);
-					$key = $device->info->ircodes->codes;
-					$count = count($key);
-					$ircodes = array();
-					for ($i = 0; $i <= $count-1; $i++)
+					//Prüfen ob IR oder RF Code für AIO Gateway
+					$address = $device->info->address;
+					if($address == "RF:01") // Funkgerät
 						{
-						    $ircodes[$i][0]  = $key[$i]->key;
-							$ircodes[$i][1] = $key[$i]->code;
-							$code = $ircodes[$i][1];
-							$valcode = substr($code, 0, 1);
-							//del instanz
-							if ($valcode == "{")
+							$InsID = $this->RFCreateInstance($name, $CategoryID);
+							$key = $device->info->ircodes->codes;
+							$count = count($key);
+							$ircodes = array();
+							for ($i = 0; $i <= $count-1; $i++)
 								{
-									$this->IRDeleteInstance($InsID);
-									break;
-								}
-						}	
-					$this->IRAddCode($InsID, $ircodes, $count); 
+									$rfcodes[$i][0]  = $key[$i]->key;
+									$rfcodes[$i][1] = $key[$i]->code;
+									$code = $rfcodes[$i][1];
+									$valcode = substr($code, 0, 1);
+									//del instanz
+									if ($valcode == "{")
+										{
+											$this->DeleteInstance($InsID);
+											break;
+										}
+								}	
+							$this->RFAddCode($InsID, $rfcodes, $count); 
+						}
+					elseif($address == "IR:01") // IR Gerät
+						{
+							$InsID = $this->IRCreateInstance($name, $CategoryID);
+							$key = $device->info->ircodes->codes;
+							$count = count($key);
+							$ircodes = array();
+							for ($i = 0; $i <= $count-1; $i++)
+								{
+									$ircodes[$i][0]  = $key[$i]->key;
+									$ircodes[$i][1] = $key[$i]->code;
+									$code = $ircodes[$i][1];
+									$valcode = substr($code, 0, 1);
+									//del instanz
+									if ($valcode == "{")
+										{
+											$this->DeleteInstance($InsID);
+											break;
+										}
+								}	
+							$this->IRAddCode($InsID, $ircodes, $count); 
+						}
+					
+					
 					}
 				}
 			}		

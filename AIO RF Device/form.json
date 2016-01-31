@@ -1426,12 +1426,12 @@
                 {
                     "type": "Button",
                     "label": "RF Code 1 senden",
-                    "onClick": "AIOIR_SendIR1($id);"
+                    "onClick": "AIORF_SendRF1($id);"
                 },
                 {
                     "type": "Button",
                     "label": "RF Code 2 senden",
-                    "onClick": "AIOIR_SendIR2($id);"
+                    "onClick": "AIORF_SendRF2($id);"
                 }
 
             ],
