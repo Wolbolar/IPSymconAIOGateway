@@ -26,6 +26,12 @@ Nähere Informationen zu ansteuerbaren Geräten über das AIO Gateway unter [Rec
  - Senden eines IR Signals über das AIO Gateway
  - Import der IR Geräte aus dem AIO Creator und AIO Creator NEO
  - Anlernen von IR Codes über das AIO Gateway aus IP-Symcom  
+ 
+ ### Funk Code Senden:  
+
+ - Senden eines Funk Signals über das AIO Gateway
+ - Import der Funk (RF) Geräte aus dem AIO Creator NEO
+ - Anlernen von Funk Codes über das AIO Gateway aus IP-Symcom  
 
 ### Intertechno Steckdosen:  
 
@@ -94,12 +100,7 @@ Nähere Informationen zu ansteuerbaren Geräten über das AIO Gateway unter [Rec
 	Bei dem entsprechenden Device sind jeweils die Werte die im AIO Creator
 	NEO eingetragen sind zu übernehmen.
 	
-	Sollte es Probleme geben bei der Client Socket Verbindung zum AIO Gateway:
-	Das AIO Gateway unter I/O Instanzen öffen
-	- Haken bei Aktiv entfernen
-	- Übernehmen
-	- erneut AIO Gateway öffnen 
-	- Haken bei Aktiv setzten und Übernehmen
+	Der Port ist 1902 und darf nicht verstellt werden.
 	
 ## 4. Import
 
@@ -124,6 +125,8 @@ Auswahlfelder:
   - [ ] FS20 Geräte importieren
   - [ ] Lightmanager 1 Geräte importieren
   - [ ] Lightmanager 2 Geräte importieren
+  - [ ] Somfy RTS Geräte importieren
+  - [ ] Funk (RF) Geräte importieren
 - Kategorie zum Import (Vor dem Import eine Kategorie anlegen die hier dann auszuwählen ist)
 
 ## 5. Funktionsreferenz
@@ -132,6 +135,9 @@ Auswahlfelder:
 
 ### IR Codes
  Die IR Codes sind aus dem AIO Creator zu kopieren
+ 
+### Funk (RF) Codes
+ Die Funk Codes sind aus dem AIO Creator zu kopieren 
  
 ### Intertechno
  Zum Ansteuern der Intertechno Steckdosen ist der Familycode und Devicecode einzutragen.
@@ -194,6 +200,19 @@ Wenn die interne Adresse ausgefüllt ist können die Felder HC1, HC2, FS20Adress
 | :---------: | :-----: | :----------: | :-------------------------------------------------------------------: |
 | Adresse     | string  |              | Adresse des Geräts abzulesen im Gerätemanager des AIO Creator         |
 
+### IR Gerät:  
+
+| Eigenschaft| Typ     | Standardwert | Funktion                                                              |
+| :--------: | :-----: | :----------: | :-------------------------------------------------------------------: |
+| IRCode[i]  | string  |              | IR Code des Geräts abzulesen im Gerätemanager des AIO Creator         |
+| IRLabel[i] | string  |              | Beschriftung des IR Codes                                             |
+
+### RF Gerät:  
+
+| Eigenschaft| Typ     | Standardwert | Funktion                                                              |
+| :--------: | :-----: | :----------: | :-------------------------------------------------------------------: |
+| RFCode[i]  | string  |              | IR Code des Geräts abzulesen im Gerätemanager des AIO Creator         |
+| RFLabel[i] | string  |              | Beschriftung des IR Codes                                             |
 
 ## 7. Anhang
 
@@ -371,6 +390,16 @@ Orange
 #### IR Device:
 `AIOIR_SendIRCode(integer $InstanceID, integer $IRCodenumber)`
 Sendet einen IR Code der Instanz mit der InstanceID und dem IR Code [Nummer]
+
+`AIOIR_Learn(integer $irid)`
+Setzt das Gateway in den Lernzustand und trägt den angelernten Wert unter IR Code mit Nummer $irid ein
+
+#### Funk (RF) Device:
+`AIORF_SendIRCode(integer $InstanceID, integer $RFCodenumber)`
+Sendet einen IR Code der Instanz mit der InstanceID und dem IR Code [Nummer]
+
+`AIORF_Learn(integer $irid)`
+Setzt das Gateway in den Lernzustand und trägt den angelernten Wert unter RF Code mit Nummer $irid ein
 
 #### Somfy RTS Device:
 `AIOSOMFYRTS_Up(integer $InstanceID)`
