@@ -641,7 +641,8 @@ class AIOImport extends IPSModule
 		{
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "IT";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);		
+			$subtype = "IT";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);		
 		}
 		
 	protected function ITImportCreator($CategoryID)
@@ -680,7 +681,8 @@ class AIOImport extends IPSModule
 		{
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "FS20";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);			
+			$subtype = "FS20";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);			
 		}
 		
 	protected function FS20ImportCreator($CategoryID)
@@ -717,7 +719,8 @@ class AIOImport extends IPSModule
 		{
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "RT";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);			
+			$subtype = "RT";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);			
 		}
 		
 	protected function SomfyImportCreator($CategoryID)
@@ -754,7 +757,8 @@ class AIOImport extends IPSModule
 			//echo "RF Import NEO";
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "CODE";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);
+			$subtype = "RF";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);
 		}
 	
 	protected function RFImportCreator($CategoryID)
@@ -808,7 +812,8 @@ class AIOImport extends IPSModule
 			//echo "IR Import NEO";
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "CODE";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);
+			$subtype = "IR";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);
 		}
 		
 	protected function IRImportCreator($CategoryID)
@@ -912,7 +917,8 @@ class AIOImport extends IPSModule
 		{
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "LEDS";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);	
+			$subtype = "LED1";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);	
 		}
 		
 	protected function Light1ImportCreator($CategoryID)
@@ -942,7 +948,8 @@ class AIOImport extends IPSModule
 		{
 			$directory = $this->ReadPropertyString('directory');
 			$devicetype = "L2";
-			$this->NEOJSONImport($devicetype, $directory, $CategoryID);	
+			$subtype = "LED2";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);	
 		}
 		
 	protected function Light2ImportCreator($CategoryID)
@@ -978,7 +985,7 @@ class AIOImport extends IPSModule
 	* LEDS
 	* L2
 	*/	
-	protected function NEOJSONImport($devicetype, $directory, $CategoryID)
+	protected function NEOJSONImport($devicetype, $directory, $CategoryID, $subtype)
 	{
 		//echo "NEOJSONImport";
 	// get file
@@ -1002,7 +1009,7 @@ class AIOImport extends IPSModule
 			if ($type == $devicetype)
 				{
 				if (isset($device->info->address)) {
-				    $address = $device->info->address; //Adress
+				    $address = $device->info->address; //Adresse
 					}
 				if (isset($device->info->data)) {
 				    $data = $device->info->data; //Switch / Dimmer / shutter
@@ -1051,56 +1058,50 @@ class AIOImport extends IPSModule
 						}
 					}
 				//IR oder RF Codes adress (IR:01) Sendediode oder RF:01
-				if (isset($device->info->ircodes))
+				if (isset($device->info->ircodes) && $subtype == "RF" && $address == "RF:01") // Funkgerät
 					{
-					$codes = $device->info->ircodes->codes;
-					//Prüfen ob IR oder RF Code für AIO Gateway
-					$address = $device->info->address;
-					if($address == "RF:01") // Funkgerät
+						$codes = $device->info->ircodes->codes;					
+						$InsID = $this->RFCreateInstance($name, $CategoryID);
+						$key = $device->info->ircodes->codes;
+						$count = count($key);
+						$rfcodes = array();
+						for ($i = 0; $i <= $count-1; $i++)
 						{
-							$InsID = $this->RFCreateInstance($name, $CategoryID);
-							$key = $device->info->ircodes->codes;
-							$count = count($key);
-							$rfcodes = array();
-							for ($i = 0; $i <= $count-1; $i++)
+							$rfcodes[$i][0]  = $key[$i]->key;
+							$rfcodes[$i][1] = $key[$i]->code;
+							$code = $rfcodes[$i][1];
+							$valcode = substr($code, 0, 1);
+							//del instanz
+							if ($valcode == "{")
 								{
-									$rfcodes[$i][0]  = $key[$i]->key;
-									$rfcodes[$i][1] = $key[$i]->code;
-									$code = $rfcodes[$i][1];
-									$valcode = substr($code, 0, 1);
-									//del instanz
-									if ($valcode == "{")
-										{
-											$this->DeleteInstance($InsID);
-											break;
-										}
-								}	
-							$this->RFAddCode($InsID, $rfcodes, $count); 
-						}
-					elseif($address == "IR:01") // IR Gerät
-						{
-							$InsID = $this->IRCreateInstance($name, $CategoryID);
-							$key = $device->info->ircodes->codes;
-							$count = count($key);
-							$ircodes = array();
-							for ($i = 0; $i <= $count-1; $i++)
-								{
-									$ircodes[$i][0]  = $key[$i]->key;
-									$ircodes[$i][1] = $key[$i]->code;
-									$code = $ircodes[$i][1];
-									$valcode = substr($code, 0, 1);
-									//del instanz
-									if ($valcode == "{")
-										{
-											$this->DeleteInstance($InsID);
-											break;
-										}
-								}	
-							$this->IRAddCode($InsID, $ircodes, $count); 
-						}
-					
-					
+									$this->DeleteInstance($InsID);
+									break;
+								}
+						}	
+						$this->RFAddCode($InsID, $rfcodes, $count); 
 					}
+				elseif(isset($device->info->ircodes) && $subtype == "IR" && $address == "IR:01") // IR Gerät
+					{
+						$InsID = $this->IRCreateInstance($name, $CategoryID);
+						$key = $device->info->ircodes->codes;
+						$count = count($key);
+						$ircodes = array();
+						for ($i = 0; $i <= $count-1; $i++)
+							{
+								$ircodes[$i][0]  = $key[$i]->key;
+								$ircodes[$i][1] = $key[$i]->code;
+								$code = $ircodes[$i][1];
+								$valcode = substr($code, 0, 1);
+								//del instanz
+								if ($valcode == "{")
+									{
+										$this->DeleteInstance($InsID);
+										break;
+									}
+							}	
+						$this->IRAddCode($InsID, $ircodes, $count); 
+					}
+					
 				}
 			}		
 		}
