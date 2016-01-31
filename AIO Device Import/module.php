@@ -1061,7 +1061,7 @@ class AIOImport extends IPSModule
 							$InsID = $this->RFCreateInstance($name, $CategoryID);
 							$key = $device->info->ircodes->codes;
 							$count = count($key);
-							$ircodes = array();
+							$rfcodes = array();
 							for ($i = 0; $i <= $count-1; $i++)
 								{
 									$rfcodes[$i][0]  = $key[$i]->key;

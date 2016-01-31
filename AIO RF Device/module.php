@@ -239,6 +239,7 @@ class AIORFDevice extends IPSModule
 		$RFLabel2 = $this->ReadPropertyString("RFLabel2");
 		$LearnRFCode = $this->ReadPropertyBoolean('LearnRFCode');
 		$NumberRFCodes = $this->ReadPropertyString("NumberRFCodes");
+		$RFStatus = $this->ReadPropertyString("RFStatus");
 		
 		//Mögliche Prüfungen durchführen
 		if ($LearnRFCode)
@@ -246,11 +247,19 @@ class AIORFDevice extends IPSModule
 			$irid = $this->ReadPropertyInteger("LearnRFCodeID");
 			$this->Learn($irid);
 		}
-		elseif ( $RFCode1 == '' or $RFCode2 == '' or $RFLabel1 == '' or $RFLabel2 == '')
+		//elseif ( $RFCode1 == '' or $RFCode2 == '' or $RFLabel1 == '' or $RFLabel2 == '')
+		elseif ( $RFCode1 == '' or $RFLabel1 == '')
         {
             // Status Error Felder dürfen nicht leer sein
             $this->SetStatus(202);
         }
+		/*
+		elseif ($RFStatus == true && ($RFCode1 == '' or $RFCode2 == '' or $RFLabel1 == '' or $RFLabel2 == ''))
+		{
+            // Status Error Feld 1 und Feld 2 müssen  dürfen nicht leer sein
+            $this->SetStatus(202);
+        }
+		*/
 		else 
 		{
 			if ($NumberRFCodes == 0) //bei Manueller Eingabe von RF Codes wenn die Anzahl der Codes nicht gesetzt wurde Anzahl berechnen
