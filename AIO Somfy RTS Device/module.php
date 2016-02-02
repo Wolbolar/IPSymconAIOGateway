@@ -163,30 +163,28 @@ class AIOSomfyRTSDevice extends IPSModule
 	}
 	
 	public function Up() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "20";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "20";
+		return $this->SendCommand($command);
         }
 	
 	public function Down() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "40";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "40";
+		return $this->SendCommand($command);
         }
 	
 	public function Stop() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "10";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "10";
+		return $this->SendCommand($command);
         }
 	
 	//Senden eines Befehls an Somfy RTS
 	// Sendestring RTS {IP Gateway}/command?XC_FNC=SendSC&type=RT&data={RTS Send Adresse}{Command} 
 	private $response = false;
-	protected function SendCommand($address, $command, $ip_aiogateway) {
+	protected function SendCommand(string $command) {
+		$address = $this->ReadPropertyString('Adresse');
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
-		IPS_LogMessage( "AIO Gateway:" , "http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
+		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
         $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
 		if ($gwcheck == "{XC_SUC}")
 			{
