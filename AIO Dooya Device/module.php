@@ -142,30 +142,28 @@ class AIODooyaDevice extends IPSModule
 	
 	
 	public function Up() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "22";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "22";
+		return $this->SendCommand($command);
         }
 	
 	public function Down() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "44";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "44";
+		return $this->SendCommand($command);
         }
 	
 	public function Stop() {
-        $address = $this->ReadPropertyInteger('Adresse');
-		$command = "55";
-		return $this->SendCommand($address, $command, $this->GetIPGateway());
+        $command = "55";
+		return $this->SendCommand($command);
         }
 	
 	//Senden eines Befehls an Dooya
 	// Sendestring {IP Gateway}/command?XC_FNC=SendSC&type=DY&data={Dooya Send Adresse 8 stellig}{Command} 
 	private $response = false;
-	protected function SendCommand($address, $command, $ip_aiogateway) {
+	protected function SendCommand($address) {
+		$address = $this->ReadPropertyString('Adresse');
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "Dooya Command:" , $command );
-        $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$address.$command);
+        $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
