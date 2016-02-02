@@ -226,12 +226,12 @@ class AIOITDevice extends IPSModule
 		if ($state === true)
 		{
 		$action = "E";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 		else
 		{
 		$action = "6";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 	}
 	
@@ -240,21 +240,23 @@ class AIOITDevice extends IPSModule
 	public function PowerOn() {
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$action = "E";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 		
 	//IT Befehl 6 schaltet aus
 	public function PowerOff() {
 		SetValueBoolean($this->GetIDForIdent('STATE'), false);
 		$action = "6";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 		
 	//Senden eines Befehls an Intertechno
 	// Sendestring IT /command?XC_FNC=SendSC&type=IT&data=
 	private $response = false;
-	protected function SendCommand($IT_send, $action, $ip_aiogateway)
+	protected function SendCommand($action)
 	{
+		$IT_send = $this->Calculate();
+		$ip_aiogateway = $this->GetIPGateway();
 		$gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
 		if ($gwcheck == "{XC_SUC}")
 			{
@@ -269,55 +271,55 @@ class AIOITDevice extends IPSModule
 	// ? - Auf 10% dimmen
 	public function Set10() {
 		$command = "E00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 	
 	// ? - Auf 20% dimmen
 	public function Set20() {
 		$command = "E10";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 		
 	// ? - Auf 30% dimmen
 	public function Set30() {
 		$command = "E20";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 40% dimmen
 	public function Set40() {
 		$command = "E30";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 50% dimmen
 	public function Set50() {
 		$command = "E40";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 60% dimmen
 	public function Set60() {
 		$command = "E50";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 70% dimmen
 	public function Set70() {
 		$command = "E60";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 80% dimmen
 	public function Set80() {
 		$command = "E70";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	// ? - Auf 90% dimmen
 	public function Set90() {
 		$command = "E80";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	

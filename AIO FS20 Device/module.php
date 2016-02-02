@@ -225,12 +225,12 @@ class AIOFS20Device extends IPSModule
 		if ($state === true)
 		{
 		$action = "1000";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 		else
 		{
 		$action = "0000";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
+		return $this->SendCommand($action);
 		}
 	}
 	
@@ -249,128 +249,131 @@ class AIOFS20Device extends IPSModule
 	
 	 public function On() {
         $command = "1000";
-		return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+		return $this->SendCommand($command);
         }
 		
 	public function Off() {
 		$command = "0000";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 	
 	public function Last() {
 		$command = "1100";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 		
 	public function Toggle() {
 		$command = "1200";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	public function DimUp() {
 		$command = "1300";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 
 	public function DimDown() {
 		$command = "1400";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0100 - Auf 6,25% dimmen
 	public function Set6() {
 		$command = "0100";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0200 - Auf 12,50% dimmen (im Creator ~10%)
 	public function Set10() {
 		$command = "0200";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0300 - Auf 18,75% dimmen (im Creator ~20%)
 	public function Set20() {
 		$command = "0300";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0400 - Auf 25,00% dimmen
 	public function Set25() {
 		$command = "0400";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0500 - Auf 31,25% dimmen (im Creator ~30%)
 	public function Set30() {
 		$command = "0500";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0600 - Auf 37,50% dimmen (im Creator ~40%)
 	public function Set40() {
 		$command = "0600";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0700 - Auf 43,75% dimmen
 	public function Set44() {
 		$command = "0700";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0800 - Auf 50,00% dimmen (im Creator ~50%)
 	public function Set50() {
 		$command = "0800";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0900 - Auf 59,25% dimmen (im Creator ~60%)
 	public function Set60() {
 		$command = "0900";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0A00 - Auf 62,50% dimmen
 	public function Set63() {
 		$command = "0A00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	// 0B00 - Auf 68,75% dimmen (im Creator ~70%)
 	public function Set70() {
 		$command = "0B00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 	
 	// 0C00 - Auf 75,00% dimmen
 	public function Set75() {
 		$command = "0C00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 	
 	// 0D00 - Auf 81,25% dimmen (im Creator ~80%)
 	public function Set80() {
 		$command = "0D00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 	
 	// 0E00 - Auf 87,50% dimmen (im Creator ~90%)
 	public function Set90() {
 		$command = "0E00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }
 		
 	// 0F00 - Auf 93,75% dimmen
 	public function Set94() {
 		$command = "0F00";
-        return $this->SendCommand($this->Calculate(), $command, $this->GetIPGateway());
+        return $this->SendCommand($command);
         }	
 	
 	//Senden eines Befehls an FS20
 	// Sendestring FS20 {IP Gateway}/command?XC_FNC=SendSC&type=FS20&data={FS20 Send Adresse}{Command} 
 	private $response = false;
-	protected function SendCommand($FS20, $command, $ip_aiogateway) {
+	protected function SendCommand($command)
+	{
+		$FS20 = $this->Calculate();
+		$ip_aiogateway = $this->GetIPGateway();
 		IPS_LogMessage( "FS20 Adresse:" , $FS20 );
 		IPS_LogMessage( "FS20 Command:" , $command );
         $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
@@ -379,7 +382,7 @@ class AIOFS20Device extends IPSModule
 			$this->response = true;	
 			}
 		return $this->response;
-		}
+	}
 	
 	
 	//Anmelden eines FS20 Geräts an das a.i.o. gateway:
