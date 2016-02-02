@@ -185,7 +185,7 @@ class AIOSomfyRTSDevice extends IPSModule
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
 		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
-        $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
+        $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
