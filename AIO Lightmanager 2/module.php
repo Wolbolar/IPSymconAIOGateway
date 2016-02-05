@@ -177,7 +177,7 @@ class AIOLightmanager2 extends IPSModule
 			return $IPGateway;
 		}
 		
-	protected function GetPasswort(){
+	protected function GetPassword(){
 		$ParentID = $this->GetParent();
 		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
 		return $GatewayPassword;
