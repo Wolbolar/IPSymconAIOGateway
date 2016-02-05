@@ -1020,7 +1020,7 @@ class AIORFDevice extends IPSModule
 	protected function Send_RF($rf_code)
 		{
 		//Sendestring zum Senden eines RF Befehls {IP Gateway}/command?code={RF Code}&XC_FNC=Send2&ir=00&rf=01			
-		$GatewayPassword = $this->GatewayPassword();	
+		$GatewayPassword = $this->GetPassword();	
 		if ($GatewayPassword != "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
@@ -1130,7 +1130,16 @@ class AIORFDevice extends IPSModule
 	public function Learn(integer $irid)
 		{
 		$ip_aiogateway = $this->GetIPGateway();
-		$RFCode = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=Learn");
+		$GatewayPassword = $this->GetPassword();	
+		if ($GatewayPassword != "")
+		{
+			$RFCode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Learn");
+		}
+		else
+		{
+			$RFCode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Learn");
+		}
+		
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($RFCode == "{XC_ERR}Failed to learn code")//Bei Fehler

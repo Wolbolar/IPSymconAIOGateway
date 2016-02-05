@@ -139,7 +139,7 @@ class AIOELRODevice extends IPSModule
 	//Senden eines Befehls an Elro
 	protected function Send_ELRO($ELRO_send, $action)
 		{
-		$GatewayPassword = $this->GatewayPassword();	
+		$GatewayPassword = $this->GetPassword();	
 		if ($action === "E")
 			{
 			// Sendestring ELRO /command?XC_FNC=SendSC&type=ELRO&data=
@@ -179,7 +179,7 @@ class AIOELRODevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=ELRO
 	public function Learn()
 		{
-		$GatewayPassword = $this->GatewayPassword();	
+		$GatewayPassword = $this->GetPassword();	
 		if ($GatewayPassword != "")
 			{
 				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=ELRO");

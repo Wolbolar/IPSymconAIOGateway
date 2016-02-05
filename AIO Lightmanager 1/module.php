@@ -257,7 +257,7 @@ class AIOLightmanager1 extends IPSModule
 	protected function Send_LED($adress, $command)
 	{
 		$response = false;
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		IPS_LogMessage( "LED Adresse:" , $adress );
 		IPS_LogMessage( "LED Command:" , $command );
 		if ($GatewayPassword != "")
@@ -433,7 +433,7 @@ class AIOLightmanager1 extends IPSModule
 	public function Learn()
 		{
 		$ip_aiogateway = $this->GetIPGateway();
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		if ($GatewayPassword != "")
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&type=LS");

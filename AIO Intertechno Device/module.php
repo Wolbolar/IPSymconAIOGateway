@@ -262,7 +262,7 @@ class AIOITDevice extends IPSModule
 	protected function SendCommand($action)
 	{
 		$IT_send = $this->Calculate();
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		if ($GatewayPassword != "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
@@ -341,7 +341,7 @@ class AIOITDevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=IT
 	public function Learn()
 		{
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		if ($GatewayPassword != "")
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=IT");

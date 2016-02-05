@@ -1111,7 +1111,7 @@ class AIOIRDevice extends IPSModule
 					IPS_LogMessage( "IR Command über AIO Gateway senden:" , "Sendediode ".$IRDiode );
 					break;								
 				}
-			$GatewayPassword = $this->GatewayPassword();
+			$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword != "")
 			{
 				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
@@ -1220,7 +1220,7 @@ class AIOIRDevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
 	public function Learn(integer $irid)
 		{
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword != "")
 			{
 				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Learn");

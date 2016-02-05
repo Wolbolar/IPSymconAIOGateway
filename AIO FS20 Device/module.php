@@ -383,7 +383,7 @@ class AIOFS20Device extends IPSModule
 		$ip_aiogateway = $this->GetIPGateway();
 		IPS_LogMessage( "FS20 Adresse:" , $FS20 );
 		IPS_LogMessage( "FS20 Command:" , $command );
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		if ($GatewayPassword != "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
@@ -404,7 +404,7 @@ class AIOFS20Device extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=FS20
 	public function Learn()
 		{
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		if ($GatewayPassword != "")
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=FS20");

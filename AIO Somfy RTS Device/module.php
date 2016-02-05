@@ -188,7 +188,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	private $response = false;
 	protected function SendCommand(string $command) {
 		$address = $this->ReadPropertyString('Adresse');
-		$GatewayPassword = $this->GatewayPassword();
+		$GatewayPassword = $this->GetPassword();
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
 		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
