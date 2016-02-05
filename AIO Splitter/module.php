@@ -20,7 +20,7 @@ class AIOSplitter extends IPSModule
 		$this->RegisterPropertyInteger("Port", 1902);
         $this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyBoolean("GatewayLED", false);
-     
+		$this->RegisterPropertyString("Passwort", "");
     }
 
     public function ApplyChanges()

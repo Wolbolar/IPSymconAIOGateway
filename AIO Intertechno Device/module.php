@@ -217,6 +217,12 @@ class AIOITDevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
+	
 	protected function PowerSetState ($state){
 	SetValueBoolean($this->GetIDForIdent('STATE'), $state);
 	return $this->SetPowerState($state);	
@@ -256,8 +262,16 @@ class AIOITDevice extends IPSModule
 	protected function SendCommand($action)
 	{
 		$IT_send = $this->Calculate();
-		$ip_aiogateway = $this->GetIPGateway();
-		$gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+		}
+		
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
@@ -327,8 +341,16 @@ class AIOITDevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=IT
 	public function Learn()
 		{
-		$ip_aiogateway = $this->GetIPGateway();
-		$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=LearnSC&type=IT");
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=IT");
+		}
+		else
+		{
+			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=IT");
+		}
+		
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler

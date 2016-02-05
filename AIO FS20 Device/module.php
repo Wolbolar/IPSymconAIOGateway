@@ -247,6 +247,13 @@ class AIOFS20Device extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
+	
+	
 	 public function On() {
         $command = "1000";
 		return $this->SendCommand($command);
@@ -376,8 +383,16 @@ class AIOFS20Device extends IPSModule
 		$ip_aiogateway = $this->GetIPGateway();
 		IPS_LogMessage( "FS20 Adresse:" , $FS20 );
 		IPS_LogMessage( "FS20 Command:" , $command );
-        $gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
-		if ($gwcheck == "{XC_SUC}")
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
+		}
+        if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
 			}
@@ -389,8 +404,15 @@ class AIOFS20Device extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=FS20
 	public function Learn()
 		{
-		$ip_aiogateway = $this->GetIPGateway();
-		$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=LearnSC&type=FS20");
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=FS20");
+		}
+		else
+		{
+			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=FS20");
+		}	
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler

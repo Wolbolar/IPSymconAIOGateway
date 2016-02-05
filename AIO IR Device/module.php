@@ -941,6 +941,12 @@ class AIOIRDevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
+	
 	//IR Diode abfragen
 	protected function GetIRDiode(){
 		$IRDiode = $this->ReadPropertyString("IRDiode");
@@ -979,12 +985,12 @@ class AIOIRDevice extends IPSModule
 	//Senden eines IR Befehls über das a.i.o. Gateway
 	public function SendIR1() {
             $IR_send = $this->ReadPropertyString("IRCode1");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }
 		
 	public function SendIR2() {
             $IR_send = $this->ReadPropertyString("IRCode2");
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }
 		
 	public function SendIRCode(integer $Value) {
@@ -1011,12 +1017,12 @@ class AIOIRDevice extends IPSModule
 			SetValueInteger($this->GetIDForIdent('IRCODES4'), $setvalue);	
 			}
 			$IR_send = $this->ReadPropertyString($IRCode);
-			return $this->Send_IR($IR_send, $this->GetIPGateway(), $this->GetIRDiode(), $this->GetExtIRDiode());
+			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }	
 	
 	//IR Code senden
 	private	$response = false;
-	protected function Send_IR($ir_code, $ip_aiogateway, $IRDiode, $EXTIRDiode)
+	protected function Send_IR($ir_code, $IRDiode, $EXTIRDiode)
 		{
 		//Sendestring zum Senden eines IR Befehls {IP Gateway}/command?code={IR Code}&XC_FNC=Send2&ir={Sendediode}&rf=00
 			switch ($EXTIRDiode)
@@ -1105,9 +1111,15 @@ class AIOIRDevice extends IPSModule
 					IPS_LogMessage( "IR Command über AIO Gateway senden:" , "Sendediode ".$IRDiode );
 					break;								
 				}
-			
-			$AIO_Code = $ip_aiogateway."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode;
-			$gwcheck = file_get_contents("http://$AIO_Code");
+			$GatewayPassword = $this->GatewayPassword();
+			if ($GatewayPassword != "")
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+			}
+			else
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+			}
 			if ($gwcheck == "{XC_SUC}")
 				{
 				$this->response = true;	
@@ -1208,8 +1220,16 @@ class AIOIRDevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
 	public function Learn(integer $irid)
 		{
-		$ip_aiogateway = $this->GetIPGateway();
-		$ircode = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=Learn");
+		$GatewayPassword = $this->GatewayPassword();
+			if ($GatewayPassword != "")
+			{
+				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Learn");
+			}
+			else
+			{
+				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Learn");
+			}	
+			
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($ircode == "{XC_ERR}Failed to learn code")//Bei Fehler

@@ -202,7 +202,13 @@ class AIOLightmanager1 extends IPSModule
 			$IPGateway = IPS_GetProperty($ParentID, 'Host');
 			return $IPGateway;
 		}
-		
+
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}	
+	
 	protected function GetParent()
 		{
 			$instance = IPS_GetInstance($this->InstanceID);//array
@@ -219,20 +225,20 @@ class AIOLightmanager1 extends IPSModule
 			{
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C0";
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 			}
 			else
 			{
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C0";
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 			}
 		}
 		
 	public function Power() {
             $adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C0";
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
         }
 		
 		
@@ -248,12 +254,20 @@ class AIOLightmanager1 extends IPSModule
 	// Beispiel: schalte ABC auf gelb:
 	// http://{GATEWAY_IP}/command?XC_FNC=SendSC&type=LS&data=ABC0F0
 	private $response = false;
-	protected function Send_LED($adress, $command, $ip_aiogateway)
+	protected function Send_LED($adress, $command)
 	{
 		$response = false;
+		$GatewayPassword = $this->GatewayPassword();
 		IPS_LogMessage( "LED Adresse:" , $adress );
 		IPS_LogMessage( "LED Command:" , $command );
-		$gwcheck = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=SendSC&type=LS&data=".$adress.$command);
+		if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=LS&data=".$adress.$command);
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=LS&data=".$adress.$command);
+		}
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
@@ -268,7 +282,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "003";
 			SetValueInteger($this->GetIDForIdent('Brightness'), 0);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Down()
@@ -276,14 +290,14 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "00C";
 			SetValueInteger($this->GetIDForIdent('Brightness'), 1);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Play_Pause()
 		{
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "030";
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Red()
@@ -291,7 +305,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "00F";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 0);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Green()
@@ -299,7 +313,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "033";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 3);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Blue()
@@ -307,7 +321,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C3";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 5);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function White()
@@ -315,7 +329,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "03C";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 7);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Orange()
@@ -323,7 +337,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0CC";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 1);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Yellow()
@@ -331,7 +345,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0F0";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 2);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Cyan()
@@ -339,7 +353,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "303";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 4);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Purple()
@@ -347,7 +361,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "C03";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 6);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Auto()
@@ -355,7 +369,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "30C";
 			SetValueInteger($this->GetIDForIdent('Szene'), 4);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Jump3()
@@ -363,7 +377,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "C0C";
 			SetValueInteger($this->GetIDForIdent('Szene'), 2);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Fade3()
@@ -371,7 +385,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "C30";
 			SetValueInteger($this->GetIDForIdent('Szene'), 0);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Flash()
@@ -379,7 +393,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "CC0";
 			SetValueInteger($this->GetIDForIdent('Szene'), 5);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Jump7()
@@ -387,7 +401,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "3C0";
 			SetValueInteger($this->GetIDForIdent('Szene'), 3);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function Fade7()
@@ -395,7 +409,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "300";
 			SetValueInteger($this->GetIDForIdent('Szene'), 1);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function SpeedUp()
@@ -403,7 +417,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "330";
 			SetValueInteger($this->GetIDForIdent('Speed'), 0);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 		
 	public function SpeedDown()
@@ -411,7 +425,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "C00";
 			SetValueInteger($this->GetIDForIdent('Speed'), 1);
-			return $this->Send_LED($adress, $command, $this->GetIPGateway());
+			return $this->Send_LED($adress, $command);
 		}
 	
 	//Anmelden eines LED Controllers an das a.i.o. gateway:
@@ -419,7 +433,16 @@ class AIOLightmanager1 extends IPSModule
 	public function Learn()
 		{
 		$ip_aiogateway = $this->GetIPGateway();
-		$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=learnSC&type=LS");
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&type=LS");
+		}
+		else
+		{
+			$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=learnSC&type=LS");
+		}
+		
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")

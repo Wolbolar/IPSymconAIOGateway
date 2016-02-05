@@ -948,6 +948,11 @@ class AIORFDevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
 		
 	protected function PowerSetState (boolean $state){
 	SetValueBoolean($this->GetIDForIdent('Status'), $state);
@@ -975,12 +980,12 @@ class AIORFDevice extends IPSModule
 	//Senden eines IR Befehls über das a.i.o. Gateway
 	public function SendRF1() {
             $RF_send = $this->ReadPropertyString("RFCode1");
-			return $this->Send_RF($RF_send, $this->GetIPGateway());
+			return $this->Send_RF($RF_send);
         }
 		
 	public function SendIR2() {
             $RF_send = $this->ReadPropertyString("RFCode2");
-			return $this->Send_RF($RF_send, $this->GetIPGateway());
+			return $this->Send_RF($RF_send);
         }
 		
 	public function SendRFCode(integer $Value) {
@@ -1007,21 +1012,28 @@ class AIORFDevice extends IPSModule
 			SetValueInteger($this->GetIDForIdent('RFCODES4'), $setvalue);	
 			}
 			$RF_send = $this->ReadPropertyString($RFCode);
-			return $this->Send_RF($RF_send, $this->GetIPGateway());
+			return $this->Send_RF($RF_send);
         }	
 	
 	//RF Code senden
 	private	$response = false;
-	protected function Send_RF($rf_code, $ip_aiogateway)
+	protected function Send_RF($rf_code)
 		{
 		//Sendestring zum Senden eines RF Befehls {IP Gateway}/command?code={RF Code}&XC_FNC=Send2&ir=00&rf=01			
-			$AIO_Code = $ip_aiogateway."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01";
-			$gwcheck = file_get_contents("http://$AIO_Code");
-			if ($gwcheck == "{XC_SUC}")
-				{
-				$this->response = true;	
-				}
-			return $this->response;
+		$GatewayPassword = $this->GatewayPassword();	
+		if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+		}
+		if ($gwcheck == "{XC_SUC}")
+			{
+			$this->response = true;	
+			}
+		return $this->response;
 
 		}
 		

@@ -140,6 +140,11 @@ class AIODooyaDevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
 	
 	public function Up() {
         $command = "22";
@@ -163,7 +168,16 @@ class AIODooyaDevice extends IPSModule
 		$address = $this->ReadPropertyString('Adresse');
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "Dooya Command:" , $command );
-        $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
+		$GatewayPassword = $this->GatewayPassword();
+		if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=RT&data=".$command.$address);
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
+		}
+		
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	

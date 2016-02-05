@@ -110,6 +110,12 @@ class AIOELRODevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
+	
 	protected function ELROPowerSetState ($state){
 	SetValueBoolean($this->GetIDForIdent('STATE'), $state);
 	return $this->SetPowerState($state);	
@@ -120,33 +126,48 @@ class AIOELRODevice extends IPSModule
 		if ($state === true)
 		{
 		$action = "E";
-		return $this->Send_ELRO($ELROAddress, $action, $this->GetIPGateway());	
+		return $this->Send_ELRO($ELROAddress, $action);	
 		}
 		else
 		{
 		$action = "6";
-		return $this->Send_ELRO($ELROAddress, $action, $this->GetIPGateway());	
+		return $this->Send_ELRO($ELROAddress, $action);	
 		}
 	}
 	
 		
 	//Senden eines Befehls an Elro
-	protected function Send_ELRO($ELRO_send, $action, $ip_aiogateway)
+	protected function Send_ELRO($ELRO_send, $action)
 		{
+		$GatewayPassword = $this->GatewayPassword();	
 		if ($action === "E")
 			{
 			// Sendestring ELRO /command?XC_FNC=SendSC&type=ELRO&data=
 			//ELRO Befehl schaltet an letzte Stelle -5 ?
-			$ELRO_Code = $ip_aiogateway."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."E";
-			file_get_contents("http://$ELRO_Code");
+			if ($GatewayPassword != "")
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."E");
+			}
+			else
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."E");
+			}
+			
 			$status = true;
 			return $status;
 			}
 		else
 			{
 			//ELRO Befehl schaltet aus letze Stelle -2 ?
-			$ELRO_Code = $ip_aiogateway."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."6";
-			file_get_contents("http://$ELRO_Code");
+			if ($GatewayPassword != "")
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."6");
+			}
+			else
+			{
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."6");
+			}
+			
 			$status = false;
 			return $status;
 			}
@@ -158,8 +179,15 @@ class AIOELRODevice extends IPSModule
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=ELRO
 	public function Learn()
 		{
-		$ip_aiogateway = $this->GetIPGateway();
-		$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=LearnSC&type=ELRO");
+		$GatewayPassword = $this->GatewayPassword();	
+		if ($GatewayPassword != "")
+			{
+				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=ELRO");
+			}
+			else
+			{
+				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=ELRO");
+			}
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler

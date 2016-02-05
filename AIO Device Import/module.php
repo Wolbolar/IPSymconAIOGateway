@@ -182,6 +182,8 @@ class AIOImport extends IPSModule
 		return $IPGateway;
 	}
 	
+	
+	
 	protected function SetupCategory($CategoryName)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');

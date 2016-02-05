@@ -18,7 +18,13 @@
                     "caption": "Gateway Port"
                 },
 				{ "type": "Label", "label": "LED im Gehäuse des AIO Gateway V4+" },
-				{ "type": "CheckBox", "name": "GatewayLED", "caption": "V4+ LED" }
+				{ "type": "CheckBox", "name": "GatewayLED", "caption": "V4+ LED" },
+				{ "type": "Label", "label": "Optional Passwort für das Gateway" },
+				{
+                    "name": "Passwort",
+                    "type": "ValidationTextBox",
+                    "caption": "Passwort"
+                }
             ],
     "status":
             [

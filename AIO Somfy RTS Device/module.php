@@ -162,6 +162,12 @@ class AIOSomfyRTSDevice extends IPSModule
 		return $IPGateway;
 	}
 	
+	protected function GetPasswort(){
+		$ParentID = $this->GetParent();
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		return $GatewayPassword;
+	}
+	
 	public function Up() {
         $command = "20";
 		return $this->SendCommand($command);
@@ -182,10 +188,18 @@ class AIOSomfyRTSDevice extends IPSModule
 	private $response = false;
 	protected function SendCommand(string $command) {
 		$address = $this->ReadPropertyString('Adresse');
+		$GatewayPassword = $this->GatewayPassword();
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
 		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
-        $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
+        if ($GatewayPassword != "")
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=RT&data=".$command.$address);
+		}
+		else
+		{
+			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address);
+		}
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
