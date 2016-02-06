@@ -1114,11 +1114,14 @@ class AIOIRDevice extends IPSModule
 			$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword !== "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+				IPS_LogMessage( "IRCode:" , $ir_code );
+				IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
 			}
 			else
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
+				IPS_LogMessage( "IRCode:" , $ir_code );			
 			}
 			if ($gwcheck == "{XC_SUC}")
 				{
