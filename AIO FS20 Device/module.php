@@ -387,6 +387,7 @@ class AIOFS20Device extends IPSModule
 		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
+			IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
 		}
 		else
 		{
