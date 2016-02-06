@@ -261,7 +261,7 @@ class AIOITDevice extends IPSModule
 		$IT_send = $this->Calculate();
 		$GatewayPassword = $this->GetPassword();
 		
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
 			IPS_LogMessage( "Adresse:" , $IT_send );
