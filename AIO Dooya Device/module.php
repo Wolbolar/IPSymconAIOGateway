@@ -169,7 +169,7 @@ class AIODooyaDevice extends IPSModule
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "Dooya Command:" , $command );
 		$GatewayPassword = $this->GetPassword();
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=RT&data=".$command.$address);
 		}

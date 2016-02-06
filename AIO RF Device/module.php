@@ -1021,7 +1021,7 @@ class AIORFDevice extends IPSModule
 		{
 		//Sendestring zum Senden eines RF Befehls {IP Gateway}/command?code={RF Code}&XC_FNC=Send2&ir=00&rf=01			
 		$GatewayPassword = $this->GetPassword();	
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
 		}
@@ -1131,7 +1131,7 @@ class AIORFDevice extends IPSModule
 		{
 		$ip_aiogateway = $this->GetIPGateway();
 		$GatewayPassword = $this->GetPassword();	
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$RFCode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Learn");
 		}

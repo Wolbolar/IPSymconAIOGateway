@@ -502,7 +502,7 @@ class AIOLightmanager2 extends IPSModule
 		{
 		$ip_aiogateway = $this->GetIPGateway();
 		$GatewayPassword = $this->GetPassword();
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&type=L2");
 		}
@@ -560,7 +560,7 @@ class AIOLightmanager2 extends IPSModule
 		IPS_LogMessage( "IP AIO Gateway:" , $ip_aiogateway );
 		IPS_LogMessage( "LED Adresse:" , $address );
 		IPS_LogMessage( "LED Command:" , $command );
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=L2&data=".$address.$command);
 		}

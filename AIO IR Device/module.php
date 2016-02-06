@@ -1112,7 +1112,7 @@ class AIOIRDevice extends IPSModule
 					break;								
 				}
 			$GatewayPassword = $this->GetPassword();
-			if ($GatewayPassword != "")
+			if ($GatewayPassword !== "")
 			{
 				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
 			}
@@ -1221,7 +1221,7 @@ class AIOIRDevice extends IPSModule
 	public function Learn(integer $irid)
 		{
 		$GatewayPassword = $this->GetPassword();
-			if ($GatewayPassword != "")
+			if ($GatewayPassword !== "")
 			{
 				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=Learn");
 			}

@@ -266,7 +266,6 @@ class AIOITDevice extends IPSModule
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
 			IPS_LogMessage( "Adresse:" , $IT_send );
 			IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
-			echo "http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action;
 		}
 		else
 		{
@@ -350,7 +349,7 @@ class AIOITDevice extends IPSModule
 	public function Learn()
 		{
 		$GatewayPassword = $this->GetPassword();
-		if ($GatewayPassword != "")
+		if ($GatewayPassword !== "")
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=IT");
 		}
