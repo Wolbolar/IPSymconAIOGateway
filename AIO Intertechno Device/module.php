@@ -122,7 +122,7 @@ class AIOITDevice extends IPSModule
     {
         switch($Ident) {
             case "STATE":
-                $this->PowerSetState($Value);
+                $this->SetPowerState($Value);
 				$ITType = $this->ReadPropertyString('ITType');
 				if ($Value === true && $ITType === "Dimmer")
 					{
@@ -223,12 +223,9 @@ class AIOITDevice extends IPSModule
 		return $GatewayPassword;
 	}
 	
-	protected function PowerSetState ($state){
-	SetValueBoolean($this->GetIDForIdent('STATE'), $state);
-	return $this->SetPowerState($state);	
-	}
-	
+		
 	protected function SetPowerState($state) {
+		SetValueBoolean($this->GetIDForIdent('STATE'), $state);
 		if ($state === true)
 		{
 		$action = "E";
@@ -263,19 +260,30 @@ class AIOITDevice extends IPSModule
 	{
 		$IT_send = $this->Calculate();
 		$GatewayPassword = $this->GetPassword();
+		
 		if ($GatewayPassword != "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+			IPS_LogMessage( "Adresse:" , $IT_send );
+			IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
+			echo "http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action;
 		}
 		else
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+			IPS_LogMessage( "Adresse:" , $IT_send );
 		}
 		
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
 			}
+		elseif ($gwcheck == "{XC_AUT}")
+		{
+			//Passwort falsch
+			IPS_LogMessage( "Adresse:" , $address );
+		IPS_LogMessage( "RTS Command:" , $command );
+		}
 		return $this->response;
 	}
 	
