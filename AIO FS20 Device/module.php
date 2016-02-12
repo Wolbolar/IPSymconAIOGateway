@@ -157,57 +157,42 @@ class AIOFS20Device extends IPSModule
     {
         switch($Ident) {
             case "Status":
-                $this->PowerSetState($Value);
+                $this->SetState($Value);
 				break;
 			case "Dimmer":
                 switch($Value) {
                     case 0: //0
-						$state = false; 
-                        SetValueBoolean($this->GetIDForIdent('Status'), $state);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
-						$this->SetPowerState($state);
+						$this->Set0();
                         break;
                     case 1: //10
                         $this->Set10();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
                     case 2: //20
                         $this->Set20();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
                     case 3: //30
                         $this->Set30();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
                     case 4: //40
                         $this->Set40();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 5: //50
                         $this->Set50();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 6: //60
                         $this->Set60();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 7: //70
                         $this->Set70();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 8: //80
                         $this->Set80();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 9: //90
                         $this->Set90();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 10: //100
-                        $state = true; 
-                        SetValueBoolean($this->GetIDForIdent('Status'), $state);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
-						$this->SetPowerState($state);
+                        $this->Set100();
                         break;		
                 }
                 break;	
@@ -216,11 +201,7 @@ class AIOFS20Device extends IPSModule
         }
     }
 	
-	protected function PowerSetState ($state){
-	SetValueBoolean($this->GetIDForIdent('Status'), $state);
-	return $this->SetPowerState($state);	
-	}
-	
+		
 	protected function SetPowerState($state) {
 		if ($state === true)
 		{
@@ -283,6 +264,12 @@ class AIOFS20Device extends IPSModule
 		$command = "1400";
         return $this->SendCommand($command);
         }	
+	
+	// DIM0 - Auf 0% dimmen
+	public function Set0() {
+		$command = "DIM0";
+        return $this->SendCommand($command);
+        }
 	
 	// 0100 - Auf 6,25% dimmen
 	public function Set6() {
@@ -374,6 +361,12 @@ class AIOFS20Device extends IPSModule
         return $this->SendCommand($command);
         }	
 	
+	// DIM100 - Auf 100% dimmen
+	public function Set100() {
+		$command = "DIM100";
+        return $this->SendCommand($command);
+        }	
+	
 	//Senden eines Befehls an FS20
 	// Sendestring FS20 {IP Gateway}/command?XC_FNC=SendSC&type=FS20&data={FS20 Send Adresse}{Command} 
 	private $response = false;
@@ -384,6 +377,52 @@ class AIOFS20Device extends IPSModule
 		IPS_LogMessage( "FS20 Adresse:" , $FS20 );
 		IPS_LogMessage( "FS20 Command:" , $command );
 		$GatewayPassword = $this->GetPassword();
+		
+		switch($command) {
+                    case "1000": //An
+						SetValueBoolean($this->GetIDForIdent('Status'), true);
+                        break;
+                    case "0000": //Aus
+                        SetValueBoolean($this->GetIDForIdent('Status'), false);
+                        break;
+					case "DIM0": //0
+                        SetValueBoolean($this->GetIDForIdent('Status'), false);
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
+						$command = "0000";
+                        break;
+					case "0200": //10
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
+                        break;	
+                    case "0300": //20
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 20);
+                        break;
+                    case "0500": //30
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 30);
+                        break;
+                    case "0600": //40
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 40);
+                        break;
+					case "0800": //50
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 50);
+                        break;
+					case "0900": //60
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 60);
+                        break;
+					case "0B00": //70
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 70);
+                        break;
+					case "0D00": //80
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 80);
+                        break;
+					case "0E00": //90
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 90);
+                        break;
+					case "DIM100": //100
+                        SetValueBoolean($this->GetIDForIdent('Status'), true);
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 100);
+						$command = "1000";
+						break;	
+				
 		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
