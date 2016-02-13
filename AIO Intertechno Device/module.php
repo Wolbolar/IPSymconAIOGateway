@@ -123,65 +123,41 @@ class AIOITDevice extends IPSModule
         switch($Ident) {
             case "STATE":
                 $this->SetPowerState($Value);
-				$ITType = $this->ReadPropertyString('ITType');
-				if ($Value === true && $ITType === "Dimmer")
-					{
-					SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
-					}
-				elseif ($Value === false && $ITType === "Dimmer")
-					{
-					SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
-					}
 				break;
 			case "Dimmer":
                 switch($Value) {
                     case 0: //0
-						$state = false; 
-                        SetValueBoolean($this->GetIDForIdent('STATE'), $state);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
 						$this->PowerOff();
                         break;
                     case 1: //10
                         $this->Set10();
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
 						break;
                     case 2: //20
                         $this->Set20();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
-                        break;
+						break;
                     case 3: //30
                         $this->Set30();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
                     case 4: //40
                         $this->Set40();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 5: //50
                         $this->Set50();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 6: //60
                         $this->Set60();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 7: //70
                         $this->Set70();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 8: //80
                         $this->Set80();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 9: //90
                         $this->Set90();
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
                         break;
 					case 10: //100
-                        $state = true; 
-						SetValueBoolean($this->GetIDForIdent('STATE'), $state);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), $Value);
-						$this->PowerOn();
+                        $this->PowerOn();
                         break;		
                 }
                 break;	
@@ -225,6 +201,15 @@ class AIOITDevice extends IPSModule
 	
 		
 	protected function SetPowerState($state) {
+		$ITType = $this->ReadPropertyString('ITType');
+		if ($state === true && $ITType === "Dimmer")
+			{
+			SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
+			}
+		elseif ($state === false && $ITType === "Dimmer")
+			{
+			SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
+			}
 		SetValueBoolean($this->GetIDForIdent('STATE'), $state);
 		if ($state === true)
 		{
@@ -241,13 +226,15 @@ class AIOITDevice extends IPSModule
 	   	
 	//IT Befehl E schaltet an
 	public function PowerOn() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$action = "E";
 		return $this->SendCommand($action);
 		}
 		
 	//IT Befehl 6 schaltet aus
-	public function PowerOff() {
+	public function PowerOff() {                
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
 		SetValueBoolean($this->GetIDForIdent('STATE'), false);
 		$action = "6";
 		return $this->SendCommand($action);
@@ -291,54 +278,63 @@ class AIOITDevice extends IPSModule
 	
 	// ? - Auf 10% dimmen
 	public function Set10() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 1);
 		$command = "E00";
         return $this->SendCommand($command);
         }
 	
 	// ? - Auf 20% dimmen
 	public function Set20() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 2);
 		$command = "E10";
         return $this->SendCommand($command);
         }
 		
 	// ? - Auf 30% dimmen
 	public function Set30() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 3);
 		$command = "E20";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 40% dimmen
 	public function Set40() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 4);
 		$command = "E30";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 50% dimmen
 	public function Set50() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 5);
 		$command = "E40";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 60% dimmen
 	public function Set60() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 6);
 		$command = "E50";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 70% dimmen
 	public function Set70() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 7);
 		$command = "E60";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 80% dimmen
 	public function Set80() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 8);
 		$command = "E70";
         return $this->SendCommand($command);
         }
 
 	// ? - Auf 90% dimmen
 	public function Set90() {
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 9);
 		$command = "E80";
         return $this->SendCommand($command);
         }	
