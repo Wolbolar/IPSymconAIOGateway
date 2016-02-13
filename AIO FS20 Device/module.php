@@ -378,7 +378,8 @@ class AIOFS20Device extends IPSModule
 		IPS_LogMessage( "FS20 Command:" , $command );
 		$GatewayPassword = $this->GetPassword();
 		
-		switch($command) {
+		switch($command) 
+		{
                     case "1000": //An
 						SetValueBoolean($this->GetIDForIdent('Status'), true);
                         break;
@@ -422,7 +423,8 @@ class AIOFS20Device extends IPSModule
 						SetValueInteger($this->GetIDForIdent('Dimmer'), 100);
 						$command = "1000";
 						break;	
-				
+		}
+		
 		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=FS20&data=".$FS20.$command);
