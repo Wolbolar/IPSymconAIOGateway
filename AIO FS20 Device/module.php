@@ -157,7 +157,7 @@ class AIOFS20Device extends IPSModule
     {
         switch($Ident) {
             case "Status":
-                $this->SetState($Value);
+                $this->SetPowerState($Value);
 				break;
 			case "Dimmer":
                 switch($Value) {
