@@ -162,6 +162,36 @@ class AIOLightmanager2 extends IPSModule
 							break;
 					}
 					break;
+				case "Helligkeit":
+					switch($Value) {
+						case 0: //Stufe 1
+							break;
+						case 1: //Stufe 2
+							
+							break;
+						case 2: //Stufe 3
+							
+							break;
+						case 3: //Stufe 4
+							
+							break;
+						case 4: //Stufe 5
+							
+							break;
+						case 5: //Stufe 6
+							
+							break;
+						case 6: //Stufe 7
+							
+							break;
+						case 7: //Stufe 8
+							
+							break;
+						case 8: //Stufe 9
+							
+							break;	
+					}
+					break;	
 				case "Farbauswahl":
 					$this->Colorselect($Value);
 					break;		
