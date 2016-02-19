@@ -145,19 +145,16 @@ class AIOSomfyRTSDevice extends IPSModule
 	public function Up() {
         $command = "20";
 		return $this->SendCommand($command);
-		SetValueInteger($this->GetIDForIdent('Somfy'), 2);
         }
 	
 	public function Down() {
         $command = "40";
 		return $this->SendCommand($command);
-		SetValueInteger($this->GetIDForIdent('Somfy'), 0);
         }
 	
 	public function Stop() {
         $command = "10";
 		return $this->SendCommand($command);
-		SetValueInteger($this->GetIDForIdent('Somfy'), 1);
         }
 	
 	//Senden eines Befehls an Somfy RTS
@@ -166,6 +163,20 @@ class AIOSomfyRTSDevice extends IPSModule
 	protected function SendCommand(string $command) {
 		$address = $this->ReadPropertyString('Adresse');
 		$GatewayPassword = $this->GetPassword();
+		switch($command) 
+		{
+                    case "20": //Up
+						SetValueInteger($this->GetIDForIdent('Somfy'), 2);
+						break;
+                    case "40": //Down
+                        SetValueInteger($this->GetIDForIdent('Somfy'), 0);
+						break;
+					case "10": //Stop
+						SetValueInteger($this->GetIDForIdent('Somfy'), 1);
+                        break;	
+		}
+		
+		
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
 		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
