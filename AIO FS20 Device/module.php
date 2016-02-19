@@ -382,9 +382,11 @@ class AIOFS20Device extends IPSModule
 		{
                     case "1000": //An
 						SetValueBoolean($this->GetIDForIdent('Status'), true);
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
                         break;
                     case "0000": //Aus
                         SetValueBoolean($this->GetIDForIdent('Status'), false);
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
                         break;
 					case "DIM0": //0
                         SetValueBoolean($this->GetIDForIdent('Status'), false);
@@ -392,35 +394,35 @@ class AIOFS20Device extends IPSModule
 						$command = "0000";
                         break;
 					case "0200": //10
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 1);
                         break;	
                     case "0300": //20
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 20);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 2);
                         break;
                     case "0500": //30
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 30);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 3);
                         break;
                     case "0600": //40
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 40);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 4);
                         break;
 					case "0800": //50
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 50);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 5);
                         break;
 					case "0900": //60
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 60);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 6);
                         break;
 					case "0B00": //70
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 70);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 7);
                         break;
 					case "0D00": //80
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 80);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 8);
                         break;
 					case "0E00": //90
-                        SetValueInteger($this->GetIDForIdent('Dimmer'), 90);
+                        SetValueInteger($this->GetIDForIdent('Dimmer'), 9);
                         break;
 					case "DIM100": //100
                         SetValueBoolean($this->GetIDForIdent('Status'), true);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), 100);
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
 						$command = "1000";
 						break;	
 		}
