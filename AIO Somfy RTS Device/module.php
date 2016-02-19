@@ -108,47 +108,21 @@ class AIOSomfyRTSDevice extends IPSModule
             case "Somfy":
                 switch($Value) {
                     case 0: //Down
-						$state = false; 
 						$this->Down();
-						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
-                        break;
+						break;
                     case 1: //Stop
-					    $state = true;
-						
-                        $this->Stop();
-						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
-                        break;
+					    $this->Stop();
+						break;
 					case 2: //Up
-					    $state = true;
-						
-                        $this->Up();
-						SetValueInteger($this->GetIDForIdent('Somfy'), $Value);
-                        break;	
+					    $this->Up();
+						break;	
                 }
                 break;	
             default:
                 throw new Exception("Invalid ident");
         }
     }
-	
-	protected function PowerSetState (boolean $state){
-	SetValueBoolean($this->GetIDForIdent('Status'), $state);
-	return $this->SetPowerState($state);	
-	}
-	
-	protected function SetPowerState(boolean $state) {
-		if ($state === true)
-		{
-		$action = "1000";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
-		}
-		else
-		{
-		$action = "0000";
-		return $this->SendCommand($this->Calculate(), $action, $this->GetIPGateway());
-		}
-	}
-	
+		
 	protected function GetParent()
     {
         $instance = IPS_GetInstance($this->InstanceID);//array
@@ -171,16 +145,19 @@ class AIOSomfyRTSDevice extends IPSModule
 	public function Up() {
         $command = "20";
 		return $this->SendCommand($command);
+		SetValueInteger($this->GetIDForIdent('Somfy'), 2);
         }
 	
 	public function Down() {
         $command = "40";
 		return $this->SendCommand($command);
+		SetValueInteger($this->GetIDForIdent('Somfy'), 0);
         }
 	
 	public function Stop() {
         $command = "10";
 		return $this->SendCommand($command);
+		SetValueInteger($this->GetIDForIdent('Somfy'), 1);
         }
 	
 	//Senden eines Befehls an Somfy RTS
