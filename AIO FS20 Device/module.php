@@ -382,12 +382,18 @@ class AIOFS20Device extends IPSModule
 		{
                     case "1000": //An
 						SetValueBoolean($this->GetIDForIdent('Status'), true);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
-                        break;
+						if (isset($this->GetIDForIdent('Dimmer')))
+						{
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 10);	
+						}
+						break;
                     case "0000": //Aus
                         SetValueBoolean($this->GetIDForIdent('Status'), false);
-						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
-                        break;
+						if (isset($this->GetIDForIdent('Dimmer')))
+						{
+						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);	
+						}
+						break;
 					case "DIM0": //0
                         SetValueBoolean($this->GetIDForIdent('Status'), false);
 						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
