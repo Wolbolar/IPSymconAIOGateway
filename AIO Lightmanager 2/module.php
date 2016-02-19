@@ -116,7 +116,7 @@ class AIOLightmanager2 extends IPSModule
 			$address = $this->ReadPropertyString("LEDAdresse");
 			switch($Ident) {
 				case "Status":
-					$this->LMPowerSetState($Value);
+					$this->SetPowerState($Value);
 					break;
 				case "Farbe":
 					switch($Value) {
@@ -188,23 +188,20 @@ class AIOLightmanager2 extends IPSModule
 			$instance = IPS_GetInstance($this->InstanceID);//array
 			return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
 		}
-		
-	protected function LMPowerSetState (boolean $state){
-			SetValueBoolean($this->GetIDForIdent('Status'), $state);
-			return $this->SetPowerState($state);	
-		}
-		
+				
 	protected function SetPowerState(boolean $state) {
 			if ($state === true)
 			{
 			$address = $this->ReadPropertyString("LEDAdresse");
 			$command = "02";
+			SetValueBoolean($this->GetIDForIdent('Status'), $state);
 			return $this->Send_LED($address, $command);
 			}
 			else
 			{
 			$address = $this->ReadPropertyString("LEDAdresse");
 			$command = "01";
+			SetValueBoolean($this->GetIDForIdent('Status'), $state);
 			return $this->Send_LED($address, $command);
 			}
 		}
@@ -212,18 +209,21 @@ class AIOLightmanager2 extends IPSModule
 	public function Power() {
             $address = $this->ReadPropertyString("LEDAdresse");
 			$command = "02";
+			SetValueBoolean($this->GetIDForIdent('Status'), true);
 			return $this->Send_LED($address, $command);
         }
 	
 	public function PowerOn() {
             $address = $this->ReadPropertyString("LEDAdresse");
 			$command = "02";
+			SetValueBoolean($this->GetIDForIdent('Status'), true);
 			return $this->Send_LED($address, $command);
         }
 	
 	public function PowerOff() {
             $address = $this->ReadPropertyString("LEDAdresse");
 			$command = "01";
+			SetValueBoolean($this->GetIDForIdent('Status'), false);
 			return $this->Send_LED($address, $command);
         }
 
@@ -556,6 +556,7 @@ class AIOLightmanager2 extends IPSModule
 	private $response = false;
 	protected function Send_LED($address, $command)
 		{
+		$ip_aiogateway = $this->GetIPGateway();
 		$GatewayPassword = $this->GetPassword();
 		IPS_LogMessage( "IP AIO Gateway:" , $ip_aiogateway );
 		IPS_LogMessage( "LED Adresse:" , $address );
