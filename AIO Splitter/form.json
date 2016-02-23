@@ -54,7 +54,7 @@
                     "caption": "Keine gültige IP Adresse."
                 },
                 {
-                    "code": 203,
+                    "code": 204,
                     "icon": "error",
                     "caption": "Verbindung zum AIO Gateway verloren."
                 }
