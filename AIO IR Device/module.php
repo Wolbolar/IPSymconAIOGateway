@@ -595,7 +595,7 @@ class AIOIRDevice extends IPSModule
     {
 		if($Ident == "Status")
 		{
-			$this->PowerSetState($value);
+			$this->SetPowerState($value);
 		}
 		elseif(!null == ($this->GetIDForIdent('IRCODES1')) && $Ident == "IRCODES1" )
 		{
@@ -959,24 +959,20 @@ class AIOIRDevice extends IPSModule
 		return $EXTIRDiode;
 	}
 	
-	protected function PowerSetState (boolean $state){
-	SetValueBoolean($this->GetIDForIdent('Status'), $state);
-	return $this->SetPowerState($state);	
-	}
 	
 	public function SetPowerState(boolean $state) {
 		if ($state === true)
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
 		//PowerOn abfragen
-		$PowerOnCode = $this->ReadPropertyString("PowerOnCode");
+		$PowerOnCode = $this->ReadPropertyInteger("PowerOnCode");
 		return $this->SendIRCode($PowerOnCode);
 		}
 		else
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
 		//PowerOff abfragen
-		$PowerOffCode = $this->ReadPropertyString("PowerOffCode");
+		$PowerOffCode = $this->ReadPropertyInteger("PowerOffCode");
 		return $this->SendIRCode($PowerOffCode);
 		}
 	}
@@ -1017,7 +1013,8 @@ class AIOIRDevice extends IPSModule
 			SetValueInteger($this->GetIDForIdent('IRCODES4'), $setvalue);	
 			}
 			$IR_send = $this->ReadPropertyString($IRCode);
-			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
+			$this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
+			return true;
         }	
 	
 	//IR Code senden
@@ -1283,7 +1280,19 @@ class AIOIRDevice extends IPSModule
         $this->SetStatus(102);	
 	}
 	
-	
+	public function Send($Text)
+		{
+			$this->SendDataToParent(json_encode(Array("DataID" => "{B87AC955-F258-468B-92FE-F4E0866A9E18}", "Buffer" => $Text)));
+		}
+		
+	public function ReceiveData($JSONString)
+		{
+			$data = json_decode($JSONString);
+			IPS_LogMessage("IOTest", utf8_decode($data->Buffer));
+
+			//Parse and write values to our variables
+			
+		}
    
 	
 	

@@ -45,8 +45,7 @@ class AIOSplitter extends IPSModule
 		}
 		if (!filter_var($ip, FILTER_VALIDATE_IP) === false)
 			{
-			$this->SetStatus(102); //IP Adresse ist gültig -> aktiv
-			
+						
 			// Zwangskonfiguration des ClientSocket
 			$ParentID = $this->GetParent();
 				if (!($ParentID === false))
@@ -90,7 +89,12 @@ class AIOSplitter extends IPSModule
 			}	
 		
 
-		
+		// Wenn I/O verbunden ist
+        if (($this->ReadPropertyBoolean('Open'))
+                and ( $this->HasActiveParent($ParentID)))
+        {
+            //Instanz aktiv
+        }
 // Eigene Profile
       
 // Eigene Variablen
