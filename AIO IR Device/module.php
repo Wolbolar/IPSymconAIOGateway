@@ -595,7 +595,7 @@ class AIOIRDevice extends IPSModule
     {
 		if($Ident == "Status")
 		{
-			$this->SetPowerState($value);
+			$this->SetPowerState($Value);
 		}
 		elseif(!null == ($this->GetIDForIdent('IRCODES1')) && $Ident == "IRCODES1" )
 		{
