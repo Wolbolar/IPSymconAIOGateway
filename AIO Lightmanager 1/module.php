@@ -116,7 +116,7 @@ class AIOLightmanager1 extends IPSModule
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			switch($Ident) {
 				case "Status":
-					$this->LMPowerSetState($Value);
+					$this->SetPowerState($Value);
 					break;
 				case "Farbe":
 					switch($Value) {
@@ -215,22 +215,20 @@ class AIOLightmanager1 extends IPSModule
 			return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
 		}
 		
-	protected function LMPowerSetState ($state){
-			SetValueBoolean($this->GetIDForIdent('Status'), $state);
-			return $this->SetPowerState($state);	
-		}
 		
 	protected function SetPowerState($state) {
 			if ($state === true)
 			{
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C0";
+			SetValueBoolean($this->GetIDForIdent('Status'), $state);
 			return $this->Send_LED($adress, $command);
 			}
 			else
 			{
 			$adress = $this->ReadPropertyString("LEDAdresse");
 			$command = "0C0";
+			SetValueBoolean($this->GetIDForIdent('Status'), $state);
 			return $this->Send_LED($adress, $command);
 			}
 		}
@@ -271,6 +269,11 @@ class AIOLightmanager1 extends IPSModule
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
+			}
+		elseif ($gwcheck == "{XC_AUTH}")
+			{
+			$this->response = false;
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch."
 			}
 		return $this->response;
 	}

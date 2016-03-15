@@ -267,6 +267,7 @@ class AIOITDevice extends IPSModule
 		elseif ($gwcheck == "{XC_AUT}")
 		{
 			//Passwort falsch
+			echo "Keine Authentizifierung möglich. Gateway Passwort ist falsch."
 			IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
 		}

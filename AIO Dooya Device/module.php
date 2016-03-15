@@ -182,6 +182,11 @@ class AIODooyaDevice extends IPSModule
 			{
 			$this->response = true;	
 			}
+		elseif ($gwcheck == "{XC_AUTH}")
+			{
+			$this->response = false;
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch."
+			}
 		return $this->response;
 		}
 	

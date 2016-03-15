@@ -602,7 +602,7 @@ class AIORFDevice extends IPSModule
     {
 		if($Ident == "Status")
 		{
-			$this->PowerSetState($value);
+			$this->SetPowerState($Value);
 		}
 		elseif(!null == ($this->GetIDForIdent('RFCODES1')) && $Ident == "RFCODES1" )
 		{
@@ -954,24 +954,20 @@ class AIORFDevice extends IPSModule
 		return $GatewayPassword;
 	}
 		
-	protected function PowerSetState (boolean $state){
-	SetValueBoolean($this->GetIDForIdent('Status'), $state);
-	return $this->SetPowerState($state);	
-	}
 	
 	public function SetPowerState(boolean $state) {
 		if ($state === true)
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
 		//PowerOn abfragen
-		$PowerOnCode = $this->ReadPropertyString("PowerOnCode");
+		$PowerOnCode = $this->ReadPropertyInteger("PowerOnCode");
 		return $this->SendRFCode($PowerOnCode);
 		}
 		else
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
 		//PowerOff abfragen
-		$PowerOffCode = $this->ReadPropertyString("PowerOffCode");
+		$PowerOffCode = $this->ReadPropertyInteger("PowerOffCode");
 		return $this->SendRFCode($PowerOffCode);
 		}
 	}
@@ -1032,6 +1028,11 @@ class AIORFDevice extends IPSModule
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
+			}
+		elseif ($gwcheck == "{XC_AUTH}")
+			{
+			$this->response = false;
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch."
 			}
 		return $this->response;
 

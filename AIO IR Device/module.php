@@ -988,7 +988,8 @@ class AIOIRDevice extends IPSModule
             $IR_send = $this->ReadPropertyString("IRCode2");
 			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }
-		
+	
+	
 	public function SendIRCode(integer $Value) {
 			//IR Code auslesen Value 0 entspricht IRCode 1
 			$IRCode = "IRCode".$Value;
@@ -1124,6 +1125,11 @@ class AIOIRDevice extends IPSModule
 				{
 				$this->response = true;	
 				}
+			elseif ($gwcheck == "{XC_AUTH}")
+			{
+			$this->response = false;
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch."
+			}
 			return $this->response;
 
 		}
