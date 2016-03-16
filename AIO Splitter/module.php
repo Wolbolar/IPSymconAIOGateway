@@ -28,7 +28,10 @@ class AIOSplitter extends IPSModule
 //Never delete this line!
         parent::ApplyChanges();
         $change = false;
-
+		
+		$this->RegisterVariableString("BufferIN", "BufferIN", "", 1);
+        $this->RegisterVariableString("CommandOut", "CommandOut", "", 2);
+		
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
 		$GatewayLED = $this->ReadPropertyBoolean("GatewayLED");
@@ -197,6 +200,8 @@ class AIOSplitter extends IPSModule
             if ($parent['InstanceStatus'] == 102)
             {
                 $this->SetStatus(102);
+				//Task auslesen
+				$this->GetTasksGateway();
                 return true;
             }
         }
@@ -276,6 +281,48 @@ class AIOSplitter extends IPSModule
         
     }
     
+	protected function GetTasksGateway()
+	{
+		$adress = $this->ReadPropertyString("Host");
+		$password = $this->ReadPropertyString("Passwort");
+		if ($password !== "")
+		{
+			$response = file_get_contents("http://".$adress."/command?XC_User=user&XC_PASS=".$password."&XC_FNC=GetStates");
+		}
+		else
+		{
+			$response = file_get_contents("http://".$adress."/command?XC_FNC=GetAll"); 
+		}
+	}
+	
+	protected function ActivateTask(integer $Tasknumber) //Tasknummer 2stellig 01 
+	{
+		$adress = $this->ReadPropertyString("Host");
+		file_get_contents("http://".$adress."/command?XC_FNC=saveGroup&id=".$Tasknumber."&active=1"); 
+	}
+	
+	protected function DeactiveTask(integer $Tasknumber)
+	{
+		$adress = $this->ReadPropertyString("Host");
+		file_get_contents("http://".$adress."/command?XC_FNC=saveGroup&id=".$Tasknumber."&active=0"); 
+	}
+	
+	protected function DelTask(integer $Tasknumber)
+	{
+				$adress = $this->ReadPropertyString("Host");
+				file_get_contents("http://".$adress."/command?XC_FNC=DelTask&id=".$Tasknumber); 
+	}
+	protected function StartTask(integer $Tasknumber)
+	{
+		$adress = $this->ReadPropertyString("Host");
+		file_get_contents("http://".$adress."/command?XC_FNC=doGroup&id=".$Tasknumber); 
+	}
+	
+	protected function DelAllTasks()
+	{
+		file_get_contents("http://".$adress."/command?XC_FNC=fEEPReset&type=01"); 
+	}
+	
 	protected function RegisterProfileLEDGateway($Name, $Icon, $Prefix, $Suffix) {
         
         if(!IPS_VariableProfileExists($Name)) {
@@ -356,6 +403,54 @@ class AIOSplitter extends IPSModule
 			//return $status;
 		}
 		
+		
+	// Data an Child weitergeben
+	public function ReceiveData($JSONString)
+	{
+	 
+	 
+		// Empfangene Daten vom I/O
+		$data = json_decode($JSONString);
+		IPS_LogMessage("ReceiveData AIO Gateway", utf8_decode($data->Buffer));
+	 
+		// Hier werden die Daten verarbeitet und in Variablen geschrieben
+		SetValue($this->GetIDForIdent("BufferIN"), $data->Buffer);
+	 
+		//echo utf8_decode($data->Buffer);
+	 
+		// Weiterleitung zu allen Gerät-/Device-Instanzen
+		$this->SendDataToChildren(json_encode(Array("DataID" => "{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}", "Buffer" => $data->Buffer))); //Denon Telnet Splitter Interface GUI
+	}
+
+	
+	################## DATAPOINT RECEIVE FROM CHILD
+		
+	public function ForwardData($JSONString)
+	{
+	 
+		// Empfangene Daten von der Device Instanz
+		$data = json_decode($JSONString);
+		IPS_LogMessage("ForwardData AIO Gateway Splitter", utf8_decode($data->Buffer));
+	 
+		// Hier würde man den Buffer im Normalfall verarbeiten
+		// z.B. CRC prüfen, in Einzelteile zerlegen
+		try
+		{
+			//
+		}
+		catch (Exception $ex)
+		{
+			echo $ex->getMessage();
+			echo ' in '.$ex->getFile().' line: '.$ex->getLine().'.';
+		}
+	 
+		// Weiterleiten zur I/O Instanz
+		$resultat = $this->SendDataToParent(json_encode(Array("DataID" => "{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}", "Buffer" => $data->Buffer))); //TX GUID
+	 
+		// Weiterverarbeiten und durchreichen
+		return $resultat;
+	 
+	}
 }
 
 ?>
