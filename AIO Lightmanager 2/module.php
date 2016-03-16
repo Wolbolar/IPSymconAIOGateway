@@ -606,7 +606,7 @@ class AIOLightmanager2 extends IPSModule
 		elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch."
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
 			}
 		return $this->response;
 		}
