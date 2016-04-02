@@ -31,6 +31,10 @@ class AIOSplitter extends IPSModule
 		
 		$this->RegisterVariableString("BufferIN", "BufferIN", "", 1);
         $this->RegisterVariableString("CommandOut", "CommandOut", "", 2);
+		$this->RegisterVariableString("HomematicIN", "Letzter Homematic Befehl", "", 3);
+		$this->RegisterVariableString("IRIN", "Letzter IR Befehl", "", 4);
+		$this->RegisterVariableString("FS20IN", "Letzter FS20 Befehl", "", 5);
+		$this->RegisterVariableString("ITIN", "Letzter Intertechno Befehl", "", 6);
 		
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
@@ -414,12 +418,14 @@ class AIOSplitter extends IPSModule
 		IPS_LogMessage("ReceiveData AIO Gateway", utf8_decode($data->Buffer));
 	 
 		// Hier werden die Daten verarbeitet und in Variablen geschrieben
+		
+		$this->UpdateLastResponse($data->Buffer);
 		SetValue($this->GetIDForIdent("BufferIN"), $data->Buffer);
 	 
 		//echo utf8_decode($data->Buffer);
 	 
 		// Weiterleitung zu allen Gerät-/Device-Instanzen
-		$this->SendDataToChildren(json_encode(Array("DataID" => "{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}", "Buffer" => $data->Buffer))); //Denon Telnet Splitter Interface GUI
+		$this->SendDataToChildren(json_encode(Array("DataID" => "{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}", "Buffer" => $data->Buffer))); //AIOSplitter Interface GUI
 	}
 
 	
@@ -431,6 +437,7 @@ class AIOSplitter extends IPSModule
 		// Empfangene Daten von der Device Instanz
 		$data = json_decode($JSONString);
 		IPS_LogMessage("ForwardData AIO Gateway Splitter", utf8_decode($data->Buffer));
+		SetValue($this->GetIDForIdent("CommandOut"), $data->Buffer);
 	 
 		// Hier würde man den Buffer im Normalfall verarbeiten
 		// z.B. CRC prüfen, in Einzelteile zerlegen
@@ -451,6 +458,33 @@ class AIOSplitter extends IPSModule
 		return $resultat;
 	 
 	}
+	
+	protected function UpdateLastResponse($payload)
+	{
+		$json = substr($response, 8, strlen($payload));
+		$payload = json_decode($json);
+		
+		$type = $payload->type;
+		$data = $payload->data;
+		
+		
+		switch ($type)
+		   {
+			case "HM": //Homematic
+				SetValue($this->GetIDForIdent("HomematicIN"), $data);
+				 break;
+			case "IR": //IR
+				SetValue($this->GetIDForIdent("IRIN"), $data);
+				 break;
+			case "IT": //Intertechno
+				SetValue($this->GetIDForIdent("ITIN"), $data);
+				 break;
+			case "FS20": //FS20
+				SetValue($this->GetIDForIdent("FS20IN"), $data);
+				 break;		
+			}
+	}
+	
 }
 
 ?>
