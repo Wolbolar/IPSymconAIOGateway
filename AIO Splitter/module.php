@@ -35,6 +35,7 @@ class AIOSplitter extends IPSModule
 		$this->RegisterVariableString("IRIN", "Letzter IR Befehl", "", 4);
 		$this->RegisterVariableString("FS20IN", "Letzter FS20 Befehl", "", 5);
 		$this->RegisterVariableString("ITIN", "Letzter Intertechno Befehl", "", 6);
+		$this->RegisterVariableString("ELROIN", "Letzter ELRO Befehl", "", 7);
 		
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
@@ -481,6 +482,9 @@ class AIOSplitter extends IPSModule
 				 break;
 			case "FS20": //FS20
 				SetValue($this->GetIDForIdent("FS20IN"), $data);
+				 break;
+			case "EL": //ELRO
+				SetValue($this->GetIDForIdent("ELROIN"), $data);
 				 break;		
 			}
 	}
