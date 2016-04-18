@@ -226,7 +226,7 @@ class AIOITDevice extends IPSModule
 	   	
 	//IT Befehl E schaltet an
 	public function PowerOn() {
-		if ($this->GetIDForIdent('Dimmer'))
+		if ($this->ReadPropertyString('ITType') == "Dimmer")
 		{
 			SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
 		}
@@ -237,7 +237,7 @@ class AIOITDevice extends IPSModule
 		
 	//IT Befehl 6 schaltet aus
 	public function PowerOff() {                
-		if ($this->GetIDForIdent('Dimmer'))
+		if ($this->ReadPropertyString('ITType') == "Dimmer")
 		{
 			SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
 		}
