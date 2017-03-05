@@ -191,16 +191,17 @@ class AIOImport extends IPSModule
 			$KategorieID = @IPS_GetCategoryIDByName($CategoryName, $ImportCategoryID);
 			if ($KategorieID === false)
 				{
-				//echo "Kategorie nicht gefunden!";
+				$this->SendDebug("AIO Import","Kategorie nicht gefunden!",0);
 				// Anlegen einer neuen Kategorie mit dem Namen "Mediola [Typ] Geräte"
 				$CategoryID = $this->CreateCategory ($CategoryName);
+				$this->SendDebug("AIO Import","Kategorie ".$CategoryName." angelegt.",0);
 				return $CategoryID;				
 				}
 				 
 			else
 				{
 				 //Kategorie exixtiert
-				 //echo "Die Kategorien-ID lautet: ". $KategorieID;
+				 $this->SendDebug("AIO Import","Kategorie ".$CategoryName." exixtiert mit ObjektID ".$KategorieID,0);
 				 $CategoryID = $KategorieID;
 				 return $CategoryID;
 				}
@@ -263,14 +264,12 @@ class AIOImport extends IPSModule
 			if ($Version === 0)	
 				{
 					//NEO device_db JSON
-					echo "ELRO Import NEO / JSON";
 					$this->ELROImportNeo($CategoryID);
 					
 				}
 			else
 				{
 					//AIO Creator ircodes.xml, devices.xml
-					echo "ELRO Import Creator / XML";
 					$this->ELROImportCreator($CategoryID);
 				}
 			
@@ -534,7 +533,7 @@ class AIOImport extends IPSModule
 	}
 	
 	//AIOELRO Instanz erstellen 
-	public function ELROCreateInstance(string $InstName, string $ELROFamilyCode, string $ELRODeviceCode, integer $CategoryID)
+	public function ELROCreateInstance(string $InstName, string $ELROAdresse, string $ELROType, integer $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -545,8 +544,7 @@ class AIOImport extends IPSModule
 			$InsID = IPS_CreateInstance("{1B755DCC-7F12-4136-8D14-2ED86E6609B7}");
 			IPS_SetName($InsID, $InstName); // Instanz benennen
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
-			IPS_SetProperty($InsID, "ELROFamilyCode", $ELROFamilyCode); //Familiencode setzten.
-			IPS_SetProperty($InsID, "ELRODeviceCode", $ELRODeviceCode); //Devicecode setzten.
+			IPS_SetProperty($InsID, "ELROAddress", $ELROAdresse); //ELROAddress setzten.
 			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
@@ -864,22 +862,14 @@ class AIOImport extends IPSModule
 
 	protected function ELROImportNeo($CategoryID)
 		{
-			//-- Daten müssen aus JSON ausgelesen werden
-			$InstName = "ELRO Export Test";
-			
-			$adress = str_split("0.2");
-			// Anpassen der Daten
-			$ELRODeviceCode = $adress[2]+1; //Devicecode auf Original umrechen +1
-			$ELROFamilyCode = $adress[0]; // Zahlencode in Buchstaben Familencode umwandeln
-			$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-			$form = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-			$ELROFamilyCode = str_replace($hexsend, $form, $ELROFamilyCode);
-			$this->ELROCreateInstance($InstName, $ELROFamilyCode, $ELRODeviceCode, $CategoryID);
+			$directory = $this->ReadPropertyString('directory');
+			$devicetype = "ELRO";
+			$subtype = "ELRO";
+			$this->NEOJSONImport($devicetype, $directory, $CategoryID, $subtype);	
 		}
 		
 	protected function ELROImportCreator($CategoryID)
 		{
-			/*
 			$directory = $this->ReadPropertyString('directory');
 			$file = IPS_GetKernelDir().$directory.'devices.xml';
 			$type = "ELRO";
@@ -890,29 +880,20 @@ class AIOImport extends IPSModule
 				$xml = new SimpleXMLElement(file_get_contents($file));
 					foreach($xml->xpath("//device[@type='".$type."']") as $device)
 					{
-					 $adress = $device['address'];
-					 $ELROType = $device['data'];
-					 $InstName = $device['id'];
-					
-					$this->FS20CreateInstance($InstName, $AIOELROAdresse, $ELROType, $CategoryID);
+					 $ELROAdresse = (string) $device['address'];
+					 $ELROType = (string) $device['data'];
+					 $InstName = (string) $device['id'];
+						
+					// Anpassen der Daten
+					//$ELROType = ucfirst($ELROType); //erster Buchstabe groß
+					$ELROAdresse = str_replace(".", "", $ELROAdresse);
+					$this->ELROCreateInstance($InstName, $ELROAdresse, $ELROType, $CategoryID);
 					}
 				}
 			else
 				{
 				exit("Datei ".$file." konnte nicht geöffnet werden.");
 				}
-			*/
-			//-- Daten müssen aus XML ausgelesen werden
-			$InstName = "ELRO Export Test";
-			
-			$adress = str_split("0.2");
-			// Anpassen der Daten
-			$ELRODeviceCode = $adress[2]+1; //Devicecode auf Original umrechen +1
-			$ELROFamilyCode = $adress[0]; // Zahlencode in Buchstaben Familencode umwandeln
-			$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-			$form = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-			$ELROFamilyCode = str_replace($hexsend, $form, $ELROFamilyCode);
-			$this->ELROCreateInstance($InstName, $ELROFamilyCode, $ELRODeviceCode, $CategoryID);
 		}			
 		
 	protected function Light1ImportNeo($CategoryID)
@@ -986,6 +967,7 @@ class AIOImport extends IPSModule
 	* CODE (IR Codes)
 	* LEDS
 	* L2
+	* ELRO
 	*/	
 	protected function NEOJSONImport($devicetype, $directory, $CategoryID, $subtype)
 	{
@@ -1032,7 +1014,13 @@ class AIOImport extends IPSModule
 								$SomfyType = $data;
 								$SomfyAdresse = $address;
 								$this->SomfyCreateInstance($name, $address, $data, $CategoryID);
-								 break;	 
+								 break;
+							case "ELRO": //ELRO
+								// Anpassen der Daten
+								$ELROType = $data;
+								$ELROAdresse = $address;
+								$this->ELROCreateInstance($name, $ELROAdresse, $ELROType, $CategoryID);
+								 break;	 	
 							case "IT": //Intertechno
 								// Anpassen der Daten
 								$adress = str_split($address);

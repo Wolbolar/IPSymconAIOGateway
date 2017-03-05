@@ -12,9 +12,8 @@ class AIOSplitter extends IPSModule
 		
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-		// ClientSocket benötigt
-        //$this->RequireParent("{3CFF0FD9-E306-41DB-9B5A-9D06D38576C3}", "AIO Gateway"); //client Socket
 		$this->RequireParent("{82347F20-F541-41E1-AC5B-A636FD3AE2D8}", "AIO Gateway"); //UDP Socket
+		//$this->RequireParent("{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}", "AIO Gateway"); //Multicast Socket
 
         $this->RegisterPropertyString("Host", "");
 		$this->RegisterPropertyInteger("Port", 1902);
@@ -67,9 +66,11 @@ class AIOSplitter extends IPSModule
 					{
 						IPS_SetProperty($ParentID, 'Port', $this->ReadPropertyInteger('Port'));
 						IPS_SetProperty($ParentID, 'BindPort', $this->ReadPropertyInteger('Port'));
+						//IPS_SetProperty($ParentID, 'BindPort', true); // Reuse Adress			
 						$change = true;
 					}
 					$ParentOpen = $this->ReadPropertyBoolean('Open');
+					
 					
 				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt später Exception.
 					if (!$ParentOpen)
@@ -416,13 +417,12 @@ class AIOSplitter extends IPSModule
 	 
 		// Empfangene Daten vom I/O
 		$data = json_decode($JSONString);
-		IPS_LogMessage("ReceiveData AIO Gateway", utf8_decode($data->Buffer));
-	 
+		$this->SendDebug("ReceiveData AIO Gateway",utf8_decode($data->Buffer),0);
+			 
 		// Hier werden die Daten verarbeitet und in Variablen geschrieben
 		
 		$this->UpdateLastResponse($data->Buffer);
-		SetValue($this->GetIDForIdent("BufferIN"), $data->Buffer);
-	 
+			 
 		//echo utf8_decode($data->Buffer);
 	 
 		// Weiterleitung zu allen Gerät-/Device-Instanzen
@@ -437,9 +437,8 @@ class AIOSplitter extends IPSModule
 	 
 		// Empfangene Daten von der Device Instanz
 		$data = json_decode($JSONString);
-		IPS_LogMessage("ForwardData AIO Gateway Splitter", utf8_decode($data->Buffer));
-		SetValue($this->GetIDForIdent("CommandOut"), $data->Buffer);
-	 
+		$this->SendDebug("ForwardData AIO Gateway Splitter",utf8_decode($data->Buffer),0);
+			 
 		// Hier würde man den Buffer im Normalfall verarbeiten
 		// z.B. CRC prüfen, in Einzelteile zerlegen
 		try

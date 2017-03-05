@@ -83,26 +83,17 @@ class AIOELRODevice extends IPSModule
 	
 	public function PowerOn() {
             $ELROAddress = $this->ReadPropertyString("ELROAddress");
-			return $this->Send_ELRO($ELROAddress, true, $this->GetIPGateway());
+			$action = "1";
+			return $this->Send_ELRO($ELROAddress, $action);	
         }
 		
 	public function PowerOff() {
 			$ELROAddress = $this->ReadPropertyString("ELROAddress");
-			return $this->Send_ELRO($ELROAddress, false, $this->GetIPGateway());
+			$action = "4";
+			return $this->Send_ELRO($ELROAddress, $action);	
         }
 	
-	//Berechnet den Sendecode aus Familien und Devicecode 
-	// Umrechnung in Hexadezimal Code A entspricht 0, Device 1 entspricht 0
-	
-	protected function ELRO_calculate(){
-		$ELROFamilyCode = $this->ReadPropertyString('ELROFamilyCode');
-		$ELRODeviceCode = $this->ReadPropertyString('ELRODeviceCode');
-		$ELROFamilyCode = ord(strtoupper($ELROFamilyCode)) - ord('A');
-		$ELRODeviceCode = intval($ELRODeviceCode)-1;
-		$ELRO_send = $ELROFamilyCode.$ELRODeviceCode;
-		return $ELRO_send;
-	}
-	
+		
 	//IP Gateway 
 	protected function GetIPGateway(){
 		$ParentID = $this->GetParent();
@@ -125,12 +116,12 @@ class AIOELRODevice extends IPSModule
 		$ELROAddress = $this->ReadPropertyString("ELROAddress");
 		if ($state === true)
 		{
-		$action = "E";
+		$action = "1";
 		return $this->Send_ELRO($ELROAddress, $action);	
 		}
 		else
 		{
-		$action = "6";
+		$action = "4";
 		return $this->Send_ELRO($ELROAddress, $action);	
 		}
 	}
@@ -139,18 +130,21 @@ class AIOELRODevice extends IPSModule
 	//Senden eines Befehls an Elro
 	protected function Send_ELRO($ELRO_send, $action)
 		{
-		$GatewayPassword = $this->GetPassword();	
-		if ($action === "E")
+		$GatewayPassword = $this->GetPassword();
+		//ELRO Befehl, erste 5 Zeichen Adresse letzes Zeichen Command
+		$ELRO_send = substr($ELRO_send, 0, 5);		
+		if ($action === "1")
 			{
 			// Sendestring ELRO /command?XC_FNC=SendSC&type=ELRO&data=
-			//ELRO Befehl schaltet an letzte Stelle -5 ?
 			if ($GatewayPassword !== "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."E");
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1",0);
 			}
 			else
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."E");
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1",0);
 			}
 			
 			$status = true;
@@ -158,14 +152,15 @@ class AIOELRODevice extends IPSModule
 			}
 		else
 			{
-			//ELRO Befehl schaltet aus letze Stelle -2 ?
 			if ($GatewayPassword != "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."6");
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4",0);
 			}
 			else
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."6");
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4",0);
 			}
 			
 			$status = false;
@@ -183,10 +178,14 @@ class AIOELRODevice extends IPSModule
 		if ($GatewayPassword !== "")
 			{
 				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=ELRO");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=LearnSC&type=ELRO",0);
+				$this->SendDebug("ELRO Adress",$address,0);
 			}
 			else
 			{
 				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=ELRO");
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=ELRO",0);
+				$this->SendDebug("ELRO Adress",$address,0);
 			}
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
@@ -195,6 +194,7 @@ class AIOELRODevice extends IPSModule
 			$this->response = false;
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
+			$this->SendDebug("ELRO Adresse:",$address,0);
 			IPS_LogMessage( "ELRO Adresse:" , $address );
 			echo "Die Adresse vom ELRO Gerät konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnAddressELRO", false); //Haken entfernen.			
