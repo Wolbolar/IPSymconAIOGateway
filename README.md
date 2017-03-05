@@ -27,7 +27,7 @@ Nähere Informationen zu ansteuerbaren Geräten über das AIO Gateway unter [Rec
  - Import der IR Geräte aus dem AIO Creator und AIO Creator NEO
  - Anlernen von IR Codes über das AIO Gateway aus IP-Symcom  
  
- ### Funk Code Senden:  
+### Funk Code Senden:  
 
  - Senden eines Funk Signals über das AIO Gateway
  - Import der Funk (RF) Geräte aus dem AIO Creator NEO
@@ -38,7 +38,14 @@ Nähere Informationen zu ansteuerbaren Geräten über das AIO Gateway unter [Rec
  - Schalten von Intertechno Steckdosen über das AIO Gateway
  - Import der Intertechno Geräte aus dem AIO Creator und AIO Creator NEO
  - Anlernen des Family und Device Codes über das AIO Gateway aus IP-Symcom   
- - An / Aus.    
+ - An / Aus.
+
+### ELRO Steckdosen:  
+
+ - Schalten von ELRO Steckdosen über das AIO Gateway
+ - Import der ELRO Geräte aus dem AIO Creator und AIO Creator NEO
+ - Anlernen der Adresse über das AIO Gateway aus IP-Symcom   
+ - An / Aus.   
 
 ### FS20 Dimmer:  
 
@@ -109,11 +116,11 @@ Import Instanz anzulegen. Dazu Instanz hinzufügen und als Hersteller *Mediola* 
 
 *Instanzauswahl:*
 
-![Instanz Auswahl](https://dl.dropboxusercontent.com/u/29543702/Instanzauswahl.png)
+![Instanz Auswahl](Doku/Instanzauswahl.png?raw=true "Instanzauswahl")
 
 *Importmodul*
 
-![Import](https://dl.dropboxusercontent.com/u/29543702/importmodul.png) 
+![Import](Doku/importmodul.png?raw=true "Import")
  
 Auswahlfelder:
 - Verzeichnis der Datei (Das Verzeichnis muss für IPS lesbar sein)
