@@ -116,11 +116,11 @@ Import Instanz anzulegen. Dazu Instanz hinzufügen und als Hersteller *Mediola* 
 
 *Instanzauswahl:*
 
-![Instanz Auswahl](Doku/Instanzauswahl.png?raw=true "Instanzauswahl")
+![Instanz Auswahl](docs/Instanzauswahl.png?raw=true "Instanzauswahl")
 
 *Importmodul*
 
-![Import](Doku/importmodul.png?raw=true "Import")
+![Import](docs/importmodul.png?raw=true "Import")
  
 Auswahlfelder:
 - Verzeichnis der Datei (Das Verzeichnis muss für IPS lesbar sein)

@@ -12,8 +12,8 @@ class AIOSplitter extends IPSModule
 		
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-		$this->RequireParent("{82347F20-F541-41E1-AC5B-A636FD3AE2D8}", "AIO Gateway"); //UDP Socket
-		//$this->RequireParent("{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}", "AIO Gateway"); //Multicast Socket
+		$this->RequireParent("{82347F20-F541-41E1-AC5B-A636FD3AE2D8}"); // AIO Gateway UDP Socket
+		//$this->RequireParent("{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}"); //Multicast Socket
 
         $this->RegisterPropertyString("Host", "");
 		$this->RegisterPropertyInteger("Port", 1902);

@@ -9,12 +9,12 @@ class AIOIRDevice extends IPSModule
     {
         //Never delete this line!
         parent::Create();
-		
+
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-        // 1. Verfügbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. Verfï¿½gbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
-		
+
 		$this->RegisterPropertyString("IRLabel1", "");
 		$this->RegisterPropertyString("IRCode1", "");
 		$this->RegisterPropertyString("IRLabel2", "");
@@ -216,7 +216,7 @@ class AIOIRDevice extends IPSModule
 		$this->RegisterPropertyString("IRLabel100", "");
 		$this->RegisterPropertyString("IRCode100", "");
 
-		
+
 		$this->RegisterPropertyBoolean("IRStatus", false);
 		$this->RegisterPropertyString("IRDiode", "01");
 		$this->RegisterPropertyString("EXTIRDiode", "00");
@@ -225,7 +225,7 @@ class AIOIRDevice extends IPSModule
 		$this->RegisterPropertyInteger("NumberIRCodes", 0);
 		$this->RegisterPropertyBoolean("LearnIRCode", false);
 		$this->RegisterPropertyInteger("LearnIRCodeID", 1);
-       
+
     }
 
 
@@ -233,16 +233,16 @@ class AIOIRDevice extends IPSModule
     {
         //Never delete this line!
         parent::ApplyChanges();
-		
-		
+
+
 		$IRCode1 = $this->ReadPropertyString("IRCode1");
 		$IRCode2 = $this->ReadPropertyString("IRCode2");
 		$IRLabel1 = $this->ReadPropertyString("IRLabel1");
 		$IRLabel2 = $this->ReadPropertyString("IRLabel2");
 		$LearnIRCode = $this->ReadPropertyBoolean('LearnIRCode');
-		$NumberIRCodes = $this->ReadPropertyString("NumberIRCodes");
-		
-		//Mögliche Prüfungen durchführen
+		$NumberIRCodes = $this->ReadPropertyInteger("NumberIRCodes");
+
+		//Mï¿½gliche Prï¿½fungen durchfï¿½hren
 		if ($LearnIRCode)
 		{
 			$irid = $this->ReadPropertyInteger("LearnIRCodeID");
@@ -250,10 +250,10 @@ class AIOIRDevice extends IPSModule
 		}
 		elseif ( $IRCode1 == '' or $IRCode2 == '' or $IRLabel1 == '' or $IRLabel2 == '')
         {
-            // Status Error Felder dürfen nicht leer sein
+            // Status Error Felder dï¿½rfen nicht leer sein
             $this->SetStatus(202);
         }
-		else 
+		else
 		{
 			if ($NumberIRCodes == 0) //bei Manueller Eingabe von IR Codes wenn die Anzahl der Codes nicht gesetzt wurde Anzahl berechnen
 			{
@@ -264,24 +264,24 @@ class AIOIRDevice extends IPSModule
 					if (empty($ircodes[$i][1]))
 					{
 						$NumberIRCodes = $i; //Anzahl der IRCodes mit Inhalt beim ersten leeren Feld wird abgebrochen
-						break;	
+						break;
 					}
-					
+
 				}
 				$this->CreateProfileIR($NumberIRCodes);
-				
+
 			}
 			else
 			{
 					$this->CreateProfileIR($NumberIRCodes);
 			}
-			
+
 			// Status aktiv
             $this->SetStatus(102);
-		}	
-		
-		
-		
+		}
+
+
+
 		//Variablen bei Bedarf
 		//Add/Remove according to feature activation
 		// create link list for deletion of liks if target is deleted
@@ -289,7 +289,7 @@ class AIOIRDevice extends IPSModule
         foreach( IPS_GetLinkList() as $key=>$LinkID ){
             $links[] =  Array( ('LinkID') => $LinkID, ('TargetID') =>  IPS_GetLink($LinkID)['TargetID'] );
         }
-		
+
 		// Statusanzeige
         if ($this->ReadPropertyBoolean("IRStatus")){
             $stateIR = $this->RegisterVariableBoolean("Status", "Status", "~Switch", 1);
@@ -297,50 +297,50 @@ class AIOIRDevice extends IPSModule
         }else{
             $this->removeVariableAction("Status", $links);
         }
-		
-       		
+
+
 	}
-	
+
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur Verfï¿½gung, wenn das Modul ï¿½ber die "Module Control" eingefï¿½gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfï¿½gung gestellt:
     *
-	* 
+	*
     */
 	protected function CreateProfileIR($NumberIRCodes)
 	{
 		//$irprofilname = str_replace(' ','',(trim(IPS_GetName(IPS_GetInstance($this->InstanceID)["InstanceID"])))); //Profilname darf keine Leerzeichen enthalten !!!!
 		$irprofilname = str_replace(' ','',(trim(IPS_GetName($this->InstanceID)))); //Profilname darf keine Leerzeichen enthalten !!!!
-		$profilname1 = $irprofilname."1.AIOIR";	
+		$profilname1 = $irprofilname."1.AIOIR";
 		$profilname2 = $irprofilname."2.AIOIR";
 		$profilname3 = $irprofilname."3.AIOIR";
-		$profilname4 = $irprofilname."4.AIOIR";	
-		
+		$profilname4 = $irprofilname."4.AIOIR";
+
 		// Start create profiles
 		if ($NumberIRCodes <=32)
 			{
 			$end = ($NumberIRCodes-1);
-			
+
 			$this->RegisterProfileIRCodes($profilname1, "Keyboard", 0, $end, $NumberIRCodes);
-		
-		
+
+
 			//Variablen anlegen
 			//Generelle Variablen
 			$this->RegisterVariableInteger("IRCODES1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("IRCODES1");	
+			$this->EnableAction("IRCODES1");
 			}
 		elseif	($NumberIRCodes <=64 && $NumberIRCodes >32 )
 			{
-			$end = ($NumberIRCodes-33);	
+			$end = ($NumberIRCodes-33);
 			$this->RegisterProfileIRCodes($profilname1, "Keyboard", 0, 31, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname2, "Keyboard", 32, $end, $NumberIRCodes);
-			
+
 			//Variablen anlegen
 			//Generelle Variablen
 			$this->RegisterVariableInteger("IRCODES1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("IRCODES1");	
+			$this->EnableAction("IRCODES1");
 			$this->RegisterVariableInteger("IRCODES2", "IR Codes", $profilname2, 30);
-			$this->EnableAction("IRCODES2");	
+			$this->EnableAction("IRCODES2");
 			}
 		elseif	($NumberIRCodes <=96 && $NumberIRCodes >64)
 			{
@@ -348,41 +348,41 @@ class AIOIRDevice extends IPSModule
 			$this->RegisterProfileIRCodes($profilname1, "Keyboard", 0, 31, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname2, "Keyboard", 32, 63, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname3, "Keyboard", 64, $end, $NumberIRCodes);
-			
+
 			//Variablen anlegen
 			//Generelle Variablen
 			$this->RegisterVariableInteger("IRCODES1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("IRCODES1");	
+			$this->EnableAction("IRCODES1");
 			$this->RegisterVariableInteger("IRCODES2", "IR Codes", $profilname2, 30);
 			$this->EnableAction("IRCODES2");
 			$this->RegisterVariableInteger("IRCODES3", "IR Codes", $profilname3, 31);
-			$this->EnableAction("IRCODES3");				
+			$this->EnableAction("IRCODES3");
 			}
 		elseif	($NumberIRCodes <=100 && $NumberIRCodes >96)
 			{
-			$end = ($NumberIRCodes-97);	
+			$end = ($NumberIRCodes-97);
 			$this->RegisterProfileIRCodes($profilname1, "Keyboard", 0, 31, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname2, "Keyboard", 32, 63, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname3, "Keyboard", 64, 95, $NumberIRCodes);
 			$this->RegisterProfileIRCodes($profilname4, "Keyboard", 96, $end, $NumberIRCodes);
-			
-			
+
+
 			//Variablen anlegen
 			//Generelle Variablen
 			$this->RegisterVariableInteger("IRCODES1", "IR Codes", $profilname1, 29);
-			$this->EnableAction("IRCODES1");	
+			$this->EnableAction("IRCODES1");
 			$this->RegisterVariableInteger("IRCODES2", "IR Codes", $profilname2, 30);
 			$this->EnableAction("IRCODES2");
 			$this->RegisterVariableInteger("IRCODES3", "IR Codes", $profilname3, 31);
 			$this->EnableAction("IRCODES3");
 			$this->RegisterVariableInteger("IRCODES4", "IR Codes", $profilname4, 32);
-			$this->EnableAction("IRCODES4");		
+			$this->EnableAction("IRCODES4");
 			}
 	}
-			
-	
-	
-	
+
+
+
+
 	protected function ArrIRCodes()
 	{
 		$ircodes = array();
@@ -587,10 +587,10 @@ class AIOIRDevice extends IPSModule
 		$ircodes[99][0] = $this->ReadPropertyString("IRLabel100");
 		$ircodes[99][1] = $this->ReadPropertyString("IRCode100");
 
-		return $ircodes;		
+		return $ircodes;
 	}
-	
-	
+
+
 	public function RequestAction($Ident, $Value)
     {
 		if($Ident == "Status")
@@ -653,7 +653,7 @@ class AIOIRDevice extends IPSModule
                         $this->SendIRCode(($Value+1));
                         break;
 					case 17: //IR 18
-                        $this->SendIRCode(($Value+1));						
+                        $this->SendIRCode(($Value+1));
                         break;
 					case 18: //IR 19
                         $this->SendIRCode(($Value+1));
@@ -696,7 +696,7 @@ class AIOIRDevice extends IPSModule
                         break;
 					case 31: //IR 32
                         $this->SendIRCode(($Value+1));
-                        break;			
+                        break;
                 }
 		}
 		elseif(!null == ($this->GetIDForIdent('IRCODES2')) && $Ident == "IRCODES2" )
@@ -923,43 +923,43 @@ class AIOIRDevice extends IPSModule
 		{
 			throw new Exception("Invalid ident");
 		}
-		
+
     }
-	
-	
-	
+
+
+
 	protected function GetParent()
     {
         $instance = IPS_GetInstance($this->InstanceID);//array
 		return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
     }
-	
-	//IP Gateway 
+
+	//IP Gateway
 	protected function GetIPGateway(){
 		$ParentID = $this->GetParent();
 		$IPGateway = IPS_GetProperty($ParentID, 'Host');
 		return $IPGateway;
 	}
-	
+
 	protected function GetPassword(){
 		$ParentID = $this->GetParent();
 		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
 		return $GatewayPassword;
 	}
-	
+
 	//IR Diode abfragen
 	protected function GetIRDiode(){
 		$IRDiode = $this->ReadPropertyString("IRDiode");
 		return $IRDiode;
 	}
-	
+
 	//Extender abfragen
 	protected function GetExtIRDiode(){
 		$EXTIRDiode = $this->ReadPropertyString("EXTIRDiode");
 		return $EXTIRDiode;
 	}
-	
-	
+
+
 	public function SetPowerState(boolean $state) {
 		if ($state === true)
 		{
@@ -976,48 +976,48 @@ class AIOIRDevice extends IPSModule
 		return $this->SendIRCode($PowerOffCode);
 		}
 	}
-	
-	
-	//Senden eines IR Befehls über das a.i.o. Gateway
+
+
+	//Senden eines IR Befehls ï¿½ber das a.i.o. Gateway
 	public function SendIR1() {
             $IR_send = $this->ReadPropertyString("IRCode1");
 			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }
-		
+
 	public function SendIR2() {
             $IR_send = $this->ReadPropertyString("IRCode2");
 			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
         }
-	
-	
+
+
 	public function SendIRCode(integer $Value) {
 			//IR Code auslesen Value 0 entspricht IRCode 1
 			$IRCode = "IRCode".$Value;
 			if($Value <= 32 && !null == ($this->GetIDForIdent('IRCODES1')))
 			{
-			$setvalue = $Value-1;	
+			$setvalue = $Value-1;
 			SetValueInteger($this->GetIDForIdent('IRCODES1'), $setvalue);
 			}
 			elseif($Value <=64 && $Value >32 && !null == ($this->GetIDForIdent('IRCODES2')))
 			{
-			$setvalue = $Value-33;	
-			SetValueInteger($this->GetIDForIdent('IRCODES2'), $setvalue);	
+			$setvalue = $Value-33;
+			SetValueInteger($this->GetIDForIdent('IRCODES2'), $setvalue);
 			}
 			elseif($Value <=96 && $Value >64 && !null == ($this->GetIDForIdent('IRCODES3')))
 			{
 			$setvalue = $Value-65;
-			SetValueInteger($this->GetIDForIdent('IRCODES3'), $setvalue);	
+			SetValueInteger($this->GetIDForIdent('IRCODES3'), $setvalue);
 			}
 			elseif($Value <=100 && $Value >96 && !null == ($this->GetIDForIdent('IRCODES4')))
 			{
-			$setvalue = $Value-97;	
-			SetValueInteger($this->GetIDForIdent('IRCODES4'), $setvalue);	
+			$setvalue = $Value-97;
+			SetValueInteger($this->GetIDForIdent('IRCODES4'), $setvalue);
 			}
 			$IR_send = $this->ReadPropertyString($IRCode);
 			$this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
 			return true;
-        }	
-	
+        }
+
 	//IR Code senden
 	private	$response = false;
 	protected function Send_IR($ir_code, $IRDiode, $EXTIRDiode)
@@ -1027,87 +1027,87 @@ class AIOIRDevice extends IPSModule
 				{
 				case "02":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Interne Sendediode" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 1 Interne Sendediode" );
 					break;
 
 				case "12":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 1" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 1 Externe Sendediode 1" );
 					break;
 
 				case "22":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 2" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 1 Externe Sendediode 2" );
 					break;
 
 				case "32":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 1 Externe Sendediode 3" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 1 Externe Sendediode 3" );
+					break;
 
 				case "03":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Interne Sendediode" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 2 Interne Sendediode" );
+					break;
 
 				case "13":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 1" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 2 Externe Sendediode 1" );
+					break;
 
 				case "23":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 2" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 2 Externe Sendediode 2" );
+					break;
 
 				case "33":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 2 Externe Sendediode 3" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 2 Externe Sendediode 3" );
+					break;
 
 				case "04":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Interne Sendediode" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 3 Interne Sendediode" );
+					break;
 
 				case "14":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 1" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 3 Externe Sendediode 1" );
+					break;
 
 				case "24":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 2" );
-					break;	
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 3 Externe Sendediode 2" );
+					break;
 
 				case "34":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 3 Externe Sendediode 3" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 3 Externe Sendediode 3" );
 					break;
 
 				case "05":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Interne Sendediode" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 4 Interne Sendediode" );
 					break;
 
 				case "15":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 1" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 4 Externe Sendediode 1" );
 					break;
 
 				case "25":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 2" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 4 Externe Sendediode 2" );
 					break;
 
 				case "35":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command über Extender senden:" , "Extender 4 Externe Sendediode 3" );
+					IPS_LogMessage( "IR Command ï¿½ber Extender senden:" , "Extender 4 Externe Sendediode 3" );
 					break;
 
 				case "00":
-					IPS_LogMessage( "IR Command über AIO Gateway senden:" , "Sendediode ".$IRDiode );
-					break;								
+					IPS_LogMessage( "IR Command ï¿½ber AIO Gateway senden:" , "Sendediode ".$IRDiode );
+					break;
 				}
 			$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword !== "")
@@ -1119,21 +1119,21 @@ class AIOIRDevice extends IPSModule
 			else
 			{
 				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
-				IPS_LogMessage( "IRCode:" , $ir_code );			
+				IPS_LogMessage( "IRCode:" , $ir_code );
 			}
 			if ($gwcheck == "{XC_SUC}")
 				{
-				$this->response = true;	
+				$this->response = true;
 				}
 			elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
+			echo "Keine Authentifizierung mï¿½glich. Das Passwort fï¿½r das Gateway ist falsch.";
 			}
 			return $this->response;
 
 		}
-		
+
 	protected function removeVariable($name, $links){
         $vid = @$this->GetIDForIdent($name);
         if ($vid){
@@ -1157,14 +1157,14 @@ class AIOIRDevice extends IPSModule
             $this->DisableAction($name);
             $this->UnregisterVariable($name);
         }
-    }	
+    }
 
 
-	
-    
+
+
 	protected function RegisterProfileIntegerIR($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
-        
+
         if(!IPS_VariableProfileExists($Name)) {
             IPS_CreateVariableProfile($Name, 1);
         } else {
@@ -1172,14 +1172,14 @@ class AIOIRDevice extends IPSModule
             if($profile['ProfileType'] != 1)
             throw new Exception("Variable profile type does not match for profile ".$Name);
         }
-        
+
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-        
+
     }
-   
-		
+
+
 	protected function IRProfileAssociation($Name, $MinValue, $MaxValue, $start)
 	{
 			//echo "Start: ".$start." MinVal: ".$MinValue." MaxVal: ".$MaxValue."<br>";
@@ -1187,15 +1187,15 @@ class AIOIRDevice extends IPSModule
 			for ($i = $MinValue; $i <= $MaxValue; $i++)
 			{
 				if (!empty($ircodes[($start+$i)][1]))
-				{	
+				{
 					//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) //Float Wert stimmt nicht
 					// IR Codes nicht im Profil hinterlegt statt dessen die ID der IRCodes der Wert muss beim Senden abgefragt werden.
-					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$ircodes[($start+$i)][0], "", -1 );//max 32 möglich
+					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$ircodes[($start+$i)][0], "", -1 );//max 32 mï¿½glich
 				}
-				
+
 			}
 	}
-	
+
 	protected function RegisterProfileIRCodes($Name, $Icon, $start, $end, $NumberIRCodes)
 	{
        	(integer)$nameid = substr($Name, -7, 1); // Nummer des Vergebnen Profilnamens
@@ -1212,17 +1212,17 @@ class AIOIRDevice extends IPSModule
 		else
 				{
 				$MinValue = 0;
-				$MaxValue = $end; 
+				$MaxValue = $end;
 				}
 			$Prefix = "";
 			$Suffix = "";
-			
+
 			$this->RegisterProfileIntegerIR($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, 0);
 			$this->IRProfileAssociation($Name, $MinValue, $MaxValue, $start);
     }
-	
-	
-	//Anlernen eines IR Codes über das a.i.o. gateway:
+
+
+	//Anlernen eines IR Codes ï¿½ber das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
 	public function Learn(integer $irid)
 		{
@@ -1234,9 +1234,9 @@ class AIOIRDevice extends IPSModule
 			else
 			{
 				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Learn");
-			}	
-			
-		//kurze Pause während das Gateway im Lernmodus ist
+			}
+
+		//kurze Pause wï¿½hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($ircode == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -1257,13 +1257,13 @@ class AIOIRDevice extends IPSModule
 				IPS_LogMessage( "IR Code:" , $ircode );
 				$this->AddIRCode($ircode, $irid);
 				echo "IR Code: ".$ircode;
-				$this->response = true;	
+				$this->response = true;
 			}
-		
+
 		return $this->response;
 		}
-	
-	//IR Code und Label hinzufügen
+
+	//IR Code und Label hinzufï¿½gen
 	protected function AddIRCode($ircode, $irid)
 	{
 		$code = "IRCode".$irid;
@@ -1278,30 +1278,30 @@ class AIOIRDevice extends IPSModule
 		$NumberIRCodes = $this->ReadPropertyString("NumberIRCodes");
 		$NumberIRCodes = $NumberIRCodes + 1;
 		$this->CreateProfileIR($NumberIRCodes);
-		IPS_SetProperty($this->InstanceID, "NumberIRCodes", $NumberIRCodes); //IRCode setzten.	
+		IPS_SetProperty($this->InstanceID, "NumberIRCodes", $NumberIRCodes); //IRCode setzten.
 		IPS_SetProperty($this->InstanceID, "LearnIRCode", false); //Haken entfernen.
-		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "IRCode".$irid." hinzugefügt:" , $ircode );
+		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration ï¿½bernehmen
+		IPS_LogMessage( "IRCode".$irid." hinzugefï¿½gt:" , $ircode );
 		// Status aktiv
-        $this->SetStatus(102);	
+        $this->SetStatus(102);
 	}
-	
+
 	public function Send($Text)
 		{
 			$this->SendDataToParent(json_encode(Array("DataID" => "{B87AC955-F258-468B-92FE-F4E0866A9E18}", "Buffer" => $Text)));
 		}
-		
+
 	public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
 			IPS_LogMessage("IOTest", utf8_decode($data->Buffer));
 
 			//Parse and write values to our variables
-			
+
 		}
-   
-	
-	
+
+
+
 }
 
 ?>
