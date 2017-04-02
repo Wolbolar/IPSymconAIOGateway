@@ -155,7 +155,7 @@ Auswahlfelder:
 ### FS20
  Zum Ansteuern von FS20 ist der HC1, HC2 Wert und die FS20 Adresse aus dem AIO Creator einzutragen.
 
-## 6. Konfiguration:
+## 6. Konfiguration
 
 ### aioGatewaySplitter:
 
@@ -495,3 +495,11 @@ GUID: `{BFD0DE8E-5A3C-458C-828B-C26B53220B8C}`
 #### AIO Dooya Device Interface GUI:
 
 GUID: `{EED83D19-52A7-4714-8ADE-899159EEAF3B}` 
+
+#### AIO Homematic Device:
+
+GUID: `{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}` 
+
+#### AIO Homematic Device Interface GUI:
+
+GUID: `{2C55C259-F00F-4020-9386-FC3E783B8AA7}` 
