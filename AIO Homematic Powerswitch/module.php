@@ -60,8 +60,10 @@ class AIOHomematicPowerswitch extends IPSModule
 			•	voltage
 			*/
 			$ConsumptionId = $this->RegisterVariableFloat("Consumption", "Gesamter Verbrauch", "~Electricity", 1);
-			//$this->EnableAction("Consumption");
-			$CurrentId = $this->RegisterVariableFloat("Current", "Strom", "~Milliampere.HM", 1);
+			//$this->EnableAction("Consumption
+			$associations =  Array();
+			$this->SetupProfile(IPSVarType::vtFloat, "AIOHM.Milliampere", "", "", " mA", 0, 0, 0, 0, $associations);
+			$CurrentId = $this->RegisterVariableFloat("Current", "Strom", "AIOHM.Milliampere", 1);
 			//$this->EnableAction("Current");
 			$ErrorId = $this->RegisterVariableBoolean("Error", "Error", "~Switch", 1);
 			//$this->EnableAction("Error");
@@ -256,7 +258,142 @@ class AIOHomematicPowerswitch extends IPSModule
 		$stateId = $this->RegisterVariableBoolean("STATE", "Status", "~Switch", 1);
 		$this->EnableAction("STATE");	
 	}
-
+	
+	// Profil anlegen
+	protected function SetupProfile($vartype, $name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations)
+	{
+		if (!IPS_VariableProfileExists($name))
+		{
+			switch ($vartype)
+			{
+				case IPSVarType::vtBoolean:
+					
+					break;
+				case IPSVarType::vtInteger:
+					$this->RegisterProfileIntegerAss($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+					break;
+				case IPSVarType::vtFloat:
+					$this->RegisterProfileFloatAss($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+					break;
+				case IPSVarType::vtString:
+					$this->RegisterProfileString($name, $icon);
+					break;
+			}	
+		}
+		return $name;
+	}
+	
+	//Profile
+	protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+	{
+        
+        if(!IPS_VariableProfileExists($Name)) {
+            IPS_CreateVariableProfile($Name, 1);
+        } else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 1)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        IPS_SetVariableProfileIcon($Name, $Icon);
+        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+		IPS_SetVariableProfileDigits($Name, $Digits); //  Nachkommastellen
+        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize); // string $ProfilName, float $Minimalwert, float $Maximalwert, float $Schrittweite
+        
+    }
+	
+	protected function RegisterProfileIntegerAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations)
+	{
+        if ( sizeof($Associations) === 0 ){
+            $MinValue = 0;
+            $MaxValue = 0;
+        } 
+		/*
+		else {
+            //undefiened offset
+			$MinValue = $Associations[0][0];
+            $MaxValue = $Associations[sizeof($Associations)-1][0];
+        }
+        */
+        $this->RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits);
+        
+		//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe )
+        foreach($Associations as $Association) {
+            IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+        }
+        
+    }
+			
+	protected function RegisterProfileString($Name, $Icon)
+	{
+        
+        if(!IPS_VariableProfileExists($Name))
+			{
+            IPS_CreateVariableProfile($Name, 3);
+			IPS_SetVariableProfileIcon($Name, $Icon);
+			} 
+		else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 3)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        
+        //IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+        //IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+        
+    }
+	
+	protected function RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+	{
+        
+        if(!IPS_VariableProfileExists($Name)) {
+            IPS_CreateVariableProfile($Name, 2);
+        } else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 2)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        IPS_SetVariableProfileIcon($Name, $Icon);
+        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+		IPS_SetVariableProfileDigits($Name, $Digits); //  Nachkommastellen
+        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+        
+    }
+	
+	protected function RegisterProfileFloatAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations)
+	{
+        if ( sizeof($Associations) === 0 ){
+            $MinValue = 0;
+            $MaxValue = 0;
+        } 
+		/*
+		else {
+            //undefiened offset
+			$MinValue = $Associations[0][0];
+            $MaxValue = $Associations[sizeof($Associations)-1][0];
+        }
+        */
+        $this->RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits);
+        
+		//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe )
+        foreach($Associations as $Association) {
+            IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+        }
+        
+    }
 }
 
+class IPSVarType extends stdClass
+{
+
+    const vtNone = -1;
+    const vtBoolean = 0;
+    const vtInteger = 1;
+    const vtFloat = 2;
+    const vtString = 3;
+    
+
+}
 ?>
