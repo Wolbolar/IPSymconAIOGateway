@@ -31,12 +31,12 @@
                 {
                     "type": "Button",
                     "label": "On",
-                    "onClick": "AIOHomematic_PowerOn($id);"
+                    "onClick": "AIOHomematicSwitch_PowerOn($id);"
                 },
                 {
                     "type": "Button",
                     "label": "Off",
-                    "onClick": "AIOHomematic_PowerOff($id);"
+                    "onClick": "AIOHomematicSwitch_PowerOff($id);"
                 }
             ],
     "status":
