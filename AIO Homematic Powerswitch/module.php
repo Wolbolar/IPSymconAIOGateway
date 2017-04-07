@@ -59,7 +59,7 @@ class AIOHomematicPowerswitch extends IPSModule
 			•	state
 			•	voltage
 			*/
-			$ConsumptionId = $this->RegisterVariableFloat("Consumption", "Gesamter Verbrauch", "~Electricity.HM", 1);
+			$ConsumptionId = $this->RegisterVariableFloat("Consumption", "Gesamter Verbrauch", "~Electricity", 1);
 			//$this->EnableAction("Consumption");
 			$CurrentId = $this->RegisterVariableFloat("Current", "Strom", "~Milliampere.HM", 1);
 			//$this->EnableAction("Current");
