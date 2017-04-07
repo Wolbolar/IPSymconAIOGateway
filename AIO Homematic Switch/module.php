@@ -123,7 +123,7 @@ class AIOHomematicSwitch extends IPSModule
 	}
 	
 	protected function SetPowerState($state) {
-		$ELROAddress = $this->ReadPropertyString("HomematicAddress");
+		$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
 		if ($state === true)
 		{
 		$action = "01";
