@@ -141,7 +141,7 @@ class AIOHomematicSwitch extends IPSModule
 	protected function Send_Homematic($HomematicAddress, $action)
 		{
 		$GatewayPassword = $this->GetPassword();
-		$Homematic_send = $HomematicAddress."01".$action;
+		$Homematic_send = $HomematicAddress.$action;
 		if ($action === "01")
 			{
 			// Sendestring Homematic XC_FNC=SendSC&type=HM&data=[Adresse][Kanal][Befehl]  z.B. 130B990101
