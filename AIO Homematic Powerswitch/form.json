@@ -13,7 +13,7 @@
                     "caption": "Homematic Data"
                 },
 				{
-                    "name": "HomematicType",
+                    "name": "HomematicTypeName",
                     "type": "ValidationTextBox",
                     "caption": "Homematic Typ"
                 },

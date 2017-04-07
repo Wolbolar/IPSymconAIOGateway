@@ -1,11 +1,11 @@
 {
     "id": "{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}",
-    "name": "AIOHomematicDevice",
+    "name": "AIOHomematicPowerswitch",
     "type": 3,
     "vendor": "Mediola",
-    "aliases": ["AIO Homematic Device"],
+    "aliases": ["AIO Homematic Powerswitch"],
     "parentRequirements": ["{2C55C259-F00F-4020-9386-FC3E783B8AA7}"],
     "childRequirements": [],
     "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
-    "prefix": "AIOHomematic"
+    "prefix": "AIOHomematicPowerswitch"
 }

@@ -1,0 +1,11 @@
+{
+    "id": "{54E09F68-FE44-4E09-9E4B-B66D20CB970E}",
+    "name": "AIOHomematicRGB",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Homematic RGB"],
+    "parentRequirements": ["{5CC66019-8912-4855-BB4A-EA5A83AB8F92}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOHomematicRGB"
+}

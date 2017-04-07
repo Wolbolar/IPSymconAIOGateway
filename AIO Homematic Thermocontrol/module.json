@@ -1,0 +1,11 @@
+{
+    "id": "{9CA28339-2DCB-4295-9C22-EBCDE6025052}",
+    "name": "AIOHomematicThermocontrol",
+    "type": 3,
+    "vendor": "Mediola",
+    "aliases": ["AIO Homematic Thermocontrol"],
+    "parentRequirements": ["{F5DAD9B2-3ADC-41B6-A58C-D5058C51055D}"],
+    "childRequirements": [],
+    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+    "prefix": "AIOHomematicThermocontrol"
+}

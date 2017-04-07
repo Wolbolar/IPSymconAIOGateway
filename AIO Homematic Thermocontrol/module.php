@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
 
-class AIOHomematicDevice extends IPSModule
+class AIOHomematicThermocontrol extends IPSModule
 {
 
    
@@ -16,7 +16,8 @@ class AIOHomematicDevice extends IPSModule
 		
 		$this->RegisterPropertyString("HomematicAddress", "");
 		$this->RegisterPropertyString("HomematicData", "");
-		$this->RegisterPropertyString("HomematicType", "");
+		$this->RegisterPropertyString("HomematicType", "0095");
+		$this->RegisterPropertyString("HomematicTypeName", "HM-CC-RT-DN");
 		$this->RegisterPropertyString("HomematicSNR", "");
 		$this->RegisterPropertyBoolean("LearnAddressHomematic", false);
 		
@@ -28,7 +29,7 @@ class AIOHomematicDevice extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
 		
-		// ELROAddress prüfen
+		// HomematicAddress prüfen
         $HomematicAddress = $this->ReadPropertyString('HomematicAddress');
         $LearnAddressHomematic = $this->ReadPropertyBoolean('LearnAddressHomematic');
 				
@@ -49,8 +50,32 @@ class AIOHomematicDevice extends IPSModule
 			// Status aktiv
             $this->SetStatus(102);
 			//Status-Variablen anlegen
-			$stateId = $this->RegisterVariableBoolean("STATE", "Status", "~Switch", 1);
-			$this->EnableAction("STATE");
+			/*
+			•	current temperature
+			•	error
+			•	humidity
+			•	mode
+			•	set temperature
+			•	valve position
+
+			*/
+			$CurrentTemperatureId = $this->RegisterVariableFloat("CurrentTemperature", "Aktuelle Temperatur", "~Temperature", 1);
+			//$this->EnableAction("CurrentTemperature");
+			$ErrorId = $this->RegisterVariableBoolean("Error", "Error", "~Switch", 1);
+			//$this->EnableAction("Error");
+			$HumidityId = $this->RegisterVariableFloat("Humidity", "Luftfeuchtigkeit", "~Humidity.F", 1);
+			//$this->EnableAction("Humidity");
+			$associations =  Array(
+									Array(0, "Manu",  "", -1),
+									Array(1, "Auto",  "", -1)
+									);
+			$this->SetupProfile(IPSVarType::vtInteger, "AIOHM.TempMode", "Temperature", "", "", 0, 1, 1, 0, $associations);
+			$ModeId = $this->RegisterVariableInteger("Mode", "Status", "AIOHM.TempMode", 1);
+			$this->EnableAction("Mode");
+			$SetTemperatureId = $this->RegisterVariableFloat("SetTemperature", "Status", "~Temperature", 1);
+			$this->EnableAction("SetTemperature");
+			$ValvePositionId = $this->RegisterVariableInteger("ValvePosition", "Ventilstellung", "~Intensity.100", 1);
+			//$this->EnableAction("ValvePosition");
 		}	
 		
 				
@@ -182,19 +207,19 @@ class AIOHomematicDevice extends IPSModule
 		$GatewayPassword = $this->GetPassword();	
 		if ($GatewayPassword !== "")
 			{
-				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&adr=".$HomematicSNR);
+				$aioresponse = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&adr=".$HomematicSNR);
 				$this->SendDebug("String to AIO Gateway","/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=learnSC&adr=".$HomematicSNR,0);
 				$this->SendDebug("Homematic Adress",$address,0);
 			}
 			else
 			{
-				$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=learnSC&adr=".$HomematicSNR);
+				$aioresponse = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=learnSC&adr=".$HomematicSNR);
 				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=learnSC&adr=".$HomematicSNR,0);
 				$this->SendDebug("Homematic Adress",$address,0);
 			}
 		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
-		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler
+		if ($aioresponse == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
 			$this->response = false;
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
@@ -207,11 +232,13 @@ class AIOHomematicDevice extends IPSModule
 		else
 			{
 				//Adresse auswerten {XC_SUC}
-				//bei Erfolg {XC_SUC}{"CODE":"414551"} 
-				(string)$address = substr($address, 17, 6);
+				//bei Erfolg {XC_SUC}{"adr":"130B99", "type":"0011"} 
+				$length = strlen($aioresponse);
+				(string)$jsonresponse = substr($aioresponse, 8, $length);
+				$data = json_decode($jsonresponse);
+				$adress = $data->adr;
+				$type = $data->type;
 				IPS_LogMessage( "Homematic Adresse:" , $address );
-				
-				$type = "";
 				$this->AddAddress($address, $type);
 				$this->response = true;	
 			}
@@ -234,6 +261,143 @@ class AIOHomematicDevice extends IPSModule
 		$stateId = $this->RegisterVariableBoolean("STATE", "Status", "~Switch", 1);
 		$this->EnableAction("STATE");	
 	}
+	
+	// Profil anlegen
+	protected function SetupProfile($vartype, $name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations)
+	{
+		if (!IPS_VariableProfileExists($name))
+		{
+			switch ($vartype)
+			{
+				case IPSVarType::vtBoolean:
+					
+					break;
+				case IPSVarType::vtInteger:
+					$this->RegisterProfileIntegerAss($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+					break;
+				case IPSVarType::vtFloat:
+					$this->RegisterProfileFloatAss($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+					break;
+				case IPSVarType::vtString:
+					$this->RegisterProfileString($name, $icon);
+					break;
+			}	
+		}
+		return $name;
+	}
+	
+	//Profile
+	protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+	{
+        
+        if(!IPS_VariableProfileExists($Name)) {
+            IPS_CreateVariableProfile($Name, 1);
+        } else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 1)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        IPS_SetVariableProfileIcon($Name, $Icon);
+        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+		IPS_SetVariableProfileDigits($Name, $Digits); //  Nachkommastellen
+        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize); // string $ProfilName, float $Minimalwert, float $Maximalwert, float $Schrittweite
+        
+    }
+	
+	protected function RegisterProfileIntegerAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations)
+	{
+        if ( sizeof($Associations) === 0 ){
+            $MinValue = 0;
+            $MaxValue = 0;
+        } 
+		/*
+		else {
+            //undefiened offset
+			$MinValue = $Associations[0][0];
+            $MaxValue = $Associations[sizeof($Associations)-1][0];
+        }
+        */
+        $this->RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits);
+        
+		//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe )
+        foreach($Associations as $Association) {
+            IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+        }
+        
+    }
+			
+	protected function RegisterProfileString($Name, $Icon)
+	{
+        
+        if(!IPS_VariableProfileExists($Name))
+			{
+            IPS_CreateVariableProfile($Name, 3);
+			IPS_SetVariableProfileIcon($Name, $Icon);
+			} 
+		else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 3)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        
+        //IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+        //IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+        
+    }
+	
+	protected function RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+	{
+        
+        if(!IPS_VariableProfileExists($Name)) {
+            IPS_CreateVariableProfile($Name, 2);
+        } else {
+            $profile = IPS_GetVariableProfile($Name);
+            if($profile['ProfileType'] != 2)
+            throw new Exception("Variable profile type does not match for profile ".$Name);
+        }
+        
+        IPS_SetVariableProfileIcon($Name, $Icon);
+        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+		IPS_SetVariableProfileDigits($Name, $Digits); //  Nachkommastellen
+        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+        
+    }
+	
+	protected function RegisterProfileFloatAss($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits, $Associations)
+	{
+        if ( sizeof($Associations) === 0 ){
+            $MinValue = 0;
+            $MaxValue = 0;
+        } 
+		/*
+		else {
+            //undefiened offset
+			$MinValue = $Associations[0][0];
+            $MaxValue = $Associations[sizeof($Associations)-1][0];
+        }
+        */
+        $this->RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $Stepsize, $Digits);
+        
+		//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe )
+        foreach($Associations as $Association) {
+            IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+        }
+        
+    }
+
+}
+
+class IPSVarType extends stdClass
+{
+
+    const vtNone = -1;
+    const vtBoolean = 0;
+    const vtInteger = 1;
+    const vtFloat = 2;
+    const vtString = 3;
+    
 
 }
 

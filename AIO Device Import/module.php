@@ -703,15 +703,34 @@ class AIOImport extends IPSModule
 	if ($InstanzID === false)
 		{
 			//echo "Instanz nicht gefunden!";
-			//Neue Instanz anlegen
-			$InsID = IPS_CreateInstance("{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}");
+			if($HomematicType == "00AC") // powerswitch
+			{
+				//Neue Instanz anlegen
+				$InsID = IPS_CreateInstance("{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}");
+			}
+			elseif($HomematicType == "0066") // switch
+			{
+				//Neue Instanz anlegen
+				$InsID = IPS_CreateInstance("{562CC7AE-0BD7-4C97-9E5B-0C9D6DD73F40}");
+			}
+			elseif($HomematicType == "0095") // thermocontrol
+			{
+				//Neue Instanz anlegen
+				$InsID = IPS_CreateInstance("{9CA28339-2DCB-4295-9C22-EBCDE6025052}");
+			}
+			elseif($HomematicType == "00F4") // sensor RGB Controller
+			{
+				//Neue Instanz anlegen
+				$InsID = IPS_CreateInstance("{54E09F68-FE44-4E09-9E4B-B66D20CB970E}");
+			}
 			IPS_SetName($InsID, $InstName); // Instanz benennen
 			IPS_SetIdent ($InsID, $Ident); // Ident
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 			IPS_SetProperty($InsID, "HomematicAddress", $HomematicAdress); // HomematicAddress setzten.
 			IPS_SetProperty($InsID, "HomematicData", $HomematicData); // HomematicData setzten.
 			IPS_SetProperty($InsID, "HomematicSNR", $HomematicSNR); // HomematicSNR setzten.
-			IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.			
+			//IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.	
+			//IPS_SetProperty($InsID, "HomematicTypeName", $HomematicTypeName); // HomematicTypeName setzten.	
 			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
