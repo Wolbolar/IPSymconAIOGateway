@@ -474,7 +474,10 @@ class AIOSplitter extends IPSModule
 				SetValue($this->GetIDForIdent("HomematicIN"), $data);
 				 break;
 			case "IR": //IR
-				$irdatacode = strstr($data, '00010');
+				//$irdatacode = strstr($data, '00010');
+				$num_of_timing = hexdec(substr($data,16, 2));
+				$start = $num_of_timing*8+17;
+				$irdatacode = substr($data, $start);  
 				SetValue($this->GetIDForIdent("IRIN"), $irdatacode);
 				 break;
 			case "IT": //Intertechno
