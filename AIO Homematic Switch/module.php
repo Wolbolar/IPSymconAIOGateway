@@ -16,8 +16,8 @@ class AIOHomematicSwitch extends IPSModule
 		
 		$this->RegisterPropertyString("HomematicAddress", "");
 		$this->RegisterPropertyString("HomematicData", "");
-		$this->RegisterPropertyString("HomematicType", "0066");
-		$this->RegisterPropertyString("HomematicTypeName", "HM-LC-Sw4-WM");
+		$this->RegisterPropertyString("HomematicType", "");
+		$this->RegisterPropertyString("HomematicTypeName", "");
 		$this->RegisterPropertyString("HomematicSNR", "");
 		$this->RegisterPropertyBoolean("LearnAddressHomematic", false);
 		
@@ -32,6 +32,8 @@ class AIOHomematicSwitch extends IPSModule
 		// HomematicAddress prüfen
         $HomematicAddress = $this->ReadPropertyString('HomematicAddress');
         $LearnAddressHomematic = $this->ReadPropertyBoolean('LearnAddressHomematic');
+		$HomematicType = $this->ReadPropertyString('HomematicType');
+		$HomematicTypeName = $this->ReadPropertyString('HomematicTypeName');
 				
 		if ($LearnAddressHomematic)
 		{
@@ -56,8 +58,17 @@ class AIOHomematicSwitch extends IPSModule
 			*/
 			$ErrorId = $this->RegisterVariableBoolean("Error", "Error", "~Switch", 1);
 			//$this->EnableAction("Error");
-			$stateId = $this->RegisterVariableBoolean("STATE", "Status", "~Switch", 1);
+			$stateId = $this->RegisterVariableBoolean("STATE", "Status", "~Switch", 2);
 			$this->EnableAction("STATE");
+			if($HomematicTypeName == "HM-LC-Sw4-WM")
+			{
+				$stateId = $this->RegisterVariableBoolean("STATE2", "Status Kanal 2", "~Switch", 3);
+				$this->EnableAction("STATE2");
+				$stateId = $this->RegisterVariableBoolean("STATE3", "Status Kanal 3", "~Switch", 4);
+				$this->EnableAction("STATE3");
+				$stateId = $this->RegisterVariableBoolean("STATE4", "Status Kanal 4", "~Switch", 5);
+				$this->EnableAction("STATE4");
+			}
 		}	
 		
 				
@@ -78,8 +89,21 @@ class AIOHomematicSwitch extends IPSModule
 		{
 			switch($Ident) {
 				case "STATE":
-					$this->HomematicPowerSetState($Value);
+					$Channel = "01";
+					$this->HomematicPowerSetState($Value, $Channel);
 					break;
+				case "STATE2":
+					$Channel = "02";
+					$this->HomematicPowerSetState($Value, $Channel);
+					break;
+				case "STATE3":
+					$Channel = "03";
+					$this->HomematicPowerSetState($Value, $Channel);
+					break;
+				case "STATE4":
+					$Channel = "04";
+					$this->HomematicPowerSetState($Value, $Channel);
+					break;		
 				default:
 					throw new Exception("Invalid ident");
 			}
@@ -103,7 +127,62 @@ class AIOHomematicSwitch extends IPSModule
 			return $this->Send_Homematic($HomematicAddress, $action);	
         }
 	
+	public function Channel1On() {
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."01";
+			$action = "01";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
 		
+	public function Channel1Off() {
+			$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."01";
+			$action = "02";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+	
+	public function Channel2On() {
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."02";
+			$action = "01";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+		
+	public function Channel2Off() {
+			$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."02";
+			$action = "02";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }	
+	
+	public function Channel3On() {
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."03";
+			$action = "01";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+		
+	public function Channel3Off() {
+			$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."03";
+			$action = "02";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+	
+	public function Channel4On() {
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."04";
+			$action = "01";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+		
+	public function Channel4Off() {
+			$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."04";
+			$action = "02";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+        }
+	
 	//IP Gateway 
 	protected function GetIPGateway(){
 		$ParentID = $this->GetParent();
@@ -117,22 +196,55 @@ class AIOHomematicSwitch extends IPSModule
 		return $GatewayPassword;
 	}
 	
-	protected function HomematicPowerSetState ($state){
-	SetValueBoolean($this->GetIDForIdent('STATE'), $state);
-	return $this->SetPowerState($state);	
+	protected function HomematicPowerSetState ($state, $channel)
+	{
+		if($channel == "01")
+		{
+			SetValueBoolean($this->GetIDForIdent('STATE'), $state);
+		}
+		elseif($channel == "02")
+		{
+			SetValueBoolean($this->GetIDForIdent('STATE2'), $state);
+		}
+		elseif($channel == "03")
+		{
+			SetValueBoolean($this->GetIDForIdent('STATE3'), $state);
+		}
+		elseif($channel == "04")
+		{
+			SetValueBoolean($this->GetIDForIdent('STATE4'), $state);
+		}
+	return $this->SetPowerState($state, $channel);	
 	}
 	
-	protected function SetPowerState($state) {
+	protected function SetPowerState($state, $channel)
+	{
 		$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
-		if ($state === true)
+		if($channel == "01")
 		{
-		$action = "01";
-		return $this->Send_Homematic($HomematicAddress, $action);	
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."01";
+		}
+		elseif($channel == "02")
+		{
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."02";
+		}
+		elseif($channel == "03")
+		{
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."03";
+		}
+		elseif($channel == "04")
+		{
+			$HomematicAddress = substr($HomematicAddress, 0, 6)."04";
+		}
+		if ($state === true)
+		{	
+			$action = "01";
+			return $this->Send_Homematic($HomematicAddress, $action);	
 		}
 		else
 		{
-		$action = "02";
-		return $this->Send_Homematic($HomematicAddress, $action);	
+			$action = "02";
+			return $this->Send_Homematic($HomematicAddress, $action);	
 		}
 	}
 	

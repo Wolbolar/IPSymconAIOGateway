@@ -729,8 +729,8 @@ class AIOImport extends IPSModule
 			IPS_SetProperty($InsID, "HomematicAddress", $HomematicAdress); // HomematicAddress setzten.
 			IPS_SetProperty($InsID, "HomematicData", $HomematicData); // HomematicData setzten.
 			IPS_SetProperty($InsID, "HomematicSNR", $HomematicSNR); // HomematicSNR setzten.
-			//IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.	
-			//IPS_SetProperty($InsID, "HomematicTypeName", $HomematicTypeName); // HomematicTypeName setzten.	
+			IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.	
+			IPS_SetProperty($InsID, "HomematicTypeName", $HomematicTypeName); // HomematicTypeName setzten.	
 			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
