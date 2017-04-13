@@ -479,6 +479,7 @@ class AIOSplitter extends IPSModule
 				$start = $num_of_timing*8+17;
 				$irdatacode = substr($data, $start);  
 				SetValue($this->GetIDForIdent("IRIN"), $irdatacode);
+				$this->SendDebug("Received IR Code",$irdatacode,0);
 				 break;
 			case "IT": //Intertechno
 				SetValue($this->GetIDForIdent("ITIN"), $data);
