@@ -705,21 +705,25 @@ class AIOImport extends IPSModule
 			//echo "Instanz nicht gefunden!";
 			if($HomematicType == "00AC") // powerswitch
 			{
+				$HomematicTypeName = "HM-ES-PMSw1-PI";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}");
 			}
 			elseif($HomematicType == "0066") // switch
 			{
+				$HomematicTypeName = "HM-LC-Sw4-WM";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{562CC7AE-0BD7-4C97-9E5B-0C9D6DD73F40}");
 			}
 			elseif($HomematicType == "0095") // thermocontrol
 			{
+				$HomematicTypeName = "HM-CC-RT-DN";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{9CA28339-2DCB-4295-9C22-EBCDE6025052}");
 			}
 			elseif($HomematicType == "00F4") // sensor RGB Controller
 			{
+				$HomematicTypeName = "HM-LC-RGBW-WM";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{54E09F68-FE44-4E09-9E4B-B66D20CB970E}");
 			}

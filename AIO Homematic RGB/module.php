@@ -16,8 +16,8 @@ class AIOHomematicRGB extends IPSModule
 		
 		$this->RegisterPropertyString("HomematicAddress", "");
 		$this->RegisterPropertyString("HomematicData", "");
-		$this->RegisterPropertyString("HomematicType", "00F4");
-		$this->RegisterPropertyString("HomematicTypeName", "HM-LC-RGBW-WM");
+		$this->RegisterPropertyString("HomematicType", "");
+		$this->RegisterPropertyString("HomematicTypeName", "");
 		$this->RegisterPropertyString("HomematicSNR", "");
 		$this->RegisterPropertyBoolean("LearnAddressHomematic", false);
 		

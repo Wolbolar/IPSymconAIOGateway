@@ -16,8 +16,8 @@ class AIOHomematicThermocontrol extends IPSModule
 		
 		$this->RegisterPropertyString("HomematicAddress", "");
 		$this->RegisterPropertyString("HomematicData", "");
-		$this->RegisterPropertyString("HomematicType", "0095");
-		$this->RegisterPropertyString("HomematicTypeName", "HM-CC-RT-DN");
+		$this->RegisterPropertyString("HomematicType", "");
+		$this->RegisterPropertyString("HomematicTypeName", "");
 		$this->RegisterPropertyString("HomematicSNR", "");
 		$this->RegisterPropertyBoolean("LearnAddressHomematic", false);
 		
@@ -66,13 +66,15 @@ class AIOHomematicThermocontrol extends IPSModule
 			$HumidityId = $this->RegisterVariableFloat("Humidity", "Luftfeuchtigkeit", "~Humidity.F", 1);
 			//$this->EnableAction("Humidity");
 			$associations =  Array(
-									Array(0, "Manu",  "", -1),
-									Array(1, "Auto",  "", -1)
+									Array(0, "Manuell",  "", -1),
+									Array(1, "Auto",  "", -1),
+									Array(2, "Boost",  "", -1),
+									Array(3, "Urlaub",  "", -1)
 									);
-			$this->SetupProfile(IPSVarType::vtInteger, "AIOHM.TempMode", "Temperature", "", "", 0, 1, 1, 0, $associations);
-			$ModeId = $this->RegisterVariableInteger("Mode", "Status", "AIOHM.TempMode", 1);
+			$this->SetupProfile(IPSVarType::vtInteger, "AIOHM.TempMode", "Temperature", "", "", 0, 3, 1, 0, $associations);
+			$ModeId = $this->RegisterVariableInteger("Mode", "Modus", "AIOHM.TempMode", 1);
 			$this->EnableAction("Mode");
-			$SetTemperatureId = $this->RegisterVariableFloat("SetTemperature", "Status", "~Temperature", 1);
+			$SetTemperatureId = $this->RegisterVariableFloat("SetTemperature", "Ziel Temperatur", "~Temperature", 1);
 			$this->EnableAction("SetTemperature");
 			$ValvePositionId = $this->RegisterVariableInteger("ValvePosition", "Ventilstellung", "~Intensity.100", 1);
 			//$this->EnableAction("ValvePosition");
@@ -109,17 +111,54 @@ class AIOHomematicThermocontrol extends IPSModule
 		return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
     }
 	
-	public function PowerOn() {
+	public function TempUp()
+	{
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$action = "12";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+    }
+	
+	public function TempDown()
+	{
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$action = "13";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+    }
+	
+	public function TempTo(int $Temp)
+	{
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$action = "11";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+    }
+	
+	public function BoostMode()
+	{
             $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
 			$action = "1";
 			return $this->Send_Homematic($HomematicAddress, $action);	
-        }
+    }
+	
+	public function HolidayMode()
+	{
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$action = "1";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+    }
 		
-	public function PowerOff() {
+	public function AutoMode()
+	{
+            $HomematicAddress = $this->ReadPropertyString("HomematicAddress");
+			$action = "1";
+			return $this->Send_Homematic($HomematicAddress, $action);	
+    }	
+		
+	public function ManuMode()
+	{
 			$HomematicAddress = $this->ReadPropertyString("HomematicAddress");
 			$action = "4";
 			return $this->Send_Homematic($HomematicAddress, $action);	
-        }
+    }
 	
 		
 	//IP Gateway 
@@ -159,16 +198,14 @@ class AIOHomematicThermocontrol extends IPSModule
 	protected function Send_Homematic($HomematicAddress, $action)
 		{
 		$GatewayPassword = $this->GetPassword();
-		//ELRO Befehl, erste 5 Zeichen Adresse letzes Zeichen Command
-		//$ELRO_send = substr($ELRO_send, 0, 5);
-		$Homematic_send = $HomematicAddress;
+		$Homematic_send = $HomematicAddress.$action;
 		if ($action === "1")
 			{
-			// Sendestring Homematic ?????? /command?XC_FNC=SendSC&type=ELRO&data=
+			// Sendestring Homematic XC_FNC=SendSC&type=HM&data=[Adresse][Kanal][Befehl]  z.B. 130B990101
 			if ($GatewayPassword !== "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."1"); //??
-				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."1",0);
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send); 
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send,0);
 			}
 			else
 			{
@@ -183,13 +220,13 @@ class AIOHomematicThermocontrol extends IPSModule
 			{
 			if ($GatewayPassword != "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."4");
-				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."4",0);
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send);
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$Homematic_send,0);
 			}
 			else
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."4");
-				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$Homematic_send."4",0);
+				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$Homematic_send);
+				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=ELRO&data=".$Homematic_send,0);
 			}
 			
 			$status = false;
