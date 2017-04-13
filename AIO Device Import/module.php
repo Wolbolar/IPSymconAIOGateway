@@ -703,27 +703,24 @@ class AIOImport extends IPSModule
 	if ($InstanzID === false)
 		{
 			//echo "Instanz nicht gefunden!";
+			$HomematicTypeName = $this->GetHomematicTypeName($HomematicType);
 			if($HomematicType == "00AC") // powerswitch
 			{
-				$HomematicTypeName = "HM-ES-PMSw1-PI";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{484B3E98-4395-4E65-A0D3-BDEE013A4B1A}");
 			}
 			elseif($HomematicType == "0066") // switch
 			{
-				$HomematicTypeName = "HM-LC-Sw4-WM";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{562CC7AE-0BD7-4C97-9E5B-0C9D6DD73F40}");
 			}
 			elseif($HomematicType == "0095") // thermocontrol
 			{
-				$HomematicTypeName = "HM-CC-RT-DN";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{9CA28339-2DCB-4295-9C22-EBCDE6025052}");
 			}
 			elseif($HomematicType == "00F4") // sensor RGB Controller
 			{
-				$HomematicTypeName = "HM-LC-RGBW-WM";
 				//Neue Instanz anlegen
 				$InsID = IPS_CreateInstance("{54E09F68-FE44-4E09-9E4B-B66D20CB970E}");
 			}
@@ -745,6 +742,134 @@ class AIOImport extends IPSModule
 			//echo "Die Instanz-ID lautet: ". $InstanzID;
 			return $InstanzID;
 		}		
+	}
+	
+	protected function GetHomematicTypeName($HomematicType)
+	{
+		if($HomematicType == "003D")
+		{
+			$HomematicTypeName = "HM-WDS10-TH-O";
+			// Beschreibung outdoor radio-controlled temperature/humidity sensor
+			// Ger‰t Kleine Wetterstation
+		}
+		elseif($HomematicType == "003F")
+		{
+			$HomematicTypeName = "HM-WDS40-TH-I";
+			// Beschreibung indoor radio-controlled temperature and humidty sensor
+			// Ger‰t Kleine Wetterstation
+		}
+		elseif($HomematicType == "0045")
+		{
+			$HomematicTypeName = "HM-Sec-WDS";
+			// Beschreibung radio-controlled water detection sensor
+			// Ger‰t Water detection
+		}
+		elseif($HomematicType == "0005")
+		{
+			$HomematicTypeName = "HM-LC-Bl1-FM";
+			// Beschreibung radio-controlled blind actuator 1-channel (flush-mount)
+			// Ger‰t Blind
+		}
+		elseif($HomematicType == "0011")
+		{
+			$HomematicTypeName = "HM-LC-Sw1-Pl";
+			// Beschreibung radio-controlled socket adapter switch actuator 1-channel
+			// Ger‰t Switch
+		}
+		elseif($HomematicType == "0042")
+		{
+			$HomematicTypeName = "HM-Sec-SD";
+			// Beschreibung radio-controlled smoke detector
+			// Ger‰t Smoke Sensor
+		}
+		elseif($HomematicType == "0030")
+		{
+			$HomematicTypeName = "HM-Sec-RHS";
+			// Beschreibung Rotary Handle Sensor
+			// Ger‰t Window
+		}
+		elseif($HomematicType == "0095")
+		{
+			$HomematicTypeName = "HM-CC-RT-DN";
+		}
+		elseif($HomematicType == "00AD")
+		{
+			$HomematicTypeName = "HM-TC-IT-WM-W-EU";
+		}
+		elseif($HomematicType == "0039")
+		{
+			$HomematicTypeName = "HM-CC-TC";
+			// Beschreibung ClimateControl-ThermoControl
+			// Ger‰t FHT
+		}
+		elseif($HomematicType == "0009")
+		{
+			$HomematicTypeName = "HM-LC-Sw2-FM";
+			// Beschreibung radio-controlled switch actuator 2-channel
+			// Ger‰t Switch
+		}
+		elseif($HomematicType == "0004")
+		{
+			$HomematicTypeName = "HM-LC-Sw1-FM";
+			// Beschreibung radio-controlled switch actuator 1-channel (flush-mount)
+			// Ger‰t Switch
+		}
+		elseif($HomematicType == "002F")
+		{
+			$HomematicTypeName = "HM-Sec-SC";
+			// Beschreibung Shutter Contact
+			// Ger‰t contact
+		}
+		elseif($HomematicType == "00B1")
+		{
+			$HomematicTypeName = "HM-Sec-SC-2";
+			// Beschreibung Shutter Contact
+			// Ger‰t contact
+		}
+		elseif($HomematicType == "0013")
+		{
+			$HomematicTypeName = "HM-LC-Dim1L-Pl";
+			// Beschreibung radio-controlled socket adapter 1-channel leading edge
+			// Ger‰t dimmer
+		}
+		elseif($HomematicType == "0069")
+		{
+			$HomematicTypeName = "HM-LC-Sw1PBU-FM";
+		}
+		elseif($HomematicType == "0068")
+		{
+			$HomematicTypeName = "HM-LC-Dim1TPBU-FM";
+		}
+		elseif($HomematicType == "006A")
+		{
+			$HomematicTypeName = "HM-LC-Bl1PBU-FM";
+		}
+		elseif($HomematicType == "0040")
+		{
+			$HomematicTypeName = "HM-WDS100-C6-O";
+			// Beschreibung radio-controlled weather data senor (OC3)
+			// Ger‰t Groﬂe Wetterstation
+		}
+		elseif($HomematicType == "00AC")
+		{
+			$HomematicTypeName = "HM-ES-PMSw1-PI";
+			// Beschreibung Powerswitch
+			// Ger‰t Powerswitch
+		}
+		elseif($HomematicType == "0066")
+		{
+			$HomematicTypeName = "HM-LC-Sw4-WM";
+			// Beschreibung 4 Kanal Aktor
+			// Ger‰t Switch
+		}
+		elseif($HomematicType == "00F4")
+		{
+			$HomematicTypeName = "HM-LC-RGBW-WM";
+			// Beschreibung sensor RGB Controller
+			// Ger‰t RGB
+		}
+		
+		return $HomematicTypeName;
 	}
 	
 	/********************************************************
