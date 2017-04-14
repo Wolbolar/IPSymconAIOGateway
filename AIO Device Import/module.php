@@ -695,7 +695,7 @@ class AIOImport extends IPSModule
 		}	
 	
 	//Homematic Instanz erstellen 
-	public function HomematicCreateInstance(string $InstName, string $Ident, string $HomematicAdress, string $HomematicData, string $HomematicSNR, string $HomematicType, integer $CategoryID)
+	public function HomematicCreateInstance(string $InstName, string $Ident, string $HomematicAddress, string $HomematicData, string $HomematicSNR, string $HomematicType, integer $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
@@ -727,7 +727,7 @@ class AIOImport extends IPSModule
 			IPS_SetName($InsID, $InstName); // Instanz benennen
 			IPS_SetIdent ($InsID, $Ident); // Ident
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
-			IPS_SetProperty($InsID, "HomematicAddress", $HomematicAdress); // HomematicAddress setzten.
+			IPS_SetProperty($InsID, "HomematicAddress", $HomematicAddress); // HomematicAddress setzten.
 			IPS_SetProperty($InsID, "HomematicData", $HomematicData); // HomematicData setzten.
 			IPS_SetProperty($InsID, "HomematicSNR", $HomematicSNR); // HomematicSNR setzten.
 			IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.	
@@ -896,13 +896,13 @@ class AIOImport extends IPSModule
 				$xml = new SimpleXMLElement(file_get_contents($file));
 					foreach($xml->xpath("//device[@type='".$type."']") as $device)
 					{
-					$adress = str_split($device['address']);
+					$address = str_split($device['address']);
 					$ITType = (string) $device['data'];
 					$InstName = (string) $device['id'];
 					// Anpassen der Daten
 					$ITType = ucfirst($ITType); //erster Buchstabe groß
-					$ITDeviceCode = strval($adress[2]+1); //Devicecode auf Original umrechen +1
-					$ITFamilyCode = $adress[0]; // Zahlencode in Buchstaben Familencode umwandeln
+					$ITDeviceCode = strval($address[2]+1); //Devicecode auf Original umrechen +1
+					$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
 					$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 					$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 					$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
@@ -1219,16 +1219,16 @@ class AIOImport extends IPSModule
 				$xml = new SimpleXMLElement(file_get_contents($file));
 					foreach($xml->xpath("//device[@type='".$type."']") as $device)
 					{
-					 $HomematicAdress = (string) $device['address'];
+					 $HomematicAddress = (string) $device['address'];
 					 $HomematicData = (string) $device['data'];
 					 $InstName = (string) $device['id'];
 					 $HomematicSNR = (string) $device['snr'];
 					 $HomematicType = (string) $device['typecode'];
 					// Anpassen der Daten
 					//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groß
-					$HomematicAdress = str_replace(".", "", $HomematicAdress);
-					$Ident = $HomematicAdress;
-					$this->HomematicCreateInstance($InstName, $Ident, $HomematicAdress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
+					$HomematicAddress = str_replace(".", "", $HomematicAddress);
+					$Ident = $HomematicSNR."_".substr($HomematicAddress, 0, 6);
+					$this->HomematicCreateInstance($InstName, $Ident, $HomematicAddress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
 					
 					}
 				}
@@ -1327,22 +1327,22 @@ class AIOImport extends IPSModule
 									 break;
 								case "HM": // Homematic
 									// Anpassen der Daten
-									$HomematicAdress = $address;
+									$HomematicAddress = $address;
 									$HomematicData = $data;
 									$HomematicSNR = $device->info->snr; // Seriennummer
 									$HomematicType = $device->info->typecode; // Typencode
 									// Anpassen der Daten
 									//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groß
-									$HomematicAdress = str_replace(".", "", $HomematicAdress);
-									$Ident = $HomematicAdress;
-									$this->HomematicCreateInstance($name, $Ident, $HomematicAdress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
+									$HomematicAddress = str_replace(".", "", $HomematicAddress);
+									$Ident = $HomematicSNR."_".substr($HomematicAddress, 0, 6);
+									$this->HomematicCreateInstance($name, $Ident, $HomematicAddress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
 									break;	 
 								case "IT": //Intertechno
 									// Anpassen der Daten
-									$adress = str_split($address);
+									$address = str_split($address);
 									$ITType = ucfirst($data); //erster Buchstabe groß
-									$ITDeviceCode = $adress[2]+1; //Devicecode auf Original umrechen +1
-									$ITFamilyCode = $adress[0]; // Zahlencode in Buchstaben Familencode umwandeln
+									$ITDeviceCode = $address[2]+1; //Devicecode auf Original umrechen +1
+									$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
 									$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 									$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 									$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
@@ -1363,7 +1363,7 @@ class AIOImport extends IPSModule
 									 break;			
 							}
 						}
-					//IR oder RF Codes adress (IR:01) Sendediode oder RF:01
+					//IR oder RF Codes address (IR:01) Sendediode oder RF:01
 					if (isset($device->info->ircodes) && $subtype == "RF" && $address == "RF:01") // Funkgerät
 						{
 							$codes = $device->info->ircodes->codes;
