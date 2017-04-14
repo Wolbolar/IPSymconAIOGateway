@@ -416,7 +416,7 @@ class AIOImport extends IPSModule
 		}
 	
 	//AIOITDevice Instanz erstellen 
-	public function ITCreateInstance(string $InstName, string $Ident, string $ITFamilyCode, string $ITDeviceCode, string $ITType, integer $CategoryID)
+	public function ITCreateInstance(string $InstName, string $Ident, string $ITFamilyCode, string $ITDeviceCode, string $ITType, int $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
@@ -445,7 +445,7 @@ class AIOImport extends IPSModule
 	}	
 	
 	//AIOFS20 Instanz erstellen 
-	public function FS20CreateInstance(string $InstName, string $Ident, string $AIOFS20Adresse, string $FS20Type, integer $CategoryID)
+	public function FS20CreateInstance(string $InstName, string $Ident, string $AIOFS20Adresse, string $FS20Type, int $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
@@ -473,7 +473,7 @@ class AIOImport extends IPSModule
 	}	
 	
 	//AIOIR Instanz erstellen 
-	public function IRCreateInstance(string $InstName, string $Ident, integer $CategoryID)
+	public function IRCreateInstance(string $InstName, string $Ident, int $CategoryID)
 	{
 	//echo "Instanz IR anlegen";
 	//Prüfen ob Instanz schon existiert
@@ -527,7 +527,7 @@ class AIOImport extends IPSModule
 			{
 			    $IRLabel = (string)"IRLabel".($i+1);
 				$IRCode = (string)"IRCode".($i+1);
-				$InsID = (integer)$InsID;
+				$InsID = (int)$InsID;
 				(string)$label = $ircodes[$i][0];
 				(string)$code = $ircodes[$i][1]; 
 				IPS_SetProperty($InsID, $IRLabel, $label); //IR Label setzten.
@@ -539,7 +539,7 @@ class AIOImport extends IPSModule
 	}
 	
 	//AIORF Instanz erstellen 
-	public function RFCreateInstance(string $InstName, string $Ident, string $Ident, integer $CategoryID)
+	public function RFCreateInstance(string $InstName, string $Ident, string $Ident, int $CategoryID)
 	{
 	//echo "Instanz RF anlegen";
 	//Prüfen ob Instanz schon existiert
@@ -575,7 +575,7 @@ class AIOImport extends IPSModule
 			{
 			    $RFLabel = (string)"RFLabel".($i+1);
 				$RFCode = (string)"RFCode".($i+1);
-				$InsID = (integer)$InsID;
+				$InsID = (int)$InsID;
 				(string)$label = $rfcodes[$i][0];
 				(string)$code = $rfcodes[$i][1]; 
 				IPS_SetProperty($InsID, $RFLabel, $label); //IR Label setzten.
@@ -587,7 +587,7 @@ class AIOImport extends IPSModule
 	}
 	
 	//AIOELRO Instanz erstellen 
-	public function ELROCreateInstance(string $InstName, string $Ident, string $ELROAdresse, string $ELROType, integer $CategoryID)
+	public function ELROCreateInstance(string $InstName, string $Ident, string $ELROAdresse, string $ELROType, int $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
@@ -614,7 +614,7 @@ class AIOImport extends IPSModule
 	}
 		
 	//AIOLight1 Instanz erstellen 
-	public function Light1CreateInstance(string $InstName, string $Ident, string $LEDAdresse, integer $CategoryID)
+	public function Light1CreateInstance(string $InstName, string $Ident, string $LEDAdresse, int $CategoryID)
 		{
 		//Prüfen ob Instanz schon existiert
 		$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
@@ -695,7 +695,7 @@ class AIOImport extends IPSModule
 		}	
 	
 	//Homematic Instanz erstellen 
-	public function HomematicCreateInstance(string $InstName, string $Ident, string $HomematicAddress, string $HomematicData, string $HomematicSNR, string $HomematicType, integer $CategoryID)
+	public function HomematicCreateInstance(string $InstName, string $Ident, string $HomematicAddress, string $HomematicData, string $HomematicSNR, string $HomematicType, int $CategoryID)
 	{
 	//Prüfen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);

@@ -955,7 +955,7 @@ class AIORFDevice extends IPSModule
 	}
 		
 	
-	public function SetPowerState(boolean $state) {
+	public function SetPowerState(bool $state) {
 		if ($state === true)
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
@@ -984,7 +984,7 @@ class AIORFDevice extends IPSModule
 			return $this->Send_RF($RF_send);
         }
 		
-	public function SendRFCode(integer $Value) {
+	public function SendRFCode(int $Value) {
 			//RF Code auslesen Value 0 entspricht RFCode 1
 			$RFCode = "RFCode".$Value;
 			if($Value <= 32 && !null == ($this->GetIDForIdent('RFCODES1')))
@@ -1128,7 +1128,7 @@ class AIORFDevice extends IPSModule
 	
 	//Anlernen eines IR Codes über das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
-	public function Learn(integer $irid)
+	public function Learn(int $irid)
 		{
 		$ip_aiogateway = $this->GetIPGateway();
 		$GatewayPassword = $this->GetPassword();	

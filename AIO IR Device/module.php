@@ -960,7 +960,8 @@ class AIOIRDevice extends IPSModule
 	}
 
 
-	public function SetPowerState(boolean $state) {
+	public function SetPowerState(bool $state)
+	{
 		if ($state === true)
 		{
 		SetValueBoolean($this->GetIDForIdent('Status'), $state);
@@ -979,18 +980,20 @@ class AIOIRDevice extends IPSModule
 
 
 	//Senden eines IR Befehls �ber das a.i.o. Gateway
-	public function SendIR1() {
+	public function SendIR1()
+	{
             $IR_send = $this->ReadPropertyString("IRCode1");
 			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
-        }
+    }
 
-	public function SendIR2() {
+	public function SendIR2()
+	{
             $IR_send = $this->ReadPropertyString("IRCode2");
 			return $this->Send_IR($IR_send, $this->GetIRDiode(), $this->GetExtIRDiode());
-        }
+    }
 
 
-	public function SendIRCode(integer $Value) {
+	public function SendIRCode(int $Value) {
 			//IR Code auslesen Value 0 entspricht IRCode 1
 			$IRCode = "IRCode".$Value;
 			if($Value <= 32 && !null == ($this->GetIDForIdent('IRCODES1')))
@@ -1224,7 +1227,7 @@ class AIOIRDevice extends IPSModule
 
 	//Anlernen eines IR Codes �ber das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
-	public function Learn(integer $irid)
+	public function Learn(int $irid)
 		{
 		$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword !== "")
@@ -1286,7 +1289,7 @@ class AIOIRDevice extends IPSModule
         $this->SetStatus(102);
 	}
 
-	public function Send($Text)
+	public function Send(string $Text)
 		{
 			$this->SendDataToParent(json_encode(Array("DataID" => "{B87AC955-F258-468B-92FE-F4E0866A9E18}", "Buffer" => $Text)));
 		}
