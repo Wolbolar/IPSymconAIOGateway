@@ -296,6 +296,12 @@ class AIOITDevice extends IPSModule
 	protected function SendCommand($action)
 	{
 		$IT_send = $this->Calculate();
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if(($ITFamilyCode == 7) && ($action == "80" || $action == "90"))
+			{
+				$IT_send = substr($IT_send, 0, 6);
+			}
 		$GatewayPassword = $this->GetPassword();
 		
 		if ($GatewayPassword !== "")
