@@ -45,7 +45,7 @@ class AIOITDevice extends IPSModule
 		else 
 		{
 			//Eingabe überprüfen
-			if (strlen($ITFamilyCode)<1 or strlen($ITFamilyCode)>1)
+			if (strlen($ITFamilyCode)<1)
 				{
 					$this->SetStatus(203);	
 				}
@@ -157,7 +157,7 @@ class AIOITDevice extends IPSModule
                         $this->Set90();
                         break;
 					case 10: //100
-                        $this->PowerOn();
+                        $this->Set100();
                         break;		
                 }
                 break;	
@@ -177,30 +177,38 @@ class AIOITDevice extends IPSModule
 	//Berechnet den Sendecode aus Familien und Devicecode 
 	// Umrechnung in Hexadezimal Code A entspricht 0, Device 1 entspricht 0
 	
-	protected function Calculate(){
+	protected function Calculate()
+	{
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$ITDeviceCode = $this->ReadPropertyString('ITDeviceCode');
-		$ITFamilyCode = ord(strtoupper($ITFamilyCode)) - ord('A');
-		$ITDeviceCode = intval($ITDeviceCode)-1;
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+		{
+			$ITFamilyCode = ord(strtoupper($ITFamilyCode)) - ord('A');
+			$ITDeviceCode = intval($ITDeviceCode)-1;
+		}
 		$IT_send = $ITFamilyCode.$ITDeviceCode;
 		return $IT_send;
 	}
 	
 	//IP Gateway 
-	protected function GetIPGateway(){
+	protected function GetIPGateway()
+	{
 		$ParentID = $this->GetParent();
 		$IPGateway = IPS_GetProperty($ParentID, 'Host');
 		return $IPGateway;
 	}
 	
-	protected function GetPassword(){
+	protected function GetPassword()
+	{
 		$ParentID = $this->GetParent();
 		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
 		return $GatewayPassword;
 	}
 	
 		
-	protected function SetPowerState($state) {
+	protected function SetPowerState($state)
+	{
 		$ITType = $this->ReadPropertyString('ITType');
 		if ($state === true && $ITType === "Dimmer")
 			{
@@ -211,40 +219,76 @@ class AIOITDevice extends IPSModule
 			SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
 			}
 		SetValueBoolean($this->GetIDForIdent('STATE'), $state);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
 		if ($state === true)
-		{
-		$action = "E";
-		return $this->SendCommand($action);
+		{		
+			if($ITFamilyCode == 1)
+			{
+				$action = "E";
+			}
+			else
+			{
+				$action = "90";
+			}	
+			return $this->SendCommand($action);
 		}
 		else
 		{
-		$action = "6";
-		return $this->SendCommand($action);
+			if($ITFamilyCode == 1)
+			{
+				$action = "6";
+			}
+			else
+			{
+				$action = "80";
+			}	
+			return $this->SendCommand($action);
 		}
 	}
 	
 	   	
-	//IT Befehl E schaltet an
-	public function PowerOn() {
+	//IT Befehl E bzw. 90 schaltet an
+	public function PowerOn()
+	{
 		if ($this->ReadPropertyString('ITType') == "Dimmer")
 		{
 			SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
 		}
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
-		$action = "E";
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$action = "E";
+			}
+			else
+			{
+				$action = "90";
+			}	
 		return $this->SendCommand($action);
-		}
+	}
 		
-	//IT Befehl 6 schaltet aus
-	public function PowerOff() {                
+	//IT Befehl 6 bzw. 80 schaltet aus
+	public function PowerOff()
+	{                
 		if ($this->ReadPropertyString('ITType') == "Dimmer")
 		{
 			SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
 		}
 		SetValueBoolean($this->GetIDForIdent('STATE'), false);
-		$action = "6";
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$action = "6";
+			}
+			else
+			{
+				$action = "80";
+			}	
 		return $this->SendCommand($action);
-		}
+	}
 		
 	//Senden eines Befehls an Intertechno
 	// Sendestring IT /command?XC_FNC=SendSC&type=IT&data=
@@ -283,69 +327,187 @@ class AIOITDevice extends IPSModule
 	//Dimmen Anschaltbefehl + 00, 10, 20 - F0
 	// 00, 10, 20, 30, 40, 50, 60, 70, 80, 90, A0, B0, C0, D0, E0, F0 ? Welche Dimmstufe
 	
+
 	// ? - Auf 10% dimmen
-	public function Set10() {
+	public function Set10()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 1);
-		$command = "E00";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E00";
+			}
+			else
+			{
+				$command = "00";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 	
 	// ? - Auf 20% dimmen
-	public function Set20() {
+	public function Set20()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 2);
-		$command = "E10";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E10";
+			}
+			else
+			{
+				$command = "10";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 		
 	// ? - Auf 30% dimmen
-	public function Set30() {
+	public function Set30()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 3);
-		$command = "E20";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E20";
+			}
+			else
+			{
+				$command = "20";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 40% dimmen
-	public function Set40() {
+	public function Set40()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 4);
-		$command = "E30";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E30";
+			}
+			else
+			{
+				$command = "30";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 50% dimmen
-	public function Set50() {
+	public function Set50()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 5);
-		$command = "E40";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E40";
+			}
+			else
+			{
+				$command = "50";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 60% dimmen
-	public function Set60() {
+	public function Set60()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 6);
-		$command = "E50";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E50";
+			}
+			else
+			{
+				$command = "70";
+			}	
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 70% dimmen
-	public function Set70() {
+	public function Set70()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 7);
-		$command = "E60";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E60";
+			}
+			else
+			{
+				$command = "90";
+			}
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 80% dimmen
-	public function Set80() {
+	public function Set80()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 8);
-		$command = "E70";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E70";
+			}
+			else
+			{
+				$command = "B0";
+			}
         return $this->SendCommand($command);
-        }
+    }
 
 	// ? - Auf 90% dimmen
-	public function Set90() {
+	public function Set90()
+	{
 		SetValueInteger($this->GetIDForIdent('Dimmer'), 9);
-		$command = "E80";
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E80";
+			}
+			else
+			{
+				$command = "D0";
+			}
         return $this->SendCommand($command);
-        }	
+    }	
 	
+	// ? - Auf 100% dimmen
+	public function Set100()
+	{
+		SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
+		SetValueBoolean($this->GetIDForIdent('STATE'), true);
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$lengthITFamilyCode = strlen($ITFamilyCode);
+		if($ITFamilyCode == 1)
+			{
+				$command = "E";
+			}
+			else
+			{
+				$command = "F0";
+			}
+        return $this->SendCommand($command);
+    }
+		
 	
 	//Anmelden eines IT Geräts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=IT

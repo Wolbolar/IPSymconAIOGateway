@@ -896,16 +896,26 @@ class AIOImport extends IPSModule
 				$xml = new SimpleXMLElement(file_get_contents($file));
 					foreach($xml->xpath("//device[@type='".$type."']") as $device)
 					{
-					$address = str_split($device['address']);
-					$ITType = (string) $device['data'];
-					$InstName = (string) $device['id'];
-					// Anpassen der Daten
-					$ITType = ucfirst($ITType); //erster Buchstabe groß
-					$ITDeviceCode = strval($address[2]+1); //Devicecode auf Original umrechen +1
-					$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
-					$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-					$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-					$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+						$address = $device['address'];
+						$ITType = (string) $device['data'];
+						$InstName = (string) $device['id'];
+						$lengthaddress = strlen($address);
+						$address = explode(".", $address);
+						// Anpassen der Daten
+						$ITType = ucfirst($ITType); //erster Buchstabe groß
+						if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
+						{
+							$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
+							$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
+							$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+							$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+							$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+						}
+						elseif($lengthaddress == 9) //neuer Code
+						{
+							$ITDeviceCode = $address[1]; // Devicecode
+							$ITFamilyCode = $address[0]; // Familencode
+						}
 					$this->ITCreateInstance($InstName, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
 					}
 				}
@@ -1339,13 +1349,23 @@ class AIOImport extends IPSModule
 									break;	 
 								case "IT": //Intertechno
 									// Anpassen der Daten
-									$address = str_split($address);
+									$lengthaddress = strlen($address);
+									$address = explode(".", $address);
+									// Anpassen der Daten
 									$ITType = ucfirst($data); //erster Buchstabe groß
-									$ITDeviceCode = $address[2]+1; //Devicecode auf Original umrechen +1
-									$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
-									$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-									$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-									$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+									if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
+									{
+										$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
+										$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
+										$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+										$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+										$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+									}
+									elseif($lengthaddress == 9) //neuer Code
+									{
+										$ITDeviceCode = $address[1]; // Devicecode
+										$ITFamilyCode = $address[0]; // Familencode
+									}
 									$this->ITCreateInstance($name, $Ident, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
 									 break;
 							}

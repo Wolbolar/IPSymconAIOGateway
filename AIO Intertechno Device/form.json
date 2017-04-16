@@ -60,7 +60,7 @@
                 {
                     "code": 203,
                     "icon": "error",
-                    "caption": "Familiencode besteht aus einem Buchstaben."
+                    "caption": "Familiencode besteht aus einem Buchstaben oder einer Zeichenfolge von 7 Zeichen."
                 },
 				{
                     "code": 204,
