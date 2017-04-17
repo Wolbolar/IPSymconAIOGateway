@@ -307,13 +307,17 @@ class AIOITDevice extends IPSModule
 		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
-			IPS_LogMessage( "Adresse:" , $IT_send );
-			IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
+			$this->SendDebug("Address",$IT_send,0);
+			$this->SendDebug("Action",$action,0);
+			$this->SendDebug("AIOGateway","Senden an Gateway mit Passwort",0);
+			$this->SendDebug("Send to AIO Gateway",utf8_decode($data->Buffer),0);
 		}
 		else
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
-			IPS_LogMessage( "Adresse:" , $IT_send );
+			$this->SendDebug("Address",$IT_send,0);
+			$this->SendDebug("Action",$action,0);
+			$this->SendDebug("Send to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action,0);
 		}
 		
 		if ($gwcheck == "{XC_SUC}")
@@ -323,9 +327,9 @@ class AIOITDevice extends IPSModule
 		elseif ($gwcheck == "{XC_AUT}")
 		{
 			//Passwort falsch
-			echo "Keine Authentizifierung möglich. Gateway Passwort ist falsch.";
-			IPS_LogMessage( "Adresse:" , $address );
-		IPS_LogMessage( "RTS Command:" , $command );
+			$this->SendDebug("AIOGateway","Keine Authentizifierung möglich. Gateway Passwort ist falsch.",0);
+			$this->SendDebug("Address",$address,0);
+			$this->SendDebug("RTS Command",$command,0);
 		}
 		return $this->response;
 	}
@@ -536,8 +540,8 @@ class AIOITDevice extends IPSModule
 			$this->response = false;
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
-			IPS_LogMessage( "IT Adresse:" , $address );
-			echo "Die Adresse vom IT Gerät konnte nicht angelernt werden.";
+			$this->SendDebug("IT Adresse",$address,0);
+			$this->SendDebug("AIO Gateway","Die Adresse vom IT Gerät konnte nicht angelernt werden.",0);
 			IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.			
 			}
 		else
@@ -549,29 +553,27 @@ class AIOITDevice extends IPSModule
 			if ($length == 25)
 				{
 				(string)$address = substr($address, 17, 4);
-				IPS_LogMessage( "IT Adresse:" , $address );
+				$this->SendDebug("IT Adresse",$address,0);
 				// Anpassen der Daten
-				$address = str_split($address);
-				$ITDeviceCode = $address[2].$address[3]; //Devicecode 
-				$ITFamilyCode = $address[0].$address[1]; // Familencode
-				$hexsfc = array("00", "01", "02", "03", "04", "05", "06", "07", "08", "09");
-				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-				$ITFamilyCode = str_replace($hexsfc, $itfc, $ITFamilyCode);
-				$hexsdc = array("00", "01", "02", "03", "04", "05", "06", "07", "08", "09");
-				$itdc = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-				$ITDeviceCode = str_replace($hexsdc, $itdc, $ITDeviceCode);
+				$address = explode(".", $address);
+				$ITDeviceCode = $address[1]; // Devicecode
+				$ITFamilyCode = $address[0]; // Familencode
+				$this->SendDebug("IT Device Code",$ITDeviceCode,0);
+				$this->SendDebug("IT Family Code",$ITFamilyCode,0);
 				}
 			elseif ($length == 21)
 				{
 				(string)$address = substr($address, 17, 2);
-				IPS_LogMessage( "IT Adresse:" , $address );
+				$this->SendDebug("IT Adresse",$address,0);
 				// Anpassen der Daten
-				$address = str_split($address);
+				$address = explode(".", $address);
 				$ITDeviceCode = ($address[1])+1; //Devicecode auf Original umrechen +1
 				$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
 				$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 				$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 				$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
+				$this->SendDebug("IT Device Code",$ITDeviceCode,0);
+				$this->SendDebug("IT Family Code",$ITFamilyCode,0);
 				}
 			$this->AddAddress($ITFamilyCode, $ITDeviceCode);
 			$this->response = true;	
@@ -588,8 +590,8 @@ class AIOITDevice extends IPSModule
 		IPS_SetProperty($instance, "ITDeviceCode", $ITDeviceCode); //ITDeviceCode setzten.
 		IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.
 		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "IT FamilyCode hinzugefügt:" , $ITFamilyCode );
-		IPS_LogMessage( "IT DeviceCode hinzugefügt:" , $ITDeviceCode );
+		$this->SendDebug("IT Device Code",$ITDeviceCode." hinzugefügt",0);
+		$this->SendDebug("IT Family Code",$ITFamilyCode." hinzugefügt",0);
 		// Status aktiv
 		$this->SetStatus(102);
 		$this->SetupVar();
