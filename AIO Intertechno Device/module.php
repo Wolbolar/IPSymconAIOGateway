@@ -182,7 +182,7 @@ class AIOITDevice extends IPSModule
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$ITDeviceCode = $this->ReadPropertyString('ITDeviceCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 		{
 			$ITFamilyCode = ord(strtoupper($ITFamilyCode)) - ord('A');
 			$ITDeviceCode = intval($ITDeviceCode)-1;
@@ -223,7 +223,7 @@ class AIOITDevice extends IPSModule
 		$lengthITFamilyCode = strlen($ITFamilyCode);
 		if ($state === true)
 		{		
-			if($ITFamilyCode == 1)
+			if($lengthITFamilyCode == 1)
 			{
 				$action = "E";
 			}
@@ -235,7 +235,7 @@ class AIOITDevice extends IPSModule
 		}
 		else
 		{
-			if($ITFamilyCode == 1)
+			if($lengthITFamilyCode == 1)
 			{
 				$action = "6";
 			}
@@ -258,7 +258,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$action = "E";
 			}
@@ -279,7 +279,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), false);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$action = "6";
 			}
@@ -298,26 +298,26 @@ class AIOITDevice extends IPSModule
 		$IT_send = $this->Calculate();
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if(($ITFamilyCode == 7) && ($action == "80" || $action == "90"))
+		if(($lengthITFamilyCode == 7) && ($action == "80" || $action == "90"))
 			{
 				$IT_send = substr($IT_send, 0, 6);
 			}
 		$GatewayPassword = $this->GetPassword();
-		
+		$aiogatewayip = $this->GetIPGateway();
 		if ($GatewayPassword !== "")
 		{
-			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+			$gwcheck = file_get_contents("http://".$aiogatewayip."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
 			$this->SendDebug("Address",$IT_send,0);
 			$this->SendDebug("Action",$action,0);
 			$this->SendDebug("AIOGateway","Senden an Gateway mit Passwort",0);
-			$this->SendDebug("Send to AIO Gateway",utf8_decode($data->Buffer),0);
+			$this->SendDebug("Send to AIO Gateway","http://".$aiogatewayip."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=IT&data=".$IT_send.$action,0);
 		}
 		else
 		{
-			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
+			$gwcheck = file_get_contents("http://".$aiogatewayip."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action);
 			$this->SendDebug("Address",$IT_send,0);
 			$this->SendDebug("Action",$action,0);
-			$this->SendDebug("Send to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action,0);
+			$this->SendDebug("Send to AIO Gateway","http://".$aiogatewayip."/command?XC_FNC=SendSC&type=IT&data=".$IT_send.$action,0);
 		}
 		
 		if ($gwcheck == "{XC_SUC}")
@@ -345,7 +345,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E00";
 			}
@@ -363,7 +363,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E10";
 			}
@@ -381,7 +381,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E20";
 			}
@@ -399,7 +399,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E30";
 			}
@@ -417,7 +417,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E40";
 			}
@@ -435,7 +435,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E50";
 			}
@@ -453,7 +453,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E60";
 			}
@@ -471,7 +471,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E70";
 			}
@@ -489,7 +489,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E80";
 			}
@@ -507,7 +507,7 @@ class AIOITDevice extends IPSModule
 		SetValueBoolean($this->GetIDForIdent('STATE'), true);
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if($ITFamilyCode == 1)
+		if($lengthITFamilyCode == 1)
 			{
 				$command = "E";
 			}

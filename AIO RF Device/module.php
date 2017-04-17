@@ -238,8 +238,8 @@ class AIORFDevice extends IPSModule
 		$RFLabel1 = $this->ReadPropertyString("RFLabel1");
 		$RFLabel2 = $this->ReadPropertyString("RFLabel2");
 		$LearnRFCode = $this->ReadPropertyBoolean('LearnRFCode');
-		$NumberRFCodes = $this->ReadPropertyString("NumberRFCodes");
-		$RFStatus = $this->ReadPropertyString("RFStatus");
+		$NumberRFCodes = $this->ReadPropertyInteger("NumberRFCodes");
+		$RFStatus = $this->RegisterPropertyBoolean("RFStatus");
 		
 		//Mögliche Prüfungen durchführen
 		if ($LearnRFCode)
@@ -979,7 +979,7 @@ class AIORFDevice extends IPSModule
 			return $this->Send_RF($RF_send);
         }
 		
-	public function SendIR2() {
+	public function SendRF2() {
             $RF_send = $this->ReadPropertyString("RFCode2");
 			return $this->Send_RF($RF_send);
         }
@@ -1016,14 +1016,20 @@ class AIORFDevice extends IPSModule
 	protected function Send_RF($rf_code)
 		{
 		//Sendestring zum Senden eines RF Befehls {IP Gateway}/command?code={RF Code}&XC_FNC=Send2&ir=00&rf=01			
-		$GatewayPassword = $this->GetPassword();	
+		$GatewayPassword = $this->GetPassword();
+		$aiogatewayip = $this->GetIPGateway();
 		if ($GatewayPassword !== "")
 		{
-			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+			$gwcheck = file_get_contents("http://".$aiogatewayip."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+			$this->SendDebug("RF Code",$rf_code,0);
+			$this->SendDebug("AIOGateway","Senden an Gateway mit Passwort",0);
+			$this->SendDebug("Send to AIO Gateway","http://".$aiogatewayip."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01",0);
 		}
 		else
 		{
-			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+			$gwcheck = file_get_contents("http://".$aiogatewayip."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01");
+			$this->SendDebug("RF Code",$rf_code,0);
+			$this->SendDebug("Send to AIO Gateway","http://".$aiogatewayip."/command?code=".$rf_code."&XC_FNC=Send2&ir=00&rf=01",0);
 		}
 		if ($gwcheck == "{XC_SUC}")
 			{
@@ -1032,7 +1038,7 @@ class AIORFDevice extends IPSModule
 		elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
+			$this->SendDebug("AIOGateway","Keine Authentizifierung möglich. Gateway Passwort ist falsch.",0);
 			}
 		return $this->response;
 
@@ -1148,9 +1154,8 @@ class AIORFDevice extends IPSModule
 			$this->response = false;
 			//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$RFCode = "Das Gateway konnte keinen RFCode empfangen.";
-			IPS_LogMessage( "RFCode:" , $RFCode );
-			echo "Der RFCode konnte nicht angelernt werden.";
-			//IPS_SetProperty($instance, "LearnRFCode", false); //Haken entfernen.
+			$this->SendDebug("RF Code",$RFCode,0);
+			$this->SendDebug("AIO Gateway","Der RF Code konnte nicht angelernt werden.",0);
 			IPS_SetProperty($this->InstanceID, "LearnRFCode", false); //Haken entfernen.
 			}
 		else
@@ -1159,16 +1164,15 @@ class AIORFDevice extends IPSModule
 				(string)$RFCode = substr($RFCode, 17);
 				$length = strlen($RFCode);
 				$RFCode = substr($RFCode, 0, ($length-2));
-				IPS_LogMessage( "RF Code:" , $RFCode );
+				$this->SendDebug("RF Code",$RFCode,0);
 				$this->AddRFCode($RFCode, $irid);
-				echo "RF Code: ".$RFCode;
 				$this->response = true;	
 			}
 		
 		return $this->response;
 		}
 	
-	//IR Code und Label hinzufügen
+	// RF Code und Label hinzufügen
 	protected function AddRFCode($RFCode, $rfid)
 	{
 		$code = "RFCode".$rfid;
@@ -1186,7 +1190,7 @@ class AIORFDevice extends IPSModule
 		IPS_SetProperty($this->InstanceID, "NumberRFCodes", $NumberRFCodes); //RFCode setzten.	
 		IPS_SetProperty($this->InstanceID, "LearnRFCode", false); //Haken entfernen.
 		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "RFCode".$rfid." hinzugefügt:" , $RFCode );
+		$this->SendDebug("RFCode".$rfid,$RFCode." hinzugefügt",0);
 		// Status aktiv
         $this->SetStatus(102);	
 	}
