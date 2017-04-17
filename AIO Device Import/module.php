@@ -916,7 +916,7 @@ class AIOImport extends IPSModule
 							$ITDeviceCode = $address[1]; // Devicecode
 							$ITFamilyCode = $address[0]; // Familencode
 						}
-					$this->ITCreateInstance($InstName, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
+					$this->ITCreateInstance($name, $Ident, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
 					}
 				}
 			else
@@ -1307,7 +1307,8 @@ class AIOImport extends IPSModule
 				{
 					if (isset($device->info->address)) {
 						$address = $device->info->address; //Adresse
-						$Ident = $address;
+						$identaddress = str_replace(".", "", $address);
+						$Ident = $identaddress;
 						}
 					if (isset($device->info->data)) {
 						$data = $device->info->data; //Switch / Dimmer / shutter
@@ -1353,6 +1354,7 @@ class AIOImport extends IPSModule
 									$address = explode(".", $address);
 									// Anpassen der Daten
 									$ITType = ucfirst($data); //erster Buchstabe groﬂ
+									$Ident = $ITType."_".$identaddress;
 									if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
 									{
 										$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
