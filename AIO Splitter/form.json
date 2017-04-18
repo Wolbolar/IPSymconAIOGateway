@@ -6,12 +6,14 @@
                     "type": "CheckBox",
                     "caption": "Open"
                 },
-				{ "type": "Label", "label": "IP Adresse des AIO Gateway / Port Standard 1902" },
+				{ "type": "Label", "label": "IP Adresse des AIO Gateway" },
                 {
                     "name": "Host",
                     "type": "ValidationTextBox",
                     "caption": "IP Adresse"
                 },
+				{ "type": "Label", "label": "ältere AIO Gateway Modelle (z.B. V4, V4 Plus) / Port Standard 1902" },
+				{ "type": "Label", "label": "AIO Gateway Modelle ab V5 (V5 / V5 Plus) / Port Standard 1901, bitte passend einstellen" },
 				{
                     "name": "Port",
                     "type": "NumberSpinner",
