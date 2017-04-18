@@ -206,7 +206,48 @@ class AIOITDevice extends IPSModule
 		return $GatewayPassword;
 	}
 	
-		
+	protected function GetActionCommand($type)
+	{
+		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
+		$ITDeviceCode = $this->ReadPropertyString('ITDeviceCode');
+		$ITAddress =  $ITFamilyCode.$ITDeviceCode;
+		$ITaction = substr($ITAddress, 6, 2);
+		if($ITaction == "80")
+			{
+				if($type == "off")
+				{
+					$action = "80";
+				}
+				elseif($type == "on")
+				{
+					$action = "90";
+				}
+			}
+		elseif($ITaction == "81")
+			{
+				if($type == "off")
+				{
+					$action = "81";
+				}
+				elseif($type == "on")
+				{
+					$action = "91";
+				}	
+			}
+		elseif($ITaction == "00")
+			{
+				if($type == "off")
+				{
+					$action = "00";
+				}
+				elseif($type == "on")
+				{
+					$action = "10";
+				}	
+			}	
+		return $action;
+	}	
+	
 	protected function SetPowerState($state)
 	{
 		$ITType = $this->ReadPropertyString('ITType');
@@ -229,7 +270,7 @@ class AIOITDevice extends IPSModule
 			}
 			else
 			{
-				$action = "90";
+				$action = $this->GetActionCommand("on");
 			}	
 			return $this->SendCommand($action);
 		}
@@ -241,7 +282,7 @@ class AIOITDevice extends IPSModule
 			}
 			else
 			{
-				$action = "80";
+				$action = $this->GetActionCommand("off");
 			}	
 			return $this->SendCommand($action);
 		}
@@ -264,7 +305,7 @@ class AIOITDevice extends IPSModule
 			}
 			else
 			{
-				$action = "90";
+				$action = $this->GetActionCommand("on");
 			}	
 		return $this->SendCommand($action);
 	}
@@ -285,7 +326,7 @@ class AIOITDevice extends IPSModule
 			}
 			else
 			{
-				$action = "80";
+				$action = $this->GetActionCommand("off");
 			}	
 		return $this->SendCommand($action);
 	}
@@ -298,7 +339,7 @@ class AIOITDevice extends IPSModule
 		$IT_send = $this->Calculate();
 		$ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$lengthITFamilyCode = strlen($ITFamilyCode);
-		if(($lengthITFamilyCode == 7) && ($action == "80" || $action == "90"))
+		if($lengthITFamilyCode == 7)
 			{
 				$IT_send = substr($IT_send, 0, 6);
 			}
