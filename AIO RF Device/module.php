@@ -318,6 +318,8 @@ class AIORFDevice extends IPSModule
 	{
 		//$irprofilname = str_replace(' ','',(trim(IPS_GetName(IPS_GetInstance($this->InstanceID)["InstanceID"])))); //Profilname darf keine Leerzeichen enthalten !!!!
 		$rfprofilname = str_replace(' ','',(trim(IPS_GetName($this->InstanceID)))); //Profilname darf keine Leerzeichen enthalten !!!!
+		// Sonderzeichen entfernen
+		$rfprofilname = $this->clear_string($rfprofilname);
 		$profilname1 = $rfprofilname."1.AIORF";	
 		$profilname2 = $rfprofilname."2.AIORF";
 		$profilname3 = $rfprofilname."3.AIORF";
@@ -387,7 +389,33 @@ class AIORFDevice extends IPSModule
 			}
 	}
 			
-	
+	protected function clear_string($str, $how = '_')
+	{
+	$search = array("ä", "ö", "ü", "ß", "Ä", "Ö", 
+					"Ü", "&", "é", "á", "ó", 
+					" :)", " :D", " :-)", " :P", 
+					" :O", " ;D", " ;)", " ^^", 
+					" :|", " :-/", ":)", ":D", 
+					":-)", ":P", ":O", ";D", ";)", 
+					"^^", ":|", ":-/", "(", ")", "[", "]", 
+					"<", ">", "!", "\"", "§", "$", "%", "&", 
+					"/", "(", ")", "=", "?", "`", "´", "*", "'", 
+					"_", ":", ";", "²", "³", "{", "}", 
+					"\\", "~", "#", "+", ".", ",", 
+					"=", ":", "=)");
+	$replace = array("ae", "oe", "ue", "ss", "Ae", "Oe", 
+					 "Ue", "und", "e", "a", "o", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", "");
+	$str = str_replace($search, $replace, $str);
+	//$str = strtolower(preg_replace("/[^a-zA-Z0-9]+/", trim($how), $str));
+	$str = preg_replace("/[^a-zA-Z0-9]+/", trim($how), $str);
+	return $str;
+	}
 	
 	
 	protected function ArrRFCodes()
@@ -1072,7 +1100,7 @@ class AIORFDevice extends IPSModule
 
 	
     
-	protected function RegisterProfileIntegerIR($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
+	protected function RegisterProfileIntegerRF($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
         
         if(!IPS_VariableProfileExists($Name)) {
@@ -1090,7 +1118,7 @@ class AIORFDevice extends IPSModule
     }
    
 		
-	protected function IRProfileAssociation($Name, $MinValue, $MaxValue, $start)
+	protected function RFProfileAssociation($Name, $MinValue, $MaxValue, $start)
 	{
 			//echo "Start: ".$start." MinVal: ".$MinValue." MaxVal: ".$MaxValue."<br>";
 			$RFCodes = $this->ArrRFCodes();
@@ -1127,8 +1155,8 @@ class AIORFDevice extends IPSModule
 			$Prefix = "";
 			$Suffix = "";
 			
-			$this->RegisterProfileIntegerIR($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, 0);
-			$this->IRProfileAssociation($Name, $MinValue, $MaxValue, $start);
+			$this->RegisterProfileIntegerRF($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, 0);
+			$this->RFProfileAssociation($Name, $MinValue, $MaxValue, $start);
     }
 	
 	
@@ -1186,18 +1214,14 @@ class AIORFDevice extends IPSModule
 			}
 		$NumberRFCodes = $this->ReadPropertyString("NumberRFCodes");
 		$NumberRFCodes = $NumberRFCodes + 1;
-		$this->CreateProfileIR($NumberRFCodes);
+		$this->CreateProfileRF($NumberRFCodes);
 		IPS_SetProperty($this->InstanceID, "NumberRFCodes", $NumberRFCodes); //RFCode setzten.	
 		IPS_SetProperty($this->InstanceID, "LearnRFCode", false); //Haken entfernen.
 		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
 		$this->SendDebug("RFCode".$rfid,$RFCode." hinzugefügt",0);
 		// Status aktiv
         $this->SetStatus(102);	
-	}
-	
-	
-   
-	
+	}	
 	
 }
 

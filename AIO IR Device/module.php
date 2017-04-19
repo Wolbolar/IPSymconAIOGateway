@@ -311,6 +311,8 @@ class AIOIRDevice extends IPSModule
 	{
 		//$irprofilname = str_replace(' ','',(trim(IPS_GetName(IPS_GetInstance($this->InstanceID)["InstanceID"])))); //Profilname darf keine Leerzeichen enthalten !!!!
 		$irprofilname = str_replace(' ','',(trim(IPS_GetName($this->InstanceID)))); //Profilname darf keine Leerzeichen enthalten !!!!
+		// Sonderzeichen entfernen
+		$irprofilname = $this->clear_string($irprofilname);
 		$profilname1 = $irprofilname."1.AIOIR";
 		$profilname2 = $irprofilname."2.AIOIR";
 		$profilname3 = $irprofilname."3.AIOIR";
@@ -380,7 +382,33 @@ class AIOIRDevice extends IPSModule
 			}
 	}
 
-
+	protected function clear_string($str, $how = '_')
+	{
+	$search = array("ä", "ö", "ü", "ß", "Ä", "Ö", 
+					"Ü", "&", "é", "á", "ó", 
+					" :)", " :D", " :-)", " :P", 
+					" :O", " ;D", " ;)", " ^^", 
+					" :|", " :-/", ":)", ":D", 
+					":-)", ":P", ":O", ";D", ";)", 
+					"^^", ":|", ":-/", "(", ")", "[", "]", 
+					"<", ">", "!", "\"", "§", "$", "%", "&", 
+					"/", "(", ")", "=", "?", "`", "´", "*", "'", 
+					"_", ":", ";", "²", "³", "{", "}", 
+					"\\", "~", "#", "+", ".", ",", 
+					"=", ":", "=)");
+	$replace = array("ae", "oe", "ue", "ss", "Ae", "Oe", 
+					 "Ue", "und", "e", "a", "o", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", 
+					 "", "", "", "", "", "", "", "", "", "");
+	$str = str_replace($search, $replace, $str);
+	//$str = strtolower(preg_replace("/[^a-zA-Z0-9]+/", trim($how), $str));
+	$str = preg_replace("/[^a-zA-Z0-9]+/", trim($how), $str);
+	return $str;
+	}
 
 
 	protected function ArrIRCodes()
