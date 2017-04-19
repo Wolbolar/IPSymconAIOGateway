@@ -239,7 +239,7 @@ class AIORFDevice extends IPSModule
 		$RFLabel2 = $this->ReadPropertyString("RFLabel2");
 		$LearnRFCode = $this->ReadPropertyBoolean('LearnRFCode');
 		$NumberRFCodes = $this->ReadPropertyInteger("NumberRFCodes");
-		$RFStatus = $this->RegisterPropertyBoolean("RFStatus");
+		$RFStatus = $this->ReadPropertyBoolean("RFStatus");
 		
 		//Mögliche Prüfungen durchführen
 		if ($LearnRFCode)
