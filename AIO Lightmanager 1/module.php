@@ -256,8 +256,8 @@ class AIOLightmanager1 extends IPSModule
 	{
 		$response = false;
 		$GatewayPassword = $this->GetPassword();
-		IPS_LogMessage( "LED Adresse:" , $adress );
-		IPS_LogMessage( "LED Command:" , $command );
+		$this->SendDebug("AIO Gateway","LED Adresse: ".$adress,0);
+		$this->SendDebug("AIO Gateway","LED Command:".$command,0);
 		if ($GatewayPassword !== "")
 		{
 			$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=LS&data=".$adress.$command);
@@ -453,7 +453,7 @@ class AIOLightmanager1 extends IPSModule
 			$this->response = false;
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
-			IPS_LogMessage( "LED Adresse:" , $address );
+			$this->SendDebug("AIO Gateway","LED Adresse: ".$adress,0);
 			echo "Die Adresse des LED Controllers konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnAddressLED", false); //Haken entfernen.			
 			}
@@ -462,8 +462,7 @@ class AIOLightmanager1 extends IPSModule
 				//Adresse auswerten {XC_SUC}
 				//bei Erfolg {XC_SUC}{"CODE","ABCDEF00"} erste 6 Stellen sind die Adresse
 				(string)$address = substr($address, 17, 3);
-				IPS_LogMessage( "LED Adresse:" , $address );
-				//echo "Adresse des LED Controllers: ".$address;
+				$this->SendDebug("AIO Gateway","LED Adresse: ".$adress,0);
 				$this->AddAddress($address);
 				$this->response = true;	
 			}

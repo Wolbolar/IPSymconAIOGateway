@@ -1058,99 +1058,99 @@ class AIOIRDevice extends IPSModule
 				{
 				case "02":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 1 Interne Sendediode" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 1 Interne Sendediode senden",0);
 					break;
 
 				case "12":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 1 Externe Sendediode 1" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 1 Externe Sendediode 1 senden",0);
 					break;
 
 				case "22":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 1 Externe Sendediode 2" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 1 Externe Sendediode 2 senden",0);
 					break;
 
 				case "32":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 1 Externe Sendediode 3" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 1 Externe Sendediode 3 senden",0);
 					break;
 
 				case "03":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 2 Interne Sendediode" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 2 Interne Sendediode senden",0);
 					break;
 
 				case "13":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 2 Externe Sendediode 1" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 2 Externe Sendediode 1 senden",0);
 					break;
 
 				case "23":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 2 Externe Sendediode 2" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 2 Externe Sendediode 2 senden",0);
 					break;
 
 				case "33":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 2 Externe Sendediode 3" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 2 Externe Sendediode 3 senden",0);
 					break;
 
 				case "04":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 3 Interne Sendediode" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 3 Interne Sendediode senden",0);
 					break;
 
 				case "14":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 3 Externe Sendediode 1" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 3 Externe Sendediode 1 senden",0);
 					break;
 
 				case "24":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 3 Externe Sendediode 2" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 3 Externe Sendediode 2 senden",0);
 					break;
 
 				case "34":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 3 Externe Sendediode 3" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 3 Externe Sendediode 3 senden",0);
 					break;
 
 				case "05":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 4 Interne Sendediode" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 4 Interne Sendediode senden",0);
 					break;
 
 				case "15":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 4 Externe Sendediode 1" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 4 Externe Sendediode 1 senden",0);
 					break;
 
 				case "25":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 4 Externe Sendediode 2" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 4 Externe Sendediode 2 senden",0);
 					break;
 
 				case "35":
 					$IRDiode = "00";
-					IPS_LogMessage( "IR Command �ber Extender senden:" , "Extender 4 Externe Sendediode 3" );
+					$this->SendDebug("AIO IR Device","IR Command über Extender 4 Externe Sendediode 3 senden",0);
 					break;
 
 				case "00":
-					IPS_LogMessage( "IR Command �ber AIO Gateway senden:" , "Sendediode ".$IRDiode );
+					$this->SendDebug("AIO IR Device","IR Command über AIO Gateway senden mit Sendediode ".$IRDiode,0);
 					break;
 				}
 			$GatewayPassword = $this->GetPassword();
 			if ($GatewayPassword !== "")
 			{
 				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
-				IPS_LogMessage( "IRCode:" , $ir_code );
-				IPS_LogMessage( "AIOGateway:" , "Senden an Gateway mit Passwort" );
+				$this->SendDebug("AIO IR Device","IRCode: ".$ir_code,0);
+				$this->SendDebug("AIO IR Device","Senden an Gateway mit Passwort",0);
 			}
 			else
 			{
 				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?code=".$ir_code."&XC_FNC=Send2&ir=".$IRDiode."&rf=".$EXTIRDiode);
-				IPS_LogMessage( "IRCode:" , $ir_code );
+				$this->SendDebug("AIO IR Device","IRCode: ".$ir_code,0);
 			}
 			if ($gwcheck == "{XC_SUC}")
 				{
@@ -1159,7 +1159,8 @@ class AIOIRDevice extends IPSModule
 			elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung m�glich. Das Passwort f�r das Gateway ist falsch.";
+			$this->SendDebug("AIO IR Device","Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.",0);
+			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
 			}
 			return $this->response;
 
@@ -1267,14 +1268,14 @@ class AIOIRDevice extends IPSModule
 				$ircode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Learn");
 			}
 
-		//kurze Pause w�hrend das Gateway im Lernmodus ist
+		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($ircode == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
 			$this->response = false;
 			//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$ircode = "Das Gateway konnte keinen IRCode empfangen.";
-			IPS_LogMessage( "IRCode:" , $ircode );
+			$this->SendDebug("AIO IR Device","Das Gateway konnte keinen IRCode empfangen.",0);
 			echo "Der IRCode konnte nicht angelernt werden.";
 			//IPS_SetProperty($instance, "LearnIRCode", false); //Haken entfernen.
 			IPS_SetProperty($this->InstanceID, "LearnIRCode", false); //Haken entfernen.
@@ -1285,16 +1286,15 @@ class AIOIRDevice extends IPSModule
 				(string)$ircode = substr($ircode, 17);
 				$length = strlen($ircode);
 				$ircode = substr($ircode, 0, ($length-2));
-				IPS_LogMessage( "IR Code:" , $ircode );
+				$this->SendDebug("AIO IR Device","IR Code: ".$ircode,0);
 				$this->AddIRCode($ircode, $irid);
-				echo "IR Code: ".$ircode;
 				$this->response = true;
 			}
 
 		return $this->response;
 		}
 
-	//IR Code und Label hinzuf�gen
+	//IR Code und Label hinzufügen
 	protected function AddIRCode($ircode, $irid)
 	{
 		$code = "IRCode".$irid;
@@ -1312,7 +1312,7 @@ class AIOIRDevice extends IPSModule
 		IPS_SetProperty($this->InstanceID, "NumberIRCodes", $NumberIRCodes); //IRCode setzten.
 		IPS_SetProperty($this->InstanceID, "LearnIRCode", false); //Haken entfernen.
 		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration �bernehmen
-		IPS_LogMessage( "IRCode".$irid." hinzugef�gt:" , $ircode );
+		$this->SendDebug("AIO IR Device","IRCode".$irid." hinzugefügt: ".$ircode,0);
 		// Status aktiv
         $this->SetStatus(102);
 	}
@@ -1325,8 +1325,8 @@ class AIOIRDevice extends IPSModule
 	public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
-			IPS_LogMessage("IOTest", utf8_decode($data->Buffer));
-
+			$this->SendDebug("AIO IR Device",utf8_decode($data->Buffer),0);
+			
 			//Parse and write values to our variables
 
 		}

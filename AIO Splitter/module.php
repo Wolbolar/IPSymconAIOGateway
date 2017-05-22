@@ -1,4 +1,4 @@
-<?
+ï»¿<?
 
 require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
 
@@ -36,7 +36,7 @@ class AIOSplitter extends IPSModule
 		$this->RegisterVariableString("ITIN", "Letzter Intertechno Befehl", "", 6);
 		$this->RegisterVariableString("ELROIN", "Letzter ELRO Befehl", "", 7);
 		
-//IP Prüfen
+//IP PrÃ¼fen
 		$ip = $this->ReadPropertyString('Host');
 		$GatewayLED = $this->ReadPropertyBoolean("GatewayLED");
 		if ($GatewayLED)
@@ -72,7 +72,7 @@ class AIOSplitter extends IPSModule
 					$ParentOpen = $this->ReadPropertyBoolean('Open');
 					
 					
-				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt später Exception.
+				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt spÃ¤ter Exception.
 					if (!$ParentOpen)
 						$this->SetStatus(104);
 
@@ -94,7 +94,7 @@ class AIOSplitter extends IPSModule
 		}
 		else
 			{
-			$this->SetStatus(203); //IP Adresse ist ungültig 
+			$this->SetStatus(203); //IP Adresse ist ungÃ¼ltig 
 			}	
 		
 
@@ -119,8 +119,8 @@ class AIOSplitter extends IPSModule
     }
 
 		/**
-        * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+        * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
         *
         *
         */
@@ -131,7 +131,7 @@ class AIOSplitter extends IPSModule
 			switch($Ident) {
 				case "Farbe":
 					switch($Value) {
-						case 0: //Weiß
+						case 0: //WeiÃŸ
 							$this->White();
 							break;
 						case 1: //Blue
@@ -344,10 +344,10 @@ class AIOSplitter extends IPSModule
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 für transparent
-		IPS_SetVariableProfileAssociation($Name, 0, "Weiß", "", 0xFFFFFFF);
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF fÃ¼r Blau). Sonderfall: -1 fÃ¼r transparent
+		IPS_SetVariableProfileAssociation($Name, 0, "WeiÃŸ", "", 0xFFFFFFF);
 		IPS_SetVariableProfileAssociation($Name, 1, "Blau", "", 0x013ADF);
-		IPS_SetVariableProfileAssociation($Name, 2, "Grün", "", 0x088A08);
+		IPS_SetVariableProfileAssociation($Name, 2, "GrÃ¼n", "", 0x088A08);
 		IPS_SetVariableProfileAssociation($Name, 3, "Rot", "", 0xFE2E2E);
 		IPS_SetVariableProfileAssociation($Name, 4, "Aus", "", 0x585858);     
     }
@@ -358,7 +358,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0105";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 0);
-			IPS_LogMessage( "LED Gateway:" , "Weiß" );
+			$this->SendDebug("AIO Gateway","LED weiÃŸ",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
@@ -368,7 +368,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0102";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 1);
-			IPS_LogMessage( "LED Gateway:" , "Blau" );
+			$this->SendDebug("AIO Gateway","LED blau",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
@@ -378,7 +378,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0103";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 2);
-			IPS_LogMessage( "LED Gateway:" , "Grün" );
+			$this->SendDebug("AIO Gateway","LED grÃ¼n",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
@@ -388,7 +388,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0106";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 3);
-			IPS_LogMessage( "LED Gateway:" , "Rot" );
+			$this->SendDebug("AIO Gateway","LED rot",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
@@ -398,7 +398,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0101";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 4);
-			IPS_LogMessage( "LED Gateway:" , "Aus" );
+			$this->SendDebug("AIO Gateway","LED aus",0);
 			return $this->Set_LEDGW($adress, $command);
 		}	
 	
@@ -425,7 +425,7 @@ class AIOSplitter extends IPSModule
 			 
 		//echo utf8_decode($data->Buffer);
 	 
-		// Weiterleitung zu allen Gerät-/Device-Instanzen
+		// Weiterleitung zu allen GerÃ¤t-/Device-Instanzen
 		$this->SendDataToChildren(json_encode(Array("DataID" => "{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}", "Buffer" => $data->Buffer))); //AIOSplitter Interface GUI
 	}
 
@@ -439,8 +439,8 @@ class AIOSplitter extends IPSModule
 		$data = json_decode($JSONString);
 		$this->SendDebug("ForwardData AIO Gateway Splitter",utf8_decode($data->Buffer),0);
 			 
-		// Hier würde man den Buffer im Normalfall verarbeiten
-		// z.B. CRC prüfen, in Einzelteile zerlegen
+		// Hier wÃ¼rde man den Buffer im Normalfall verarbeiten
+		// z.B. CRC prÃ¼fen, in Einzelteile zerlegen
 		try
 		{
 			//
