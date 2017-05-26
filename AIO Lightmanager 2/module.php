@@ -379,7 +379,7 @@ class AIOLightmanager2 extends IPSModule
         }
 		
 		
-	public function Colorselect(integer $Value)
+	public function Colorselect(int $Value)
 		{
             SetValueInteger($this->GetIDForIdent('Farbauswahl'), $Value);
 			
