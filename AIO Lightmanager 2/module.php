@@ -27,7 +27,7 @@ class AIOLightmanager2 extends IPSModule
 
 		//Mögliche Prüfungen durchführen
 		$LEDAdresse = $this->ReadPropertyString('LEDAdresse');
-		$LearnAddressLED = $this->ReadPropertyString('LearnAddressLED');
+		$LearnAddressLED = $this->ReadPropertyBoolean('LearnAddressLED');
 				
 		if ($LearnAddressLED)
 		{

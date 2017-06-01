@@ -1,4 +1,4 @@
-ï»¿<?
+<?
 
 require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
 
@@ -72,7 +72,7 @@ class AIOSplitter extends IPSModule
 					$ParentOpen = $this->ReadPropertyBoolean('Open');
 					
 					
-				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt spÃ¤ter Exception.
+				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt später Exception.
 					if (!$ParentOpen)
 						$this->SetStatus(104);
 
@@ -94,7 +94,7 @@ class AIOSplitter extends IPSModule
 		}
 		else
 			{
-			$this->SetStatus(203); //IP Adresse ist ungÃ¼ltig 
+			$this->SetStatus(203); //IP Adresse ist ungültig 
 			}	
 		
 
@@ -119,8 +119,8 @@ class AIOSplitter extends IPSModule
     }
 
 		/**
-        * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
-        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
+        * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
+        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
         *
         *
         */
@@ -131,7 +131,7 @@ class AIOSplitter extends IPSModule
 			switch($Ident) {
 				case "Farbe":
 					switch($Value) {
-						case 0: //WeiÃŸ
+						case 0: //Weiß
 							$this->White();
 							break;
 						case 1: //Blue
@@ -344,10 +344,10 @@ class AIOSplitter extends IPSModule
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF fÃ¼r Blau). Sonderfall: -1 fÃ¼r transparent
-		IPS_SetVariableProfileAssociation($Name, 0, "WeiÃŸ", "", 0xFFFFFFF);
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 für transparent
+		IPS_SetVariableProfileAssociation($Name, 0, "Weiß", "", 0xFFFFFFF);
 		IPS_SetVariableProfileAssociation($Name, 1, "Blau", "", 0x013ADF);
-		IPS_SetVariableProfileAssociation($Name, 2, "GrÃ¼n", "", 0x088A08);
+		IPS_SetVariableProfileAssociation($Name, 2, "Grün", "", 0x088A08);
 		IPS_SetVariableProfileAssociation($Name, 3, "Rot", "", 0xFE2E2E);
 		IPS_SetVariableProfileAssociation($Name, 4, "Aus", "", 0x585858);     
     }
@@ -358,7 +358,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0105";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 0);
-			$this->SendDebug("AIO Gateway","LED weiÃŸ",0);
+			$this->SendDebug("AIO Gateway","LED weiß",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
