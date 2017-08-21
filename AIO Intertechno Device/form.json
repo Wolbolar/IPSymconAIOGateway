@@ -12,14 +12,14 @@
                     "type": "ValidationTextBox",
                     "caption": "Einzel Code"
                 },
-				{ "type": "Label", "label": "Intertechno Gerätetyp (Switch / Dimmer):"},
-				{ "name": "ITType",   "type": "Select",            "caption": "Gerätetyp", 
+				{ "type": "Label", "label": "Intertechno GerÃ¤tetyp (Switch / Dimmer):"},
+				{ "name": "ITType",   "type": "Select",            "caption": "GerÃ¤tetyp",
                     "options": [ 
                                  { "label": "Switch",                   "value": "Switch" },
                                  { "label": "Dimmer",        			"value": "Dimmer ITLR-300" }
                   ] },
-				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein Intertechno Gerät angelernt werden soll" },
-				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die Power Taste der Fernbedienung gedrückt werden." },
+				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein Intertechno GerÃ¤t angelernt werden soll" },
+				{ "type": "Label", "label": "Nach DrÃ¼cken von Ã¼bernehmen muss die Power Taste der Fernbedienung gedrÃ¼ckt werden." },
 				{ "type": "CheckBox", "name": "LearnITCode", "caption": "IT Code anlernen" } 
             ],
     "actions":
@@ -45,7 +45,7 @@
 				{
                     "code": 102,
                     "icon": "active",
-                    "caption": "Konfiguration gültig."
+                    "caption": "Konfiguration gÃ¼ltig."
                 },
                 {
                     "code": 104,
@@ -55,7 +55,7 @@
                 {
                     "code": 202,
                     "icon": "error",
-                    "caption": "Eingabe ungültig. Felder dürfen nicht leer sein."
+                    "caption": "Eingabe ungÃ¼ltig. Felder dÃ¼rfen nicht leer sein."
                 },
                 {
                     "code": 203,

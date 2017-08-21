@@ -24,13 +24,13 @@
                     "type": "ValidationTextBox",
                     "caption": "AIO FS 20 Adresse"
                 },
-				{ "name": "FS20Type",   "type": "Select",            "caption": "FS20 Gerätetyp", 
+				{ "name": "FS20Type",   "type": "Select",            "caption": "FS20 GerÃ¤tetyp",
                     "options": [ 
                                  { "label": "Switch",                   "value": "Switch" },
                                  { "label": "Dimmer",        			"value": "Dimmer" }
                   ] },
-				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein FS20 Gerät angelernt werden soll" },
-				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die Power Taste der Fernbedienung gedrückt werden." },
+				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein FS20 GerÃ¤t angelernt werden soll" },
+				{ "type": "Label", "label": "Nach DrÃ¼cken von Ã¼bernehmen muss die Power Taste der Fernbedienung gedrÃ¼ckt werden." },
 				{ "type": "CheckBox", "name": "LearnFS20Address", "caption": "FS20 Adresse anlernen" } 	
             ],
     "actions":
@@ -58,7 +58,7 @@
 				{
                     "code": 102,
                     "icon": "active",
-                    "caption": "Konfiguration gültig."
+                    "caption": "Konfiguration gÃ¼ltig."
                 },
                 {
                     "code": 104,
@@ -68,7 +68,7 @@
                 {
                     "code": 202,
                     "icon": "error",
-                    "caption": "Angaben ungültig. Felder dürfen nicht leer sein."
+                    "caption": "Angaben ungÃ¼ltig. Felder dÃ¼rfen nicht leer sein."
                 },
                 {
                     "code": 203,
@@ -98,7 +98,7 @@
 				{
                     "code": 208,
                     "icon": "error",
-                    "caption": "Berechnete Adresse und Eingabe stimmen nicht überein."
+                    "caption": "Berechnete Adresse und Eingabe stimmen nicht Ã¼berein."
                 }
             ]
 }

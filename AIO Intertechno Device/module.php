@@ -91,7 +91,7 @@ class AIOITDevice extends IPSModule
 					
 		// Variablen bei Dimmer anlegen
 		$ITType = $this->ReadPropertyString('ITType');
-		if ($ITType === "Dimmer")
+		if ($ITType === "Dimmer ITLR-300")
 			{
 			$this->RegisterVariableInteger("Dimmer", "Dimmer", "IntertechnoDimmer.AIOIT", 2);
 			$this->EnableAction("Dimmer");
@@ -558,7 +558,7 @@ class AIOITDevice extends IPSModule
     }
 		
 	
-	//Anmelden eines IT Ger�ts an das a.i.o. gateway:
+	//Anmelden eines IT Geräts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=IT
 	public function Learn()
 		{
@@ -572,7 +572,7 @@ class AIOITDevice extends IPSModule
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=IT");
 		}
 		
-		//kurze Pause w�hrend das Gateway im Lernmodus ist
+		//kurze Pause während das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -587,7 +587,7 @@ class AIOITDevice extends IPSModule
 			{
 			//Adresse auswerten {XC_SUC}
 			//bei Erfolg {XC_SUC}{"CODE":"03"}
-			//bei machen R�ckmeldung {XC_SUC}{"CODE":"010006"}	 //FC 01 = B DC 00 = 1 und an/aus
+			//bei machen Rückmeldung {XC_SUC}{"CODE":"010006"}	 //FC 01 = B DC 00 = 1 und an/aus
 			$length = strlen($address);
 			if ($length == 25)
 				{
