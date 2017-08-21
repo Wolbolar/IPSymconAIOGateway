@@ -3,6 +3,10 @@
 	"author": "Fonzo",
 	"name": "Mediola AIO Gateway",
 	"url": "www.mediola.com",
+	"compatibility": {
+	"version": "4.2",
+	"date": 1492639200
+	},
 	"version": "0.1.1",
 	"build": 0,
 	"date": 0

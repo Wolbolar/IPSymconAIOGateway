@@ -11,7 +11,7 @@ class AIOITDevice extends IPSModule
         //Never delete this line!
         parent::Create();
 
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		
 		$this->RegisterPropertyString("ITFamilyCode", "");
@@ -28,7 +28,7 @@ class AIOITDevice extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
 		
-		// ITFamilyCode und ITDeviceCode prüfen
+		// ITFamilyCode und ITDeviceCode prÃ¼fen
         $ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$ITDeviceCode = $this->ReadPropertyString('ITDeviceCode');
   		$LearnITCode = $this->ReadPropertyBoolean('LearnITCode');
@@ -39,12 +39,12 @@ class AIOITDevice extends IPSModule
 		}
 		elseif ( $ITFamilyCode == '' or $ITDeviceCode == '')
         {
-            // Status Error Felder dürfen nicht leer sein
+            // Status Error Felder dÃ¼rfen nicht leer sein
             $this->SetStatus(202);
         }
 		else 
 		{
-			//Eingabe überprüfen
+			//Eingabe Ã¼berprÃ¼fen
 			if (strlen($ITFamilyCode)<1)
 				{
 					$this->SetStatus(203);	
@@ -78,8 +78,8 @@ class AIOITDevice extends IPSModule
 	}
 		
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
     *
 	* PUBLIC
     */
@@ -368,9 +368,7 @@ class AIOITDevice extends IPSModule
 		elseif ($gwcheck == "{XC_AUT}")
 		{
 			//Passwort falsch
-			$this->SendDebug("AIOGateway","Keine Authentizifierung möglich. Gateway Passwort ist falsch.",0);
-			$this->SendDebug("Address",$address,0);
-			$this->SendDebug("RTS Command",$command,0);
+			$this->SendDebug("AIOGateway","Keine Authentizifierung mÃ¶glich. Gateway Passwort ist falsch.",0);
 		}
 		return $this->response;
 	}
@@ -560,7 +558,7 @@ class AIOITDevice extends IPSModule
     }
 		
 	
-	//Anmelden eines IT Geräts an das a.i.o. gateway:
+	//Anmelden eines IT Gerï¿½ts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=IT
 	public function Learn()
 		{
@@ -574,7 +572,7 @@ class AIOITDevice extends IPSModule
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=IT");
 		}
 		
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wï¿½hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -582,14 +580,14 @@ class AIOITDevice extends IPSModule
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
 			$this->SendDebug("IT Adresse",$address,0);
-			$this->SendDebug("AIO Gateway","Die Adresse vom IT Gerät konnte nicht angelernt werden.",0);
+			$this->SendDebug("AIO Gateway","Die Adresse vom IT GerÃ¤t konnte nicht angelernt werden.",0);
 			IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.			
 			}
 		else
 			{
 			//Adresse auswerten {XC_SUC}
 			//bei Erfolg {XC_SUC}{"CODE":"03"}
-			//bei machen Rückmeldung {XC_SUC}{"CODE":"010006"}	 //FC 01 = B DC 00 = 1 und an/aus
+			//bei machen Rï¿½ckmeldung {XC_SUC}{"CODE":"010006"}	 //FC 01 = B DC 00 = 1 und an/aus
 			$length = strlen($address);
 			if ($length == 25)
 				{
@@ -623,16 +621,16 @@ class AIOITDevice extends IPSModule
 		return $this->response;
 		}
 	
-	//IT Adresse hinzufügen
+	//IT Adresse hinzufÃ¼gen
 	protected function AddAddress($ITFamilyCode, $ITDeviceCode)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "ITFamilyCode", $ITFamilyCode); //ITFamilyCode setzten.
 		IPS_SetProperty($instance, "ITDeviceCode", $ITDeviceCode); //ITDeviceCode setzten.
 		IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.
-		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		$this->SendDebug("IT Device Code",$ITDeviceCode." hinzugefügt",0);
-		$this->SendDebug("IT Family Code",$ITFamilyCode." hinzugefügt",0);
+		IPS_ApplyChanges($instance); //Neue Konfiguration Ã¼bernehmen
+		$this->SendDebug("IT Device Code",$ITDeviceCode." hinzugefÃ¼gt",0);
+		$this->SendDebug("IT Family Code",$ITFamilyCode." hinzugefÃ¼gt",0);
 		// Status aktiv
 		$this->SetStatus(102);
 		$this->SetupVar();

@@ -12,7 +12,7 @@ class AIOFS20Device extends IPSModule
 		
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		
 		$this->RegisterPropertyString("HC1", "");
@@ -34,8 +34,8 @@ class AIOFS20Device extends IPSModule
 
 
 	 /**
-     * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-     * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+     * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+     * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
      *
      *
      */
@@ -54,8 +54,8 @@ class AIOFS20Device extends IPSModule
 				}
 			elseif ($AIOFS20Adresse != '')
 				{
-					//AIOFS20Adresse prüfen
-					if (strlen($AIOFS20Adresse)<6 or strlen($AIOFS20Adresse)>6)//Länge prüfen
+					//AIOFS20Adresse prÃ¼fen
+					if (strlen($AIOFS20Adresse)<6 or strlen($AIOFS20Adresse)>6)//LÃ¤nge prÃ¼fen
 						{
 							$this->SetStatus(207);	
 						}
@@ -77,16 +77,16 @@ class AIOFS20Device extends IPSModule
 			{	
 				
 				
-				//Eingabe überprüfen Länge 4 Zeichen nur Zahlen
-				if (strlen($HC1)<4 or strlen($HC1)>4)//Länge prüfen
+				//Eingabe Ã¼berprÃ¼fen LÃ¤nge 4 Zeichen nur Zahlen
+				if (strlen($HC1)<4 or strlen($HC1)>4)//LÃ¤nge prÃ¼fen
 					{
 						$this->SetStatus(204);	
 					}
-				elseif (strlen($HC2)<4 or strlen($HC2)>4)//Länge prüfen
+				elseif (strlen($HC2)<4 or strlen($HC2)>4)//LÃ¤nge prÃ¼fen
 					{
 						$this->SetStatus(205);
 					}
-				elseif (strlen($FS20Adresse)<4 or strlen($FS20Adresse)>4)//Länge prüfen
+				elseif (strlen($FS20Adresse)<4 or strlen($FS20Adresse)>4)//LÃ¤nge prÃ¼fen
 					{
 						$this->SetStatus(206);
 					}
@@ -373,24 +373,23 @@ class AIOFS20Device extends IPSModule
 	protected function SendCommand($command)
 	{
 		$FS20 = $this->Calculate();
-		$ip_aiogateway = $this->GetIPGateway();
-		IPS_LogMessage( "FS20 Adresse:" , $FS20 );
-		IPS_LogMessage( "FS20 Command:" , $command );
+        $this->SendDebug("AIO Gateway:", "Send to FS20 address ". $FS20,0);
+        $this->SendDebug("AIO Gateway:", "Send Command ". $command,0);
 		$GatewayPassword = $this->GetPassword();
 		
 		switch($command) 
 		{
                     case "1000": //An
 						SetValueBoolean($this->GetIDForIdent('Status'), true);
-						 
-						if (IPS_StatusVariableExists($this->InstanceID, "Dimmer"))
+
+						if ($this->GetIDForIdent("Dimmer"))
 						{
 						SetValueInteger($this->GetIDForIdent('Dimmer'), 10);	
 						}
 						break;
                     case "0000": //Aus
                         SetValueBoolean($this->GetIDForIdent('Status'), false);
-						if (IPS_StatusVariableExists($this->InstanceID, "Dimmer"))
+						if ($this->GetIDForIdent("Dimmer"))
 						{
 						SetValueInteger($this->GetIDForIdent('Dimmer'), 0);	
 						}
@@ -450,13 +449,13 @@ class AIOFS20Device extends IPSModule
 		elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
+			echo "Keine Authentifizierung mÃ¶glich. Das Passwort fÃ¼r das Gateway ist falsch.";
 			}
 		return $this->response;
 	}
 	
 	
-	//Anmelden eines FS20 Geräts an das a.i.o. gateway:
+	//Anmelden eines FS20 GerÃ¤ts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=FS20
 	public function Learn()
 		{
@@ -469,7 +468,7 @@ class AIOFS20Device extends IPSModule
 		{
 			$address = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=FS20");
 		}	
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wÃ¤hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -477,7 +476,7 @@ class AIOFS20Device extends IPSModule
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
 			IPS_LogMessage( "FS20 Adresse:" , $address );
-			echo "Die Adresse vom FS20 Gerät konnte nicht angelernt werden.";
+			echo "Die Adresse vom FS20 GerÃ¤t konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnFS20Address", false); //Haken entfernen.			
 			}
 		else
@@ -486,7 +485,7 @@ class AIOFS20Device extends IPSModule
 				//bei Erfolg {XC_SUC}{"CODE":"123403"} 
 				(string)$address = substr($address, 17, 6);
 				IPS_LogMessage( "FS20 Adresse:" , $address );
-				//echo "Adresse des FS20 Geräts: ".$address;
+				//echo "Adresse des FS20 GerÃ¤ts: ".$address;
 				$this->AddAddress($address);
 				$this->response = true;	
 			}
@@ -494,14 +493,14 @@ class AIOFS20Device extends IPSModule
 		return $this->response;
 		}
 	
-	//IT Adresse hinzufügen
+	//IT Adresse hinzufÃ¼gen
 	protected function AddAddress($address)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "AIOAdresse", $address); //FS20 Adresse setzten.
 		IPS_SetProperty($instance, "LearnFS20Address", false); //Haken entfernen.
-		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "FS20 Adresse hinzugefügt:" , $address );
+		IPS_ApplyChanges($instance); //Neue Konfiguration Ã¼bernehmen
+		IPS_LogMessage( "FS20 Adresse hinzugefÃ¼gt:" , $address );
 		// Status aktiv
 		$this->SetStatus(102);	
 		$this->SetupVar();
@@ -532,13 +531,13 @@ class AIOFS20Device extends IPSModule
 				{
 				$arr1[$i] = $arr1[$i] -1; 
 				}
-			/* Aufteilung in Zweierblöcke */
+			/* Aufteilung in ZweierblÃ¶cke */
 			/* Die jeweils erste Zahl eines Blocks wird mit 4 multipliziert und mit der zweiten Zahl addiert */
 			for ($i = 0; $i <= 10; $i=$i+2)
 				{
 				$arr2[$i] = $arr1[$i] * 4 + $arr1[$i+1];
 			}
-			/* Jeder Block wird nun in seine Hexadezimaldarstellung überführt (0-9, A-F) */
+			/* Jeder Block wird nun in seine Hexadezimaldarstellung Ã¼berfÃ¼hrt (0-9, A-F) */
 			for ($i = 0; $i <= 10; $i=$i+2)
 				{
 				$arr2[$i] = dechex($arr2[$i]);

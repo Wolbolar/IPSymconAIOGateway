@@ -72,7 +72,7 @@ class AIOSplitter extends IPSModule
 					$ParentOpen = $this->ReadPropertyBoolean('Open');
 					
 					
-				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt später Exception.
+				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt spÃ¤ter Exception.
 					if (!$ParentOpen)
 						$this->SetStatus(104);
 
@@ -94,7 +94,7 @@ class AIOSplitter extends IPSModule
 		}
 		else
 			{
-			$this->SetStatus(203); //IP Adresse ist ungültig 
+			$this->SetStatus(203); //IP Adresse ist ungÃ¼ltig
 			}	
 		
 
@@ -119,8 +119,8 @@ class AIOSplitter extends IPSModule
     }
 
 		/**
-        * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+        * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
         *
         *
         */
@@ -131,7 +131,7 @@ class AIOSplitter extends IPSModule
 			switch($Ident) {
 				case "Farbe":
 					switch($Value) {
-						case 0: //Weiß
+						case 0: //WeiÃŸ
 							$this->White();
 							break;
 						case 1: //Blue
@@ -215,23 +215,6 @@ class AIOSplitter extends IPSModule
         return false;
     }
 
-    protected function RequireParent($ModuleID, $Name = '')
-    {
-
-        $instance = IPS_GetInstance($this->InstanceID);
-        if ($instance['ConnectionID'] == 0)
-        {
-
-            $parentID = IPS_CreateInstance($ModuleID);
-            $instance = IPS_GetInstance($parentID);
-            if ($Name == '')
-                IPS_SetName($parentID, $instance['ModuleInfo']['ModuleName']);
-            else
-                IPS_SetName($parentID, $Name);
-            IPS_ConnectInstance($this->InstanceID, $parentID);
-        }
-    }
-
     private function SetValueBoolean($Ident, $value)
     {
         $id = $this->GetIDForIdent($Ident);
@@ -265,11 +248,6 @@ class AIOSplitter extends IPSModule
         return false;
     }
 
-    protected function SetStatus($InstanceStatus)
-    {
-        if ($InstanceStatus <> IPS_GetInstance($this->InstanceID)['InstanceStatus'])
-            parent::SetStatus($InstanceStatus);
-    }
 
 	protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize) {
         
@@ -326,7 +304,8 @@ class AIOSplitter extends IPSModule
 	
 	protected function DelAllTasks()
 	{
-		file_get_contents("http://".$adress."/command?XC_FNC=fEEPReset&type=01"); 
+        $adress = $this->ReadPropertyString("Host");
+	    file_get_contents("http://".$adress."/command?XC_FNC=fEEPReset&type=01");
 	}
 	
 	protected function RegisterProfileLEDGateway($Name, $Icon, $Prefix, $Suffix) {
@@ -344,10 +323,10 @@ class AIOSplitter extends IPSModule
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 für transparent
-		IPS_SetVariableProfileAssociation($Name, 0, "Weiß", "", 0xFFFFFFF);
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF fï¿½r Blau). Sonderfall: -1 fï¿½r transparent
+		IPS_SetVariableProfileAssociation($Name, 0, "WeiÃŸ", "", 0xFFFFFFF);
 		IPS_SetVariableProfileAssociation($Name, 1, "Blau", "", 0x013ADF);
-		IPS_SetVariableProfileAssociation($Name, 2, "Grün", "", 0x088A08);
+		IPS_SetVariableProfileAssociation($Name, 2, "GrÃ¼n", "", 0x088A08);
 		IPS_SetVariableProfileAssociation($Name, 3, "Rot", "", 0xFE2E2E);
 		IPS_SetVariableProfileAssociation($Name, 4, "Aus", "", 0x585858);     
     }
@@ -358,7 +337,7 @@ class AIOSplitter extends IPSModule
 			$adress = $this->ReadPropertyString("Host");
 			$command = "0105";
 			SetValueInteger($this->GetIDForIdent('Farbe'), 0);
-			$this->SendDebug("AIO Gateway","LED weiß",0);
+			$this->SendDebug("AIO Gateway","LED weiÃŸ",0);
 			return $this->Set_LEDGW($adress, $command);
 		}
 	
@@ -431,8 +410,10 @@ class AIOSplitter extends IPSModule
 
 	
 	################## DATAPOINT RECEIVE FROM CHILD
-		
-	public function ForwardData($JSONString)
+
+    // Type String, Declaration can be used when PHP 7 is available
+    //public function ForwardData(string $JSONString)
+    public function ForwardData($JSONString)
 	{
 	 
 		// Empfangene Daten von der Device Instanz
