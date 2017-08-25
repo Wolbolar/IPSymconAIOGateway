@@ -1,6 +1,6 @@
 <?
 
-require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
+require_once(__DIR__ . DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."AIOGatewayClass.php");  // diverse Klassen
 
 class AIOFS20Device extends IPSModule
 {

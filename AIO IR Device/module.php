@@ -12,7 +12,7 @@ class AIOIRDevice extends IPSModule
 
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-        // 1. Verf�gbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. Verfügbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 
 		$this->RegisterPropertyString("IRLabel1", "");
@@ -242,7 +242,7 @@ class AIOIRDevice extends IPSModule
 		$LearnIRCode = $this->ReadPropertyBoolean('LearnIRCode');
 		$NumberIRCodes = $this->ReadPropertyInteger("NumberIRCodes");
 
-		//M�gliche Pr�fungen durchf�hren
+		//Mögliche Prüfungen durchführen
 		if ($LearnIRCode)
 		{
 			$irid = $this->ReadPropertyInteger("LearnIRCodeID");
@@ -250,7 +250,7 @@ class AIOIRDevice extends IPSModule
 		}
 		elseif ( $IRCode1 == '' or $IRCode2 == '' or $IRLabel1 == '' or $IRLabel2 == '')
         {
-            // Status Error Felder d�rfen nicht leer sein
+            // Status Error Felder dürfen nicht leer sein
             $this->SetStatus(202);
         }
 		else
@@ -302,8 +302,8 @@ class AIOIRDevice extends IPSModule
 	}
 
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verf�gung, wenn das Modul �ber die "Module Control" eingef�gt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verf�gung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
     *
 	*
     */
@@ -1007,7 +1007,7 @@ class AIOIRDevice extends IPSModule
 	}
 
 
-	//Senden eines IR Befehls �ber das a.i.o. Gateway
+	//Senden eines IR Befehls über das a.i.o. Gateway
 	public function SendIR1()
 	{
             $IR_send = $this->ReadPropertyString("IRCode1");
@@ -1222,7 +1222,7 @@ class AIOIRDevice extends IPSModule
 				{
 					//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) //Float Wert stimmt nicht
 					// IR Codes nicht im Profil hinterlegt statt dessen die ID der IRCodes der Wert muss beim Senden abgefragt werden.
-					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$ircodes[($start+$i)][0], "", -1 );//max 32 m�glich
+					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$ircodes[($start+$i)][0], "", -1 );//max 32 möglich
 				}
 
 			}
@@ -1254,7 +1254,7 @@ class AIOIRDevice extends IPSModule
     }
 
 
-	//Anlernen eines IR Codes �ber das a.i.o. gateway:
+	//Anlernen eines IR Codes über das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
 	public function Learn(int $irid)
 		{
@@ -1306,12 +1306,12 @@ class AIOIRDevice extends IPSModule
 			{
 				IPS_SetProperty($this->InstanceID, $label, "Neuer Code"); //IRLabel provisorisch setzten.
 			}
-		$NumberIRCodes = $this->ReadPropertyString("NumberIRCodes");
+		$NumberIRCodes = $this->ReadPropertyInteger("NumberIRCodes");
 		$NumberIRCodes = $NumberIRCodes + 1;
 		$this->CreateProfileIR($NumberIRCodes);
 		IPS_SetProperty($this->InstanceID, "NumberIRCodes", $NumberIRCodes); //IRCode setzten.
 		IPS_SetProperty($this->InstanceID, "LearnIRCode", false); //Haken entfernen.
-		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration �bernehmen
+		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
 		$this->SendDebug("AIO IR Device","IRCode".$irid." hinzugefügt: ".$ircode,0);
 		// Status aktiv
         $this->SetStatus(102);
