@@ -11,7 +11,7 @@ class AIOELRODevice extends IPSModule
         //Never delete this line!
         parent::Create();
 
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		
 		$this->RegisterPropertyString("ELROAddress", "");
@@ -25,7 +25,7 @@ class AIOELRODevice extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
 		
-		// ELROAddress prüfen
+		// ELROAddress prÃ¼fen
         $ELROAddress = $this->ReadPropertyString('ELROAddress');
         $LearnAddressELRO = $this->ReadPropertyBoolean('LearnAddressELRO');
 				
@@ -40,7 +40,7 @@ class AIOELRODevice extends IPSModule
         }
 		else 
 		{
-			//Eingabe überprüfen
+			//Eingabe Ã¼berprÃ¼fen
 			
 			
 			// Status aktiv
@@ -57,8 +57,8 @@ class AIOELRODevice extends IPSModule
 	}
 	
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
     *
     * ABC_MeineErsteEigeneFunktion($id);
     *
@@ -170,7 +170,7 @@ class AIOELRODevice extends IPSModule
 		}
 	
 	private $response = false;
-	//Anmelden eines ELRO Geräts an das a.i.o. gateway:
+	//Anmelden eines ELRO GerÃ¤ts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=ELRO
 	public function Learn()
 		{
@@ -187,7 +187,7 @@ class AIOELRODevice extends IPSModule
 				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=LearnSC&type=ELRO",0);
 				$this->SendDebug("ELRO Adress",$address,0);
 			}
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wÃ¤hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -196,7 +196,7 @@ class AIOELRODevice extends IPSModule
 			$address = "Das Gateway konnte keine Adresse empfangen.";
 			$this->SendDebug("ELRO Adresse:",$address,0);
 			IPS_LogMessage( "ELRO Adresse:" , $address );
-			echo "Die Adresse vom ELRO Gerät konnte nicht angelernt werden.";
+			echo "Die Adresse vom ELRO GerÃ¤t konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnAddressELRO", false); //Haken entfernen.			
 			}
 		else
@@ -205,7 +205,7 @@ class AIOELRODevice extends IPSModule
 				//bei Erfolg {XC_SUC}{"CODE":"414551"} 
 				(string)$address = substr($address, 17, 6);
 				IPS_LogMessage( "ELRO Adresse:" , $address );
-				//echo "Adresse des ELRO Geräts: ".$address;
+				//echo "Adresse des ELRO GerÃ¤ts: ".$address;
 				$this->AddAddress($address);
 				$this->response = true;	
 			}
@@ -213,14 +213,14 @@ class AIOELRODevice extends IPSModule
 		return $this->response;
 		}
 	
-	//Adresse hinzufügen
+	//Adresse hinzufÃ¼gen
 	protected function AddAddress($address)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "ELROAddress", $address); //Adresse setzten.
 		IPS_SetProperty($instance, "LearnAddressELRO", false); //Haken entfernen.
-		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "ELRO Adresse hinzugefügt:" , $address );
+		IPS_ApplyChanges($instance); //Neue Konfiguration Ã¼bernehmen
+		IPS_LogMessage( "ELRO Adresse hinzugefÃ¼gt:" , $address );
 		// Status aktiv
         $this->SetStatus(102);
 		//Status-Variablen anlegen

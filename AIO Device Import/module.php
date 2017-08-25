@@ -11,7 +11,7 @@ class AIOImport extends IPSModule
         //Never delete this line!
         parent::Create();
 
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		
 		$this->RegisterPropertyString("directory", "webfront/user/neo/");
@@ -41,8 +41,8 @@ class AIOImport extends IPSModule
 	}
 		
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
     *
 	* PUBLIC
     */
@@ -50,15 +50,15 @@ class AIOImport extends IPSModule
 	private function ValidateConfiguration()
 	{
 			
-		// directory  prüfen
+		// directory  prÃ¼fen
 		$directory = $this->ReadPropertyString('directory');
 		$directoryIPS = IPS_GetKernelDir().$directory;
 		if ( $directory == '')
 			{
-				// Status Error Felder dürfen nicht leer sein
+				// Status Error Felder dÃ¼rfen nicht leer sein
 				$this->SetStatus(202);
 			}
-		//Verzeichnis überprüfen	
+		//Verzeichnis Ã¼berprÃ¼fen
 		elseif (!file_exists($directoryIPS))
 			{
 				// Status Error Verzeichnis wurde nicht gefunden
@@ -75,12 +75,12 @@ class AIOImport extends IPSModule
 		$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
 		if ( $ImportCategoryID === 0)
 			{
-				// Status Error Kategorie zum Import auswählen
+				// Status Error Kategorie zum Import auswÃ¤hlen
 				$this->SetStatus(211);
 			}
 		elseif ( $ImportCategoryID != 0)	
 			{
-				// Status Error Kategorie zum Import auswählen
+				// Status Error Kategorie zum Import auswÃ¤hlen
 				$this->SetStatus(102);
 			}
 			
@@ -96,10 +96,10 @@ class AIOImport extends IPSModule
 		$HomematicImport = $this->ReadPropertyBoolean('HomematicImport');
 		$RoomImport = $this->ReadPropertyBoolean('RoomImport');
 		
-		//Auswahl Prüfen
-		if ($IRImport === false && $ITImport === false && $ELROImport === false && $FS20Import === false && $LM1Import === false && $LM2Import === false && $SomfyImport === false && $RFImport === false && $HomematicImport && $RoomImport)
+		//Auswahl PrÃ¼fen
+		if ($IRImport === false && $ITImport === false && $ELROImport === false && $FS20Import === false && $LM1Import === false && $LM2Import === false && $SomfyImport === false && $RFImport === false && $HomematicImport == false)
 			{
-				//$this->SetStatus(207); //Es wurde nichts zum Importieren ausgewählt
+				$this->SetStatus(207); //Es wurde nichts zum Importieren ausgewÃ¤hlt
 			}
 		if ($IRImport === true)
 			{
@@ -107,7 +107,7 @@ class AIOImport extends IPSModule
 				$this->IRImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "IRImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen				
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($ITImport === true)
 			{
@@ -115,7 +115,7 @@ class AIOImport extends IPSModule
 				$this->ITImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "ITImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($ELROImport === true)
 			{
@@ -123,7 +123,7 @@ class AIOImport extends IPSModule
 				$this->ELROImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "ELROImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($FS20Import === true)
 			{
@@ -131,7 +131,7 @@ class AIOImport extends IPSModule
 				$this->FS20Import($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "FS20Import", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($LM1Import === true)
 			{
@@ -139,7 +139,7 @@ class AIOImport extends IPSModule
 				$this->Light1Import($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "LM1Import", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}		
 		if ($LM2Import === true)
 			{
@@ -147,7 +147,7 @@ class AIOImport extends IPSModule
 				$this->Light2Import($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "LM2Import", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($SomfyImport === true)
 			{
@@ -155,7 +155,7 @@ class AIOImport extends IPSModule
 				$this->SomfyImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "SomfyImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}		
 		if ($RFImport === true)
 			{
@@ -163,7 +163,7 @@ class AIOImport extends IPSModule
 				$this->RFImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "RFImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}
 		if ($HomematicImport === true)
 			{
@@ -171,7 +171,7 @@ class AIOImport extends IPSModule
 				$this->HomematicImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "HomematicImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}	
 		if ($RoomImport === true)
 			{
@@ -179,9 +179,9 @@ class AIOImport extends IPSModule
 				$this->RFImport($Version);
 				//$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 				IPS_SetProperty($this->InstanceID, "RoomImport", false); //Haken entfernen.
-				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
 			}			
-		//$this->SetStatus(102); //IP Adresse ist gültig -> aktiv
+		//$this->SetStatus(102); //IP Adresse ist gÃ¼ltig -> aktiv
 	
 	}
 	
@@ -205,12 +205,12 @@ class AIOImport extends IPSModule
 	
 	protected function SetupCategory($CategoryName, $ParentID)
 		{
-			//Prüfen ob Kategorie exitiert ansonsten anlegen
+			//PrÃ¼fen ob Kategorie exitiert ansonsten anlegen
 			$KategorieID = @IPS_GetCategoryIDByName($CategoryName, $ParentID);
 			if ($KategorieID === false)
 				{
 				$this->SendDebug("AIO Import","Kategorie nicht gefunden!",0);
-				// Anlegen einer neuen Kategorie mit dem Namen "Mediola [Typ] Geräte"
+				// Anlegen einer neuen Kategorie mit dem Namen "Mediola [Typ] GerÃ¤te"
 				$CategoryID = $this->CreateCategory ($CategoryName, $ParentID);
 				$this->SendDebug("AIO Import","Kategorie ".$CategoryName." angelegt.",0);
 				return $CategoryID;				
@@ -228,7 +228,6 @@ class AIOImport extends IPSModule
 	// Anlegen einer neuen Kategorie 
 	protected function CreateCategory ($CategoryName, $ParentID)	
 		{
-			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');	
 			$CatID = IPS_CreateCategory();       // Kategorie anlegen
 			$CategoryName = (string)$CategoryName;
 			IPS_SetName($CatID, $CategoryName); // Kategorie benennen
@@ -239,7 +238,7 @@ class AIOImport extends IPSModule
 	protected function IRImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola IR Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola IR GerÃ¤te", $ImportCategoryID);
 			
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -258,7 +257,7 @@ class AIOImport extends IPSModule
 	protected function ITImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola IT Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola IT GerÃ¤te", $ImportCategoryID);
 			
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -278,7 +277,7 @@ class AIOImport extends IPSModule
 	protected function ELROImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola ELRO Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola ELRO GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -298,7 +297,7 @@ class AIOImport extends IPSModule
 	protected function FS20Import($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola FS20 Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola FS20 GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -318,7 +317,7 @@ class AIOImport extends IPSModule
 	protected function Light1Import($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola Lightmanager 1 Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola Lightmanager 1 GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -338,7 +337,7 @@ class AIOImport extends IPSModule
 	protected function Light2Import($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Mediola Lightmanager 2 Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Mediola Lightmanager 2 GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -358,7 +357,7 @@ class AIOImport extends IPSModule
 	protected function SomfyImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Somfy Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Somfy GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -378,7 +377,7 @@ class AIOImport extends IPSModule
 	protected function RFImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Funk Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Funk GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -398,7 +397,7 @@ class AIOImport extends IPSModule
 	protected function HomematicImport($Version)
 		{
 			$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-			$CategoryID = $this->SetupCategory("Homematic Geräte", $ImportCategoryID);
+			$CategoryID = $this->SetupCategory("Homematic GerÃ¤te", $ImportCategoryID);
 						
 			//Datei nach Version einlesen
 			if ($Version === 0)	
@@ -418,7 +417,7 @@ class AIOImport extends IPSModule
 	//AIOITDevice Instanz erstellen 
 	public function ITCreateInstance(string $InstName, string $Ident, string $ITFamilyCode, string $ITDeviceCode, string $ITType, int $CategoryID)
 	{
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 	if ($InstanzID === false)
@@ -432,7 +431,7 @@ class AIOImport extends IPSModule
 			IPS_SetProperty($InsID, "ITFamilyCode", $ITFamilyCode); //Familiencode setzten.
 			IPS_SetProperty($InsID, "ITDeviceCode", $ITDeviceCode); //Devicecode setzten.
 			IPS_SetProperty($InsID, "ITType", $ITType); //Typ setzten.
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );
 			return $InsID;	
 		}
@@ -447,7 +446,7 @@ class AIOImport extends IPSModule
 	//AIOFS20 Instanz erstellen 
 	public function FS20CreateInstance(string $InstName, string $Ident, string $AIOFS20Adresse, string $FS20Type, int $CategoryID)
 	{
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 	if ($InstanzID === false)
@@ -460,7 +459,7 @@ class AIOImport extends IPSModule
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 			IPS_SetProperty($InsID, "AIOAdresse", $AIOFS20Adresse); //AIOAdresse setzten.
 			IPS_SetProperty($InsID, "FS20Type", $FS20Type); //Typ setzten.
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
 		}
@@ -476,7 +475,7 @@ class AIOImport extends IPSModule
 	public function IRCreateInstance(string $InstName, string $Ident, int $CategoryID)
 	{
 	//echo "Instanz IR anlegen";
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 	if ($InstanzID === false)
@@ -488,7 +487,7 @@ class AIOImport extends IPSModule
 			IPS_SetName($InsID, $InstName); // Instanz benennen
 			IPS_SetIdent ($InsID, $Ident); // Ident
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
 		}
@@ -500,27 +499,27 @@ class AIOImport extends IPSModule
 		}		
 	}
 		
-	//Instanz löschen
+	//Instanz lÃ¶schen
 	protected function DeleteInstance($InsID)
 	{
-	//Prüfen ob Instanz existiert
+	//PrÃ¼fen ob Instanz existiert
 	$InstanzID = @IPS_GetInstance($InsID);
 	if ($InstanzID === false)
 		{
 			//echo "Instanz nicht gefunden!";
-			//Instanz muss nicht gelöscht werden, existiert nicht.
+			//Instanz muss nicht gelÃ¶scht werden, existiert nicht.
 			return $InsID;	
 		}
 			
 	else
 		{
-			//echo "Die Instanz-ID wurde gelöscht: ". $InstanzID;
+			//echo "Die Instanz-ID wurde gelÃ¶scht: ". $InstanzID;
 			IPS_DeleteInstance($InsID);	
 			return $InstanzID;
 		}	
 	}
 	
-	//IR Code zufügen		
+	//IR Code zufÃ¼gen
 	protected function IRAddCode($InsID, $ircodes, $count)
 	{
 		for ($i = 0; $i <= $count-1; $i++)
@@ -528,21 +527,21 @@ class AIOImport extends IPSModule
 			    $IRLabel = (string)"IRLabel".($i+1);
 				$IRCode = (string)"IRCode".($i+1);
 				$InsID = (int)$InsID;
-				(string)$label = $ircodes[$i][0];
-				(string)$code = $ircodes[$i][1]; 
+				$label = $ircodes[$i][0];
+				$code = $ircodes[$i][1];
 				IPS_SetProperty($InsID, $IRLabel, $label); //IR Label setzten.
 				IPS_SetProperty($InsID, $IRCode, $code); //IR Code setzten.
+                $this->SendDebug("AIO IR:","IR Code hinzugefÃ¼gt Name: ".$label,0);
 			}
 		IPS_SetProperty($InsID, "NumberIRCodes", $count); //Anzahl IR Codes setzten.
-		IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "IR Code hinzugefügt:" , "Name: ".$label );	
+		IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 	}
 	
 	//AIORF Instanz erstellen 
-	public function RFCreateInstance(string $InstName, string $Ident, string $Ident, int $CategoryID)
+	public function RFCreateInstance(string $InstName, string $Ident, int $CategoryID)
 	{
 	//echo "Instanz RF anlegen";
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
@@ -555,7 +554,7 @@ class AIOImport extends IPSModule
 			IPS_SetName($InsID, $InstName); // Instanz benennen
 			IPS_SetIdent ($InsID, $Ident); // Ident
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
 		}
@@ -568,7 +567,7 @@ class AIOImport extends IPSModule
 	}
 		
 		
-	//RF Code zufügen		
+	//RF Code zufÃ¼gen
 	protected function RFAddCode($InsID, $rfcodes, $count)
 	{
 		for ($i = 0; $i <= $count-1; $i++)
@@ -576,20 +575,20 @@ class AIOImport extends IPSModule
 			    $RFLabel = (string)"RFLabel".($i+1);
 				$RFCode = (string)"RFCode".($i+1);
 				$InsID = (int)$InsID;
-				(string)$label = $rfcodes[$i][0];
-				(string)$code = $rfcodes[$i][1]; 
+				$label = $rfcodes[$i][0];
+				$code = $rfcodes[$i][1];
 				IPS_SetProperty($InsID, $RFLabel, $label); //IR Label setzten.
 				IPS_SetProperty($InsID, $RFCode, $code); //IR Code setzten.
+                $this->SendDebug("AIO RF:","RF Code hinzugefÃ¼gt Name: ".$label,0);
 			}
 		IPS_SetProperty($InsID, "NumberRFCodes", $count); //Anzahl IR Codes setzten.
-		IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "RF Code hinzugefügt:" , "Name: ".$label );	
+		IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 	}
 	
 	//AIOELRO Instanz erstellen 
 	public function ELROCreateInstance(string $InstName, string $Ident, string $ELROAdresse, string $ELROType, int $CategoryID)
 	{
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 	if ($InstanzID === false)
@@ -601,7 +600,7 @@ class AIOImport extends IPSModule
 			IPS_SetIdent ($InsID, $Ident); // Ident
 			IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 			IPS_SetProperty($InsID, "ELROAddress", $ELROAdresse); //ELROAddress setzten.
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
 		}
@@ -616,7 +615,7 @@ class AIOImport extends IPSModule
 	//AIOLight1 Instanz erstellen 
 	public function Light1CreateInstance(string $InstName, string $Ident, string $LEDAdresse, int $CategoryID)
 		{
-		//Prüfen ob Instanz schon existiert
+		//PrÃ¼fen ob Instanz schon existiert
 		$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 		//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 		if ($InstanzID === false)
@@ -628,7 +627,7 @@ class AIOImport extends IPSModule
 				IPS_SetIdent ($InsID, $Ident); // Ident
 				IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 				IPS_SetProperty($InsID, "LEDAdresse", $LEDAdresse); //LEDAdresse setzten.
-				IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 				IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 				return $InsID;	
 			}
@@ -643,7 +642,7 @@ class AIOImport extends IPSModule
 	//AIOLight2 Instanz erstellen 
 	public function Light2CreateInstance(string $InstName, string $Ident, string $LEDAdresse, string $CategoryID)
 		{
-		//Prüfen ob Instanz schon existiert
+		//PrÃ¼fen ob Instanz schon existiert
 		$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	    //$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 		if ($InstanzID === false)
@@ -655,7 +654,7 @@ class AIOImport extends IPSModule
 				IPS_SetIdent ($InsID, $Ident); // Ident
 				IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 				IPS_SetProperty($InsID, "LEDAdresse", $LEDAdresse); //LEDAdresse setzten.
-				IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 				IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );		
 				return $InsID;	
 			}
@@ -670,7 +669,7 @@ class AIOImport extends IPSModule
 	//Somfy Instanz erstellen 
 	public function SomfyCreateInstance(string $InstName, string $Ident, string $AIOSomfyAdresse, string $SomfyType, string $CategoryID)
 		{
-		//Prüfen ob Instanz schon existiert
+		//PrÃ¼fen ob Instanz schon existiert
 		$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	    //$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 		if ($InstanzID === false)
@@ -682,7 +681,7 @@ class AIOImport extends IPSModule
 				IPS_SetIdent ($InsID, $Ident); // Ident
 				IPS_SetParent($InsID, $CategoryID); // Instanz einsortieren unter dem Objekt mit der ID "$CategoryID"
 				IPS_SetProperty($InsID, "Adresse", $AIOSomfyAdresse); //Adresse setzten.
-				IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+				IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 				IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );		
 				return $InsID;	
 			}
@@ -697,7 +696,7 @@ class AIOImport extends IPSModule
 	//Homematic Instanz erstellen 
 	public function HomematicCreateInstance(string $InstName, string $Ident, string $HomematicAddress, string $HomematicData, string $HomematicSNR, string $HomematicType, int $CategoryID)
 	{
-	//Prüfen ob Instanz schon existiert
+	//PrÃ¼fen ob Instanz schon existiert
 	$InstanzID = @IPS_GetObjectIDByIdent($Ident, $CategoryID);
 	//$InstanzID = @IPS_GetInstanceIDByName($InstName, $CategoryID);
 	if ($InstanzID === false)
@@ -732,7 +731,7 @@ class AIOImport extends IPSModule
 			IPS_SetProperty($InsID, "HomematicSNR", $HomematicSNR); // HomematicSNR setzten.
 			IPS_SetProperty($InsID, "HomematicType", $HomematicType); // HomematicType setzten.	
 			IPS_SetProperty($InsID, "HomematicTypeName", $HomematicTypeName); // HomematicTypeName setzten.	
-			IPS_ApplyChanges($InsID); //Neue Konfiguration übernehmen
+			IPS_ApplyChanges($InsID); //Neue Konfiguration Ã¼bernehmen
 			IPS_LogMessage( "Instanz erstellt:" , "Name: ".$InstName );	
 			return $InsID;	
 		}
@@ -750,43 +749,43 @@ class AIOImport extends IPSModule
 		{
 			$HomematicTypeName = "HM-WDS10-TH-O";
 			// Beschreibung outdoor radio-controlled temperature/humidity sensor
-			// Gerät Kleine Wetterstation
+			// GerÃ¤t Kleine Wetterstation
 		}
 		elseif($HomematicType == "003F")
 		{
 			$HomematicTypeName = "HM-WDS40-TH-I";
 			// Beschreibung indoor radio-controlled temperature and humidty sensor
-			// Gerät Kleine Wetterstation
+			// GerÃ¤t Kleine Wetterstation
 		}
 		elseif($HomematicType == "0045")
 		{
 			$HomematicTypeName = "HM-Sec-WDS";
 			// Beschreibung radio-controlled water detection sensor
-			// Gerät Water detection
+			// GerÃ¤t Water detection
 		}
 		elseif($HomematicType == "0005")
 		{
 			$HomematicTypeName = "HM-LC-Bl1-FM";
 			// Beschreibung radio-controlled blind actuator 1-channel (flush-mount)
-			// Gerät Blind
+			// GerÃ¤t Blind
 		}
 		elseif($HomematicType == "0011")
 		{
 			$HomematicTypeName = "HM-LC-Sw1-Pl";
 			// Beschreibung radio-controlled socket adapter switch actuator 1-channel
-			// Gerät Switch
+			// GerÃ¤t Switch
 		}
 		elseif($HomematicType == "0042")
 		{
 			$HomematicTypeName = "HM-Sec-SD";
 			// Beschreibung radio-controlled smoke detector
-			// Gerät Smoke Sensor
+			// GerÃ¤t Smoke Sensor
 		}
 		elseif($HomematicType == "0030")
 		{
 			$HomematicTypeName = "HM-Sec-RHS";
 			// Beschreibung Rotary Handle Sensor
-			// Gerät Window
+			// GerÃ¤t Window
 		}
 		elseif($HomematicType == "0095")
 		{
@@ -800,37 +799,37 @@ class AIOImport extends IPSModule
 		{
 			$HomematicTypeName = "HM-CC-TC";
 			// Beschreibung ClimateControl-ThermoControl
-			// Gerät FHT
+			// GerÃ¤t FHT
 		}
 		elseif($HomematicType == "0009")
 		{
 			$HomematicTypeName = "HM-LC-Sw2-FM";
 			// Beschreibung radio-controlled switch actuator 2-channel
-			// Gerät Switch
+			// GerÃ¤t Switch
 		}
 		elseif($HomematicType == "0004")
 		{
 			$HomematicTypeName = "HM-LC-Sw1-FM";
 			// Beschreibung radio-controlled switch actuator 1-channel (flush-mount)
-			// Gerät Switch
+			// GerÃ¤t Switch
 		}
 		elseif($HomematicType == "002F")
 		{
 			$HomematicTypeName = "HM-Sec-SC";
 			// Beschreibung Shutter Contact
-			// Gerät contact
+			// GerÃ¤t contact
 		}
 		elseif($HomematicType == "00B1")
 		{
 			$HomematicTypeName = "HM-Sec-SC-2";
 			// Beschreibung Shutter Contact
-			// Gerät contact
+			// GerÃ¤t contact
 		}
 		elseif($HomematicType == "0013")
 		{
 			$HomematicTypeName = "HM-LC-Dim1L-Pl";
 			// Beschreibung radio-controlled socket adapter 1-channel leading edge
-			// Gerät dimmer
+			// GerÃ¤t dimmer
 		}
 		elseif($HomematicType == "0069")
 		{
@@ -848,33 +847,33 @@ class AIOImport extends IPSModule
 		{
 			$HomematicTypeName = "HM-WDS100-C6-O";
 			// Beschreibung radio-controlled weather data senor (OC3)
-			// Gerät Große Wetterstation
+			// GerÃ¤t GroÃŸe Wetterstation
 		}
 		elseif($HomematicType == "00AC")
 		{
 			$HomematicTypeName = "HM-ES-PMSw1-PI";
 			// Beschreibung Powerswitch
-			// Gerät Powerswitch
+			// GerÃ¤t Powerswitch
 		}
 		elseif($HomematicType == "0066")
 		{
 			$HomematicTypeName = "HM-LC-Sw4-WM";
 			// Beschreibung 4 Kanal Aktor
-			// Gerät Switch
+			// GerÃ¤t Switch
 		}
 		elseif($HomematicType == "00F4")
 		{
 			$HomematicTypeName = "HM-LC-RGBW-WM";
 			// Beschreibung sensor RGB Controller
-			// Gerät RGB
+			// GerÃ¤t RGB
 		}
 		
 		return $HomematicTypeName;
 	}
-	
-	/********************************************************
-	*Import
-	********************************************************/
+
+
+    // Import
+
 	//Intertechno
 	protected function ITImportNeo($CategoryID)
 		{
@@ -899,10 +898,11 @@ class AIOImport extends IPSModule
 						$address = $device['address'];
 						$ITType = (string) $device['data'];
 						$InstName = (string) $device['id'];
+                        $Ident = str_replace(".", "", $address);
 						$lengthaddress = strlen($address);
 						$address = explode(".", $address);
 						// Anpassen der Daten
-						$ITType = ucfirst($ITType); //erster Buchstabe groß
+						$ITType = ucfirst($ITType); //erster Buchstabe groÃŸ
 						if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
 						{
 							$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
@@ -916,12 +916,12 @@ class AIOImport extends IPSModule
 							$ITDeviceCode = $address[1]; // Devicecode
 							$ITFamilyCode = $address[0]; // Familencode
 						}
-					$this->ITCreateInstance($name, $Ident, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
+					$this->ITCreateInstance($InstName, $Ident, $ITFamilyCode, $ITDeviceCode, $ITType, $CategoryID);
 					}
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}
 	
@@ -949,17 +949,18 @@ class AIOImport extends IPSModule
 					 $AIOFS20Adresse = (string) $device['address'];
 					 $FS20Type = (string) $device['data'];
 					 $InstName = (string) $device['id'];
-						
+					 $Ident = str_replace(".", "", $AIOFS20Adresse);
+
 					// Anpassen der Daten
-					$FS20Type = ucfirst($FS20Type); //erster Buchstabe groß
+					$FS20Type = ucfirst($FS20Type); //erster Buchstabe groÃŸ
 					$AIOFS20Adresse = str_replace(".", "", $AIOFS20Adresse);
 					//echo "Funktion aufrufen mit ".$FS20Type." ".$AIOFS20Adresse." ".$InstName." <br>";
-					$this->FS20CreateInstance($InstName, $AIOFS20Adresse, $FS20Type, $CategoryID);
+                    $this->FS20CreateInstance($InstName, $Ident, $AIOFS20Adresse, $FS20Type, $CategoryID);
 					}
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}	
 	
@@ -989,14 +990,14 @@ class AIOImport extends IPSModule
 					 $InstName = (string) $device['id'];
 						
 					// Anpassen der Daten
-					$SomfyType = ucfirst($SomfyType); //erster Buchstabe groß
+					$SomfyType = ucfirst($SomfyType); //erster Buchstabe groÃŸ
 					$AIOSomfyAdresse = str_replace(".", "", $AIOSomfyAdresse);
 					$this->SomfyCreateInstance($InstName, $AIOSomfyAdresse, $SomfyType, $CategoryID);
 					}
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}	
 	
@@ -1015,7 +1016,7 @@ class AIOImport extends IPSModule
 			//echo "RF Import Creator in ".$CategoryID;
 			$directory = $this->ReadPropertyString('directory');
 			$file = IPS_GetKernelDir().$directory.'ircodes.xml';
-			$type = "CODE";
+			// $type = "CODE";
 						
 			if (file_exists($file))
 				{
@@ -1024,7 +1025,7 @@ class AIOImport extends IPSModule
 				foreach($xml->device as $device)
 					{
 					$name = $device['id'];
-					//Prüfen ob IR Code für AIO Gateway
+					//PrÃ¼fen ob IR Code fÃ¼r AIO Gateway
 					$count = $device->key->count();
 					$key = $device->key;
 					$InsID = $this->IRCreateInstance($name, $CategoryID);
@@ -1037,7 +1038,7 @@ class AIOImport extends IPSModule
 							//del instanz
 							if ($valcode == "{" || $valcode == "C")
 								{
-									$this->IRDeleteInstance($InsID);
+									$this->DeleteInstance($InsID);
 									break;
 								}
 						}
@@ -1050,7 +1051,7 @@ class AIOImport extends IPSModule
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}
 	
@@ -1079,7 +1080,7 @@ class AIOImport extends IPSModule
 				foreach($xml->device as $device)
 					{
 					$name = $device['id'];
-					//Prüfen ob IR Code für AIO Gateway
+					//PrÃ¼fen ob IR Code fÃ¼r AIO Gateway
 					$count = $device->key->count();
 					$key = $device->key;
 					$InsID = $this->IRCreateInstance($name, $CategoryID);
@@ -1092,7 +1093,7 @@ class AIOImport extends IPSModule
 							//del instanz
 							if ($valcode == "{" || $valcode == "C")
 								{
-									$this->IRDeleteInstance($InsID);
+									$this->DeleteInstance($InsID);
 									break;
 								}
 						}
@@ -1105,7 +1106,7 @@ class AIOImport extends IPSModule
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}
 
@@ -1134,14 +1135,14 @@ class AIOImport extends IPSModule
 					 $InstName = (string) $device['id'];
 						
 					// Anpassen der Daten
-					//$ELROType = ucfirst($ELROType); //erster Buchstabe groß
+					//$ELROType = ucfirst($ELROType); //erster Buchstabe groÃŸ
 					$ELROAdresse = str_replace(".", "", $ELROAdresse);
 					$this->ELROCreateInstance($InstName, $ELROAdresse, $ELROType, $CategoryID);
 					}
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}			
 		
@@ -1172,7 +1173,7 @@ class AIOImport extends IPSModule
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}
 
@@ -1203,7 +1204,7 @@ class AIOImport extends IPSModule
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 			
 		}
@@ -1235,7 +1236,7 @@ class AIOImport extends IPSModule
 					 $HomematicSNR = (string) $device['snr'];
 					 $HomematicType = (string) $device['typecode'];
 					// Anpassen der Daten
-					//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groß
+					//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groÃŸ
 					$HomematicAddress = str_replace(".", "", $HomematicAddress);
 					$Ident = $HomematicSNR."_".substr($HomematicAddress, 0, 6);
 					$this->HomematicCreateInstance($InstName, $Ident, $HomematicAddress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
@@ -1244,7 +1245,7 @@ class AIOImport extends IPSModule
 				}
 			else
 				{
-				exit("Datei ".$file." konnte nicht geöffnet werden.");
+				exit("Datei ".$file." konnte nicht geÃ¶ffnet werden.");
 				}
 		}	
 
@@ -1269,7 +1270,7 @@ class AIOImport extends IPSModule
 		//rooms auslesen
 		$rooms = $json->rooms;
 		$ImportCategoryID = $this->ReadPropertyInteger('ImportCategoryID');
-		$roomcatid = $this->SetupCategory("Räume", $ImportCategoryID);	
+		$roomcatid = $this->SetupCategory("RÃ¤ume", $ImportCategoryID);
 		
 		$roomsneo = array();
 		foreach ($rooms as $key => $room)
@@ -1320,7 +1321,7 @@ class AIOImport extends IPSModule
 						   {
 								case "FS20": //FS20
 									// Anpassen der Daten
-									$FS20Type = ucfirst($data); //erster Buchstabe groß
+									$FS20Type = ucfirst($data); //erster Buchstabe groÃŸ
 									$AIOFS20Adresse = str_replace(".", "", $address);
 									$this->FS20CreateInstance($name, $Ident, $AIOFS20Adresse, $FS20Type, $CategoryID);
 									 break;
@@ -1343,7 +1344,7 @@ class AIOImport extends IPSModule
 									$HomematicSNR = $device->info->snr; // Seriennummer
 									$HomematicType = $device->info->typecode; // Typencode
 									// Anpassen der Daten
-									//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groß
+									//$HomematicType = ucfirst($HomematicType); //erster Buchstabe groÃŸ
 									$HomematicAddress = str_replace(".", "", $HomematicAddress);
 									$Ident = $HomematicSNR."_".substr($HomematicAddress, 0, 6);
 									$this->HomematicCreateInstance($name, $Ident, $HomematicAddress, $HomematicData, $HomematicSNR, $HomematicType, $CategoryID);
@@ -1353,7 +1354,7 @@ class AIOImport extends IPSModule
 									$lengthaddress = strlen($address);
 									$address = explode(".", $address);
 									// Anpassen der Daten
-									$ITType = ucfirst($data); //erster Buchstabe groß
+									$ITType = ucfirst($data); //erster Buchstabe groÃŸ
 									$Ident = $ITType."_".$identaddress;
 									if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
 									{
@@ -1386,7 +1387,7 @@ class AIOImport extends IPSModule
 							}
 						}
 					//IR oder RF Codes address (IR:01) Sendediode oder RF:01
-					if (isset($device->info->ircodes) && $subtype == "RF" && $address == "RF:01") // Funkgerät
+					if (isset($device->info->ircodes) && $subtype == "RF" && $address == "RF:01") // FunkgerÃ¤t
 						{
 							$codes = $device->info->ircodes->codes;
 							$key = $device->info->ircodes->codes;
@@ -1414,7 +1415,7 @@ class AIOImport extends IPSModule
 							}	
 							$this->RFAddCode($InsID, $rfcodes, $count); 
 						}
-					elseif(isset($device->info->ircodes) && $subtype == "IR" && $address == "IR:01") // IR Gerät
+					elseif(isset($device->info->ircodes) && $subtype == "IR" && $address == "IR:01") // IR GerÃ¤t
 						{
 							$key = $device->info->ircodes->codes;
 							$count = count($key);

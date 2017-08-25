@@ -12,7 +12,7 @@ Beta Test
 3. [Installation](#3-installation)
 4. [Import](#4-import)   
 5. [Funktionsreferenz](#5-funktionsreferenz)
-6. [Konfiguration] (#6-konfiguration)  
+6. [Konfiguration](#6-konfiguration) 
 7. [Anhang](#7-anhang)  
 
 ## 1. Funktionsumfang

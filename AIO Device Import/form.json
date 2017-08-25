@@ -1,32 +1,32 @@
 {
     "elements":
             [
-				{ "type": "Label", "label": "Import von Ger‰ten aus dem AIO Creator:" },
+				{ "type": "Label", "label": "Import von Ger√§ten aus dem AIO Creator:" },
 				{ "type": "Label", "label": "Verzeichnis der zu importierenden Dateien" },
 				{
                     "name": "Directory",
                     "type": "ValidationTextBox",
                     "caption": "Verzeichnis der Dateien"
                 },
-				{ "type": "Label", "label": "Dateien m¸ssen im Verzeichnis liegen: AIO Creator (ircodes.xml, devices.xml) / AIO Creator NEO (device_db)" },
+				{ "type": "Label", "label": "Dateien m√ºssen im Verzeichnis liegen: AIO Creator (ircodes.xml, devices.xml) / AIO Creator NEO (device_db)" },
 				{ "type": "Select", "name": "Version", "caption": "Version Creator",
 						"options": [
 									{ "value": 0, "label": "AIO Creator NEO" },
 									{ "value": 1, "label": "AIO Creator (alte Version)" }
 								  ]
 				},
-				{ "type": "Label", "label": "Zu importierende Ger‰te:" },
-				{ "type": "CheckBox", "name": "IRImport", "caption": "Infrarot Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "ITImport", "caption": "Intertechno Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "ELROImport", "caption": "ELRO Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "FS20Import", "caption": "FS20 Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "LM1Import", "caption": "Light Manager 1 Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "LM2Import", "caption": "Light Manager 2 Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "SomfyImport", "caption": "Somfy RTS Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "RFImport", "caption": "Funk (RF) Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "HomematicImport", "caption": "Homematic Ger‰te importieren" },
-				{ "type": "CheckBox", "name": "RoomImport", "caption": "R‰ume importieren" },
-				{ "type": "Label", "label": "Kategorie zum Anlegen der Ger‰te:" },
+				{ "type": "Label", "label": "Zu importierende Ger√§te:" },
+				{ "type": "CheckBox", "name": "IRImport", "caption": "Infrarot Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "ITImport", "caption": "Intertechno Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "ELROImport", "caption": "ELRO Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "FS20Import", "caption": "FS20 Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "LM1Import", "caption": "Light Manager 1 Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "LM2Import", "caption": "Light Manager 2 Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "SomfyImport", "caption": "Somfy RTS Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "RFImport", "caption": "Funk (RF) Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "HomematicImport", "caption": "Homematic Ger√§te importieren" },
+				{ "type": "CheckBox", "name": "RoomImport", "caption": "R√§ume importieren" },
+				{ "type": "Label", "label": "Kategorie zum Anlegen der Ger√§te:" },
 				{ "type": "SelectCategory", "name": "ImportCategoryID", "caption": "Kategorie zum Import" }
             ],
     "status":
@@ -39,7 +39,7 @@
 				{
                     "code": 102,
                     "icon": "active",
-                    "caption": "Konfiguration g¸ltig."
+                    "caption": "Konfiguration g√ºltig."
                 },
                 {
                     "code": 104,
@@ -49,7 +49,7 @@
                 {
                     "code": 202,
                     "icon": "error",
-                    "caption": "Eingabe ung¸ltig. Felder d¸rfen nicht leer sein."
+                    "caption": "Eingabe ung√ºltig. Felder d√ºrfen nicht leer sein."
                 },
                 {
                     "code": 203,
@@ -74,7 +74,7 @@
 				{
                     "code": 207,
                     "icon": "error",
-                    "caption": "Es wurde nichts zum Importieren ausgew‰hlt."
+                    "caption": "Es wurde nichts zum Importieren ausgew√§hlt."
                 },
 				{
                     "code": 208,
@@ -84,7 +84,7 @@
 				{
                     "code": 209,
                     "icon": "error",
-                    "caption": "Keine g¸ltige IP Adresse."
+                    "caption": "Keine g√ºltige IP Adresse."
                 },
                 {
                     "code": 210,
@@ -94,7 +94,7 @@
 				{
                     "code": 211,
                     "icon": "error",
-                    "caption": "Kategorie zum Import ausw‰hlen."
+                    "caption": "Kategorie zum Import ausw√§hlen."
                 }
             ]
 }
