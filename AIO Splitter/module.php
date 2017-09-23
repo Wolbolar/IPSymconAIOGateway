@@ -442,36 +442,40 @@ class AIOSplitter extends IPSModule
 	
 	protected function UpdateLastResponse($payload)
 	{
-		$json = substr($payload, 8, strlen($payload));
-		$payload = json_decode($json);
-		
-		$type = $payload->type;
-		$data = $payload->data;
-		
-		
-		switch ($type)
-		   {
-			case "HM": //Homematic
-				SetValue($this->GetIDForIdent("HomematicIN"), $data);
-				 break;
-			case "IR": //IR
-				//$irdatacode = strstr($data, '00010');
-				$num_of_timing = hexdec(substr($data,16, 2));
-				$start = $num_of_timing*8+17;
-				$irdatacode = substr($data, $start);  
-				SetValue($this->GetIDForIdent("IRIN"), $irdatacode);
-				$this->SendDebug("Received IR Code",$irdatacode,0);
-				 break;
-			case "IT": //Intertechno
-				SetValue($this->GetIDForIdent("ITIN"), $data);
-				 break;
-			case "FS20": //FS20
-				SetValue($this->GetIDForIdent("FS20IN"), $data);
-				 break;
-			case "EL": //ELRO
-				SetValue($this->GetIDForIdent("ELROIN"), $data);
-				 break;		
-			}
+		$pos = stripos($payload, '{XC_EVT}');
+
+        if ($pos == 0)
+        {
+            $json = substr($payload, 8, strlen($payload));
+            $payload = json_decode($json);
+
+            $type = $payload->type;
+            $data = $payload->data;
+
+            switch ($type)
+            {
+                case "HM": //Homematic
+                    SetValue($this->GetIDForIdent("HomematicIN"), $data);
+                    break;
+                case "IR": //IR
+                    //$irdatacode = strstr($data, '00010');
+                    $num_of_timing = hexdec(substr($data,16, 2));
+                    $start = $num_of_timing*8+17;
+                    $irdatacode = substr($data, $start);
+                    SetValue($this->GetIDForIdent("IRIN"), $irdatacode);
+                    $this->SendDebug("Received IR Code",$irdatacode,0);
+                    break;
+                case "IT": //Intertechno
+                    SetValue($this->GetIDForIdent("ITIN"), $data);
+                    break;
+                case "FS20": //FS20
+                    SetValue($this->GetIDForIdent("FS20IN"), $data);
+                    break;
+                case "EL": //ELRO
+                    SetValue($this->GetIDForIdent("ELROIN"), $data);
+                    break;
+            }
+        }
 	}
 	
 }
