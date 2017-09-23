@@ -442,9 +442,9 @@ class AIOSplitter extends IPSModule
 	
 	protected function UpdateLastResponse($payload)
 	{
-		$pos = stripos($payload, '{XC_EVT}');
+		$pos = stripos($payload, '{"type"');
 
-        if ($pos == 0)
+        if ($pos)
         {
             $json = substr($payload, 8, strlen($payload));
             $payload = json_decode($json);
