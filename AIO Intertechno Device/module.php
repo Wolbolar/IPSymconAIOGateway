@@ -575,8 +575,7 @@ class AIOITDevice extends IPSModule
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
 			$this->SendDebug("IT Adresse",$address,0);
-			$this->SendDebug("AIO Gateway","Die Adresse vom IT Gerät konnte nicht angelernt werden.",0);
-			IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.			
+			$this->SendDebug("AIO Gateway","Die Adresse vom IT Gerät konnte nicht angelernt werden.",0);			
 			}
 		else
 			{
