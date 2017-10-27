@@ -31,13 +31,8 @@ class AIOITDevice extends IPSModule
 		// ITFamilyCode und ITDeviceCode prüfen
         $ITFamilyCode = $this->ReadPropertyString('ITFamilyCode');
 		$ITDeviceCode = $this->ReadPropertyString('ITDeviceCode');
-  		$LearnITCode = $this->ReadPropertyBoolean('LearnITCode');
-		
-        if ($LearnITCode)
-		{
-			$this->Learn();
-		}
-		elseif ( $ITFamilyCode == '' or $ITDeviceCode == '')
+  		
+		if ( $ITFamilyCode == '' or $ITDeviceCode == '')
         {
             // Status Error Felder dürfen nicht leer sein
             $this->SetStatus(202);
@@ -627,7 +622,6 @@ class AIOITDevice extends IPSModule
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "ITFamilyCode", $ITFamilyCode); //ITFamilyCode setzten.
 		IPS_SetProperty($instance, "ITDeviceCode", $ITDeviceCode); //ITDeviceCode setzten.
-		IPS_SetProperty($instance, "LearnITCode", false); //Haken entfernen.
 		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
 		$this->SendDebug("IT Device Code",$ITDeviceCode." hinzugefügt",0);
 		$this->SendDebug("IT Family Code",$ITFamilyCode." hinzugefügt",0);

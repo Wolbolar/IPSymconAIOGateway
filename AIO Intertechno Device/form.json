@@ -17,14 +17,18 @@
                     "options": [ 
                                  { "label": "Switch",                   "value": "Switch" },
                                  { "label": "Dimmer",        			"value": "Dimmer ITLR-300" }
-                  ] },
-				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein Intertechno Gerät angelernt werden soll" },
-				{ "type": "Label", "label": "Nach Drücken von übernehmen muss die Power Taste der Fernbedienung gedrückt werden." },
-				{ "type": "CheckBox", "name": "LearnITCode", "caption": "IT Code anlernen" } 
+                  ] }
             ],
     "actions":
             [
+                { "type": "Label", "label": "Anlernen (Drücken wenn nicht angelernt werden soll und die Werte nicht manuell eingetragen wurden" },
+                { "type": "Label", "label": "Nach Drücken auf den Button muss die Power Taste der Fernbedienung gedrückt werden." },
                 {
+                    "type": "Button",
+                    "label": "Learn",
+                    "onClick": "AIOIT_Learn($id);"
+                },
+				{
                     "type": "Button",
                     "label": "On",
                     "onClick": "AIOIT_PowerOn($id);"
