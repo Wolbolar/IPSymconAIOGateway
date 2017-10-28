@@ -21,7 +21,7 @@
             ],
     "actions":
             [
-                { "type": "Label", "label": "Anlernen (Drücken wenn nicht angelernt werden soll und die Werte nicht manuell eingetragen wurden" },
+                { "type": "Label", "label": "Anlernen (Drücken wenn angelernt werden soll und die Werte nicht manuell eingetragen wurden" },
                 { "type": "Label", "label": "Nach Drücken auf den Button muss die Power Taste der Fernbedienung gedrückt werden." },
                 {
                     "type": "Button",
