@@ -12,7 +12,7 @@ class AIORFDevice extends IPSModule
 		
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-        // 1. Verfügbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIO-Splitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		
 		$this->RegisterPropertyString("RFLabel1", "");
@@ -241,7 +241,7 @@ class AIORFDevice extends IPSModule
 		$NumberRFCodes = $this->ReadPropertyInteger("NumberRFCodes");
 		$RFStatus = $this->ReadPropertyBoolean("RFStatus");
 		
-		//Mögliche Prüfungen durchführen
+		//MÃ¶gliche PrÃ¼fungen durchfÃ¼hren
 		if ($LearnRFCode)
 		{
 			$irid = $this->ReadPropertyInteger("LearnRFCodeID");
@@ -250,13 +250,13 @@ class AIORFDevice extends IPSModule
 		//elseif ( $RFCode1 == '' or $RFCode2 == '' or $RFLabel1 == '' or $RFLabel2 == '')
 		elseif ( $RFCode1 == '' or $RFLabel1 == '')
         {
-            // Status Error Felder dürfen nicht leer sein
+            // Status Error Felder dÃ¼rfen nicht leer sein
             $this->SetStatus(202);
         }
 		/*
 		elseif ($RFStatus == true && ($RFCode1 == '' or $RFCode2 == '' or $RFLabel1 == '' or $RFLabel2 == ''))
 		{
-            // Status Error Feld 1 und Feld 2 müssen  dürfen nicht leer sein
+            // Status Error Feld 1 und Feld 2 mÃ¼ssen  dÃ¼rfen nicht leer sein
             $this->SetStatus(202);
         }
 		*/
@@ -309,8 +309,8 @@ class AIORFDevice extends IPSModule
 	}
 	
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
     *
 	* 
     */
@@ -391,18 +391,18 @@ class AIORFDevice extends IPSModule
 			
 	protected function clear_string($str, $how = '_')
 	{
-	$search = array("ä", "ö", "ü", "ß", "Ä", "Ö", 
-					"Ü", "&", "é", "á", "ó", 
-					" :)", " :D", " :-)", " :P", 
-					" :O", " ;D", " ;)", " ^^", 
-					" :|", " :-/", ":)", ":D", 
-					":-)", ":P", ":O", ";D", ";)", 
-					"^^", ":|", ":-/", "(", ")", "[", "]", 
-					"<", ">", "!", "\"", "§", "$", "%", "&", 
-					"/", "(", ")", "=", "?", "`", "´", "*", "'", 
-					"_", ":", ";", "²", "³", "{", "}", 
-					"\\", "~", "#", "+", ".", ",", 
-					"=", ":", "=)");
+	$search = array("Ã¤", "Ã¶", "Ã¼", "ÃŸ", "Ã„", "Ã–",
+        "Ãœ", "&", "Ã©", "Ã¡", "Ã³",
+        " :)", " :D", " :-)", " :P",
+        " :O", " ;D", " ;)", " ^^",
+        " :|", " :-/", ":)", ":D",
+        ":-)", ":P", ":O", ";D", ";)",
+        "^^", ":|", ":-/", "(", ")", "[", "]",
+        "<", ">", "!", "\"", "Â§", "$", "%", "&",
+        "/", "(", ")", "=", "?", "`", "Â´", "*", "'",
+        "_", ":", ";", "Â²", "Â³", "{", "}",
+        "\\", "~", "#", "+", ".", ",",
+        "=", ":", "=)");
 	$replace = array("ae", "oe", "ue", "ss", "Ae", "Oe", 
 					 "Ue", "und", "e", "a", "o", "", "", 
 					 "", "", "", "", "", "", "", "", "", 
@@ -1001,7 +1001,7 @@ class AIORFDevice extends IPSModule
 	}
 	
 	
-	//Senden eines IR Befehls über das a.i.o. Gateway
+	//Senden eines IR Befehls Ã¼ber das a.i.o. Gateway
 	public function SendRF1() {
             $RF_send = $this->ReadPropertyString("RFCode1");
 			return $this->Send_RF($RF_send);
@@ -1066,7 +1066,7 @@ class AIORFDevice extends IPSModule
 		elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			$this->SendDebug("AIOGateway","Keine Authentizifierung möglich. Gateway Passwort ist falsch.",0);
+			$this->SendDebug("AIOGateway","Keine Authentizifierung mï¿½glich. Gateway Passwort ist falsch.",0);
 			}
 		return $this->response;
 
@@ -1128,7 +1128,7 @@ class AIORFDevice extends IPSModule
 				{	
 					//boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) //Float Wert stimmt nicht
 					// IR Codes nicht im Profil hinterlegt statt dessen die ID der RFCodes der Wert muss beim Senden abgefragt werden.
-					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$RFCodes[($start+$i)][0], "", -1 );//max 32 möglich
+					IPS_SetVariableProfileAssociation( (string)$Name, (float)$i, (string)$RFCodes[($start+$i)][0], "", -1 );//max 32 mï¿½glich
 				}
 				
 			}
@@ -1160,7 +1160,7 @@ class AIORFDevice extends IPSModule
     }
 	
 	
-	//Anlernen eines IR Codes über das a.i.o. gateway:
+	//Anlernen eines IR Codes Ã¼ber das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=Learn
 	public function Learn(int $irid)
 		{
@@ -1175,7 +1175,7 @@ class AIORFDevice extends IPSModule
 			$RFCode = file_get_contents("http://".$this->GetIPGateway()."/command?XC_FNC=Learn");
 		}
 		
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wÃ¤hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($RFCode == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -1200,7 +1200,7 @@ class AIORFDevice extends IPSModule
 		return $this->response;
 		}
 	
-	// RF Code und Label hinzufügen
+	// RF Code und Label hinzufÃ¼gen
 	protected function AddRFCode($RFCode, $rfid)
 	{
 		$code = "RFCode".$rfid;
@@ -1212,13 +1212,13 @@ class AIORFDevice extends IPSModule
 			{
 				IPS_SetProperty($this->InstanceID, $label, "Neuer Code"); //RFLabel provisorisch setzten.
 			}
-		$NumberRFCodes = $this->ReadPropertyString("NumberRFCodes");
+		$NumberRFCodes = $this->ReadPropertyInteger("NumberRFCodes");
 		$NumberRFCodes = $NumberRFCodes + 1;
 		$this->CreateProfileRF($NumberRFCodes);
 		IPS_SetProperty($this->InstanceID, "NumberRFCodes", $NumberRFCodes); //RFCode setzten.	
 		IPS_SetProperty($this->InstanceID, "LearnRFCode", false); //Haken entfernen.
-		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration übernehmen
-		$this->SendDebug("RFCode".$rfid,$RFCode." hinzugefügt",0);
+		IPS_ApplyChanges($this->InstanceID); //Neue Konfiguration Ã¼bernehmen
+		$this->SendDebug("RFCode".$rfid,$RFCode." hinzugefÃ¼gt",0);
 		// Status aktiv
         $this->SetStatus(102);	
 	}	

@@ -233,9 +233,9 @@
 								  ]
 				},
 				{ "type": "Label", "label": "Anlernen (Haken setzen wenn ein RF Code angelernt werden soll" },
-				{ "type": "Label", "label": "Nach Drücken von Übernehmen muss die entsprechnde Taste der Fernbedienung gedrückt werden." },
+				{ "type": "Label", "label": "Nach DrÃ¼cken von Ãœbernehmen muss die entsprechnde Taste der Fernbedienung gedrÃ¼ckt werden." },
 				{ "type": "CheckBox", "name": "LearnRFCode", "caption": "RF Code anlernen" },
-				{ "type": "Label", "label": "RF Code auswählen der angelernt werden soll." },
+				{ "type": "Label", "label": "RF Code auswÃ¤hlen der angelernt werden soll." },
 				{ "type": "Select", "name": "LearnRFCodeID", "caption": "Anzulernender RF Code",
 						"options": [
 									{ "value": 1, "label": "RF Code 1" },
@@ -1445,7 +1445,7 @@
 				{
                     "code": 102,
                     "icon": "active",
-                    "caption": "Konfiguration gültig."
+                    "caption": "Konfiguration gÃ¼ltig."
                 },
                 {
                     "code": 104,
@@ -1455,7 +1455,7 @@
                 {
                     "code": 202,
                     "icon": "error",
-                    "caption": "Felder dürfen nicht leer sein."
+                    "caption": "Felder dÃ¼rfen nicht leer sein."
                 },
                 {
                     "code": 203,
