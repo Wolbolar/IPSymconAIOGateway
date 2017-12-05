@@ -130,7 +130,9 @@ class AIOELRODevice extends IPSModule
 	//Senden eines Befehls an Elro
 	protected function Send_ELRO($ELRO_send, $action)
 		{
-		$GatewayPassword = $this->GetPassword();
+		    $parent = $this->GetParent();
+		    $gatewaytype = IPS_GetProperty($parent, "gatewaytype");
+		    $GatewayPassword = $this->GetPassword();
 		//ELRO Befehl, erste 5 Zeichen Adresse letzes Zeichen Command
 		$ELRO_send = substr($ELRO_send, 0, 5);		
 		if ($action === "1")
@@ -138,8 +140,16 @@ class AIOELRODevice extends IPSModule
 			// Sendestring ELRO /command?XC_FNC=SendSC&type=ELRO&data=
 			if ($GatewayPassword !== "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1");
-				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1",0);
+				if($gatewaytype == 6 || $gatewaytype == 7)
+				{
+                    $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?auth=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1");
+                    $this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1",0);
+                }
+                else
+                {
+                    $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1");
+                    $this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."1",0);
+                }
 			}
 			else
 			{
@@ -154,8 +164,16 @@ class AIOELRODevice extends IPSModule
 			{
 			if ($GatewayPassword != "")
 			{
-				$gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4");
-				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4",0);
+                if($gatewaytype == 6 || $gatewaytype == 7)
+                {
+                    $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?auth=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4");
+                    $this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4",0);
+                }
+                else
+                {
+                    $gwcheck = file_get_contents("http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4");
+                    $this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=ELRO&data=".$ELRO_send."4",0);
+                }
 			}
 			else
 			{
