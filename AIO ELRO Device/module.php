@@ -80,18 +80,22 @@ class AIOELRODevice extends IPSModule
         $instance = IPS_GetInstance($this->InstanceID);//array
 		return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
     }
-	
-	public function PowerOn() {
-            $ELROAddress = $this->ReadPropertyString("ELROAddress");
-			$action = "1";
-			return $this->Send_ELRO($ELROAddress, $action);	
-        }
-		
-	public function PowerOff() {
-			$ELROAddress = $this->ReadPropertyString("ELROAddress");
-			$action = "4";
-			return $this->Send_ELRO($ELROAddress, $action);	
-        }
+
+    public function PowerOn()
+    {
+        $ELROAddress = $this->ReadPropertyString("ELROAddress");
+        $action = "1";
+        SetValueBoolean($this->GetIDForIdent('STATE'), true);
+        return $this->Send_ELRO($ELROAddress, $action);
+    }
+
+    public function PowerOff()
+    {
+        $ELROAddress = $this->ReadPropertyString("ELROAddress");
+        $action = "4";
+        SetValueBoolean($this->GetIDForIdent('STATE'), false);
+        return $this->Send_ELRO($ELROAddress, $action);
+    }
 	
 		
 	//IP Gateway 
