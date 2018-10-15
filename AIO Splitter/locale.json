@@ -1,0 +1,15 @@
+{
+	"translations": {
+		"de": {
+			"gateway type": "Gateway Typ",
+			"IP address AIO Gateway": "IP Adresse des AIO Gateway",
+			"IP address": "IP Adresse",
+			"Creating instance.": "Die Instanz wird erstellt.",
+			"No valid IP address.":"Keine gültige IP Adresse.",
+			"AIO gateway active.": "AIO Gateway ereichbar.",
+			"Interface closed.": "Interface geschlossen.",
+			"AIO Gateway IP address must not be empty.": "AIO Gateway IP Adresse darf nicht leer sein.",
+			"Connection lost to AIO Gateway.": "Verbindung zum AIO Gateway verloren."
+		}
+	}
+}
