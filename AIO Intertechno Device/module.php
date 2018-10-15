@@ -169,8 +169,9 @@ class AIOITDevice extends IPSModule
         $lengthITFamilyCode = strlen($ITFamilyCode);
         if($lengthITFamilyCode == 1)
         {
-            $ITFamilyCode = ord(strtoupper($ITFamilyCode)) - ord('A');
+        	$ITFamilyCode = ord(strtoupper($ITFamilyCode)) - ord('A');
             $ITDeviceCode = intval($ITDeviceCode)-1;
+			$ITDeviceCode = strtoupper(dechex($ITDeviceCode));
         }
         $IT_send = $ITFamilyCode.$ITDeviceCode;
         return $IT_send;
