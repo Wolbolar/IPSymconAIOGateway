@@ -905,10 +905,13 @@ class AIOImport extends IPSModule
 						$ITType = ucfirst($ITType); //erster Buchstabe groß
 						if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
 						{
-							$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
+							$ITDeviceCode_import = strval($address[1]);
+							$ITDeviceCode_dec = hexdec($ITDeviceCode_import);
+							$ITDeviceCode = strval($ITDeviceCode_dec+1); // Devicecode auf Original umrechen +1
 							$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
-							$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-							$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+							$hexsend = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
+							$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W");
+							$ITFamilyCode = hexdec($ITFamilyCode);
 							$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
 						}
 						elseif($lengthaddress == 9) //neuer Code
@@ -1358,10 +1361,13 @@ class AIOImport extends IPSModule
 									$Ident = $ITType."_".$identaddress;
 									if($lengthaddress == 3) // alter Code aus Buchstaben und Ziffer
 									{
-										$ITDeviceCode = strval($address[1]+1); // Devicecode auf Original umrechen +1
+										$ITDeviceCode_import = strval($address[1]);
+										$ITDeviceCode_dec = hexdec($ITDeviceCode_import);
+										$ITDeviceCode = strval($ITDeviceCode_dec+1); // Devicecode auf Original umrechen +1
 										$ITFamilyCode = $address[0]; // Zahlencode in Buchstaben Familencode umwandeln
-										$hexsend = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-										$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+										$hexsend = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
+										$itfc = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W");
+										$ITFamilyCode = hexdec($ITFamilyCode);
 										$ITFamilyCode = str_replace($hexsend, $itfc, $ITFamilyCode);
 									}
 									elseif($lengthaddress == 9) //neuer Code
