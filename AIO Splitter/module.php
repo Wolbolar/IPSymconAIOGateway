@@ -4,6 +4,8 @@ require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
 
 class AIOSplitter extends IPSModule
 {
+	// helper properties
+	private $position = 0;
 
     public function Create()
     {
@@ -12,99 +14,68 @@ class AIOSplitter extends IPSModule
 		
 		//These lines are parsed on Symcon Startup or Instance creation
         //You cannot use variables here. Just static values.
-		$this->RequireParent("{82347F20-F541-41E1-AC5B-A636FD3AE2D8}"); // AIO Gateway UDP Socket
-		//$this->RequireParent("{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}"); //Multicast Socket
+		//You cannot use variables here. Just static values.
+		$this->RequireParent("{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}"); // AIO Gateway Multicast Socket
 
-        $this->RegisterPropertyString("Host", "");
+		$this->RegisterPropertyString("Host", "");
 		$this->RegisterPropertyInteger("Port", 1902);
-        $this->RegisterPropertyBoolean("Open", false);
+		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyBoolean("GatewayLED", false);
 		$this->RegisterPropertyString("Passwort", "");
-        $this->RegisterPropertyInteger("gatewaytype", 4);
+		$this->RegisterPropertyInteger("gatewaytype", 4);
+		$this->RegisterPropertyString("IPSHost", "");
+	
     }
 
     public function ApplyChanges()
     {
-//Never delete this line!
-        parent::ApplyChanges();
-        $change = false;
-		
-		$this->RegisterVariableString("BufferIN", "BufferIN", "", 1);
-        $this->RegisterVariableString("CommandOut", "CommandOut", "", 2);
-		$this->RegisterVariableString("HomematicIN", "Letzter Homematic Befehl", "", 3);
-		$this->RegisterVariableString("IRIN", "Letzter IR Befehl", "", 4);
-		$this->RegisterVariableString("FS20IN", "Letzter FS20 Befehl", "", 5);
-		$this->RegisterVariableString("ITIN", "Letzter Intertechno Befehl", "", 6);
-		$this->RegisterVariableString("ELROIN", "Letzter ELRO Befehl", "", 7);
-		
+		$this->RegisterVariableString("BufferIN", "BufferIN", "", $this->_getPosition());
+		$this->RegisterVariableString("CommandOut", "CommandOut", "", $this->_getPosition());
+		$this->RegisterVariableString("HomematicIN", "Letzter Homematic Befehl", "", $this->_getPosition());
+		$this->RegisterVariableString("IRIN", "Letzter IR Befehl", "", $this->_getPosition());
+		$this->RegisterVariableString("FS20IN", "Letzter FS20 Befehl", "", $this->_getPosition());
+		$this->RegisterVariableString("ITIN", "Letzter Intertechno Befehl", "", $this->_getPosition());
+		$this->RegisterVariableString("ELROIN", "Letzter ELRO Befehl", "", $this->_getPosition());
+
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
 		$GatewayLED = $this->ReadPropertyBoolean("GatewayLED");
-		if ($GatewayLED)
-		{
+		if ($GatewayLED) {
 			//Profil anlegen
 			$this->RegisterProfileLEDGateway("LED.AIOGateway", "Bulb", "", "");
-			
-		
+
+
 			//Variablen anlegen
 			//Farbe
-				$stateID = $this->RegisterVariableInteger("Farbe", "Farbe", "LED.AIOGateway", 1);
-				$this->EnableAction("Farbe");
+			$this->RegisterVariableInteger("Farbe", "Farbe", "LED.AIOGateway", $this->_getPosition());
+			$this->EnableAction("Farbe");
 		}
-		if (!filter_var($ip, FILTER_VALIDATE_IP) === false)
-			{
-						
-			// Zwangskonfiguration des ClientSocket
-			$ParentID = $this->GetParent();
-				if (!($ParentID === false))
-				{
-					if (IPS_GetProperty($ParentID, 'Host') <> $this->ReadPropertyString('Host'))
-					{
-						IPS_SetProperty($ParentID, 'Host', $this->ReadPropertyString('Host'));
-						$change = true;
-					}
-					if (IPS_GetProperty($ParentID, 'Port') <> $this->ReadPropertyInteger('Port'))
-					{
-						IPS_SetProperty($ParentID, 'Port', $this->ReadPropertyInteger('Port'));
-						IPS_SetProperty($ParentID, 'BindPort', $this->ReadPropertyInteger('Port'));
-						//IPS_SetProperty($ParentID, 'BindPort', true); // Reuse Adress			
-						$change = true;
-					}
-					$ParentOpen = $this->ReadPropertyBoolean('Open');
-					
-					
-				// Keine Verbindung erzwingen wenn IPAIOGateway leer ist, sonst folgt später Exception.
-					if (!$ParentOpen)
-						$this->SetStatus(104);
-
-					if ($this->ReadPropertyString('Host') == '')
-					{
-						if ($ParentOpen)
-							$this->SetStatus(202);
-						$ParentOpen = false;
-					}
-					if (IPS_GetProperty($ParentID, 'Open') <> $ParentOpen)
-					{
-						IPS_SetProperty($ParentID, 'Open', $ParentOpen);
-						$change = true;
-					}
-					if ($change)
-						@IPS_ApplyChanges($ParentID);
-				}
-		
-		}
-		else
-			{
+		if (!filter_var($ip, FILTER_VALIDATE_IP) === false) {
+			$this->SendDebug("AIO Gateway", "IP valid", 0);
+		} else {
+			$this->SendDebug("AIO Gateway", "IP not valid", 0);
 			$this->SetStatus(203); //IP Adresse ist ungültig
-			}	
-		
+		}
+
+		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		if ($gatewaytype == 6 || $gatewaytype == 7) {
+			$this->RegisterVariableString("Gateway_Name", "Gateway Name", "", $this->_getPosition());
+			$this->RegisterVariableString("Hardware_Version", "Hardware Version", "", $this->_getPosition());
+			$this->RegisterVariableString("Hardware_Revision", "Hardware Revision", "", $this->_getPosition());
+			$this->RegisterVariableString("Firmware_Version", "Firmware Version", "", $this->_getPosition());
+			$this->RegisterVariableString("Build", "Build", "", $this->_getPosition());
+			$this->RegisterVariableString("Gateway_IP", "Gateway IP", "", $this->_getPosition());
+			$this->RegisterVariableString("Gateway_MAC", "Gateway MAC", "", $this->_getPosition());
+			$this->RegisterVariableString("Gateway_Serial", "Serialnumber", "", $this->_getPosition());
+			$this->RegisterVariableString("Gateway_SID", "SID", "", $this->_getPosition());
+			$this->RegisterVariableString("Gateway_WIFI", "WIFI", "", $this->_getPosition());
+		}
 
 		// Wenn I/O verbunden ist
-        if (($this->ReadPropertyBoolean('Open'))
-                and ( $this->HasActiveParent($ParentID)))
-        {
-            //Instanz aktiv
-        }
+		if ($this->HasActiveParent()) {
+			$this->SetStatus(IS_ACTIVE);
+		}
+
 // Eigene Profile
       
 // Eigene Variablen
@@ -125,7 +96,41 @@ class AIOSplitter extends IPSModule
         *
         *
         */
-		
+	
+	public function GetConfigurationForParent()
+	{
+		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		if ($gatewaytype == 6 || $gatewaytype == 7) {
+			$Config['Host'] = $this->GetHostIP();
+			$Config['Port'] = 1901;
+			$Config['MulticastIP'] = "239.255.255.250";
+			$Config['BindPort'] = 1901;
+			$Config['EnableBroadcast'] = true;
+			$Config['EnableReuseAddress'] = true;
+			$Config['EnableLoopback'] = false;
+		} else {
+			$Config['Host'] = $this->GetHostIP();
+			$Config['Port'] = 1902;
+			$Config['MulticastIP'] = "239.255.255.250";
+			$Config['BindPort'] = 1902;
+			$Config['EnableBroadcast'] = true;
+			$Config['EnableReuseAddress'] = true;
+			$Config['EnableLoopback'] = false;
+		}
+		return json_encode($Config);
+	}
+
+	
+	protected function GetHostIP()
+	{
+		$ip = exec("sudo ifconfig eth0 | grep 'inet Adresse:' | cut -d: -f2 | awk '{ print $1}'");
+		if ($ip == "") {
+			$ipinfo = Sys_GetNetworkInfo();
+			$ip = $ipinfo[0]['IP'];
+		}
+		return $ip;
+	}
+	
     public function RequestAction($Ident, $Value)
 		{
 			
@@ -199,23 +204,7 @@ class AIOSplitter extends IPSModule
         return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;
     }
 
-    protected function HasActiveParent($ParentID)
-    {
-        if ($ParentID > 0)
-        {
-            $parent = IPS_GetInstance($ParentID);
-            if ($parent['InstanceStatus'] == 102)
-            {
-                $this->SetStatus(102);
-				//Task auslesen
-				$this->GetTasksGateway();
-                return true;
-            }
-        }
-        $this->SetStatus(203);
-        return false;
-    }
-
+  
     private function SetValueBoolean($Ident, $value)
     {
         $id = $this->GetIDForIdent($Ident);
@@ -479,6 +468,14 @@ class AIOSplitter extends IPSModule
         }
 	}
 	
+	/**
+	 * return incremented position
+	 * @return int
+	 */
+	private function _getPosition()
+	{
+		$this->position++;
+		return $this->position;
+	}
+	
 }
-
-?>
