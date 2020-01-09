@@ -1,0 +1,32 @@
+{
+  "translations": {
+    "de": {
+      "Dooya devicetype (blind / shutter):": "Dooya Gerätetyp (Jalousie / Rollladen):",
+      "device type": "Gerätetyp",
+      "Dooya devicecode:": "Dooya Gerätecode:",
+      "device code": "Gerätecode",
+      "Update interval in seconds:": "Aktualisierungsintervall in Sekunden:",
+      "seconds": "Sekunden",
+      "Please choose": "Bitte auswählen",
+      "switch": "Schalter",
+      "dimmer": "Dimmer",
+      "shutter": "Rollladen",
+      "dim": "Dimmen",
+      "Step down": "Stufe runter",
+      "Step up": "Stufe hoch",
+      "Move down": "Runterfahren",
+      "Move up": "Hochfahren",
+      "Dim down": "Runterdimmen",
+      "Dim up": "Hochdimmen",
+      "Stop": "Stop",
+      "Up": "Hoch",
+      "Down": "Runter",
+      "Creating instance.": "Instanz wird angelegt.",
+      "Instabus device created.": "Instabus Gerät angelegt",
+      "interface closed.": "Schnittstelle geschlossen",
+      "Please follow the instructions.": "Bitte der Anleitung folgen.",
+      "Device code must not be empty.": "Geräte Code darf nicht leer sein.",
+      "Device code has not the correct lenght.": "Geräte Code hat nicht die korrekte Länge."
+    }
+  }
+}

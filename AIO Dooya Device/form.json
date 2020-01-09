@@ -12,14 +12,29 @@
             [
                 {
                     "type": "Button",
-                    "label": "Up",
-                    "onClick": "AIODooya_Up($id);"
+                    "label": "Move up",
+                    "onClick": "AIODooya_MoveUp($id);"
                 },
-       
                 {
                     "type": "Button",
-                    "label": "Down",
-                    "onClick": "AIODooya_Down($id);"
+                    "label": "Step up",
+                    "onClick": "AIODooya_StepUp($id);"
+                },
+                {
+                    "type": "Button",
+                    "label": "Stop",
+                    "onClick": "AIODooya_Stop($id);"
+                },
+
+                {
+                    "type": "Button",
+                    "label": "Step down",
+                    "onClick": "AIODooya_StepDown($id);"
+                },
+                {
+                    "type": "Button",
+                    "label": "Move down",
+                    "onClick": "AIODooya_MoveDown($id);"
                 }
 
             ],
@@ -33,7 +48,7 @@
 				{
                     "code": 102,
                     "icon": "active",
-                    "caption": "Konfiguration gültig."
+                    "caption": "Konfiguration gÃ¼ltig."
                 },
                 {
                     "code": 104,
@@ -43,7 +58,7 @@
                 {
                     "code": 202,
                     "icon": "error",
-                    "caption": "Angaben ungültig. Felder dürfen nicht leer sein."
+                    "caption": "Angaben ungÃ¼ltig. Felder dÃ¼rfen nicht leer sein."
                 },
                 {
                     "code": 203,
@@ -63,7 +78,7 @@
 				{
                     "code": 208,
                     "icon": "error",
-                    "caption": "Berechnete Adresse und Eingabe stimmen nicht überein."
+                    "caption": "Berechnete Adresse und Eingabe stimmen nicht Ã¼berein."
                 }
             ]
 }
