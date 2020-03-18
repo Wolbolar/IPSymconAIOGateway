@@ -71,9 +71,6 @@ class AIOSomfyRTSDevice extends IPSModule
             // Status aktiv
             $this->SetStatus(102);
             $this->SetupVar();
-            $this->SetupProfiles();
-
-
         }
 
 
@@ -81,43 +78,32 @@ class AIOSomfyRTSDevice extends IPSModule
 
     }
 
-    protected function SetupProfiles()
-    {
-        // Profile anlegen
-        $this->RegisterProfileIntegerEx("Somfy.AIORTS", "Jalousie", "", "", Array(
-            Array(0, "Down",  "HollowArrowDown", -1),
-            Array(1, "Stop",  "", -1),
-            Array(2, "Up",  "HollowArrowUp", -1)
-        ));
-    }
-
+    
     protected function SetupVar()
     {
         //Status-Variablen anlegen
-        $stateId = $this->RegisterVariableInteger("Somfy", "Somfy", "Somfy.AIORTS", 1);
+        $stateId = $this->RegisterVariableInteger("Somfy", "Somfy", "~ShutterMoveStop", 1);
         $this->EnableAction("Somfy");
 
 
     }
 
-
-
-    public function RequestAction($Ident, $Value)
+	public function RequestAction($Ident, $Value)
     {
         switch($Ident) {
             case "Somfy":
                 switch($Value) {
-                    case 0: //Down
-                        $this->Down();
-                        break;
-                    case 1: //Stop
-                        $this->Stop();
-                        break;
-                    case 2: //Up
-                        $this->Up();
-                        break;
+                    case 4: // Down, Schließen
+						$this->Down();
+						break;
+                    case 2: // Stop
+					    $this->Stop();
+						break;
+					case 0: // Up, Öffnen
+					    $this->Up();
+						break;	
                 }
-                break;
+                break;	
             default:
                 throw new Exception("Invalid ident");
         }
@@ -150,14 +136,14 @@ class AIOSomfyRTSDevice extends IPSModule
         $aiogatewayip = $aiogateway->GetIPGateway();
         switch($command)
         {
-            case "20": //Up
-                SetValueInteger($this->GetIDForIdent('Somfy'), 2);
-                break;
-            case "40": //Down
-                SetValueInteger($this->GetIDForIdent('Somfy'), 0);
-                break;
-            case "10": //Stop
-                SetValueInteger($this->GetIDForIdent('Somfy'), 1);
+            case "20": // Up, Öffnen
+				SetValueInteger($this->GetIDForIdent('Somfy'), 0);
+				break;
+            case "40": // Down, Schließen
+                SetValueInteger($this->GetIDForIdent('Somfy'), 4);
+				break;
+			case "10": //Stop
+				SetValueInteger($this->GetIDForIdent('Somfy'), 2);
                 break;
         }
 
