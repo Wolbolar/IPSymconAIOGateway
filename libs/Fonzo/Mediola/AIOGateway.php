@@ -29,7 +29,7 @@ class AIOGateway
 	public function GetPassword()
 	{
 		$ParentID = $this->GetParent();
-		$GatewayPassword = IPS_GetProperty($ParentID, 'Passwort');
+		$GatewayPassword = IPS_GetProperty($ParentID, 'Password');
 		return $GatewayPassword;
 	}
 
@@ -268,11 +268,516 @@ class AIODevice
 
 class BarthelmeChromoFlex extends \stdClass
 {
-
+	const Type = 'CF4';
 }
+
+/*
+ * Barthelme Chromoflex 4 (Pro)
+Gateway Login
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=addSensor&type=CF4&adr=0001000010
+Device type	Group Address
+0x0001	0x000010
+Device types
+0x0001	1-canal
+0x0002	2-canal
+0x0003	3-canal
+0x0004	4-canal
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set Color
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF4&data=02000010FAFBFCFD
+Parameter
+canal 1	canal 2	canal 3	canal 4
+Command	Group Address	Red	Green	Blue	White
+0x02	0x000010	0xFA	0xFB	0xFC	0xFD
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set Brightness
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF4&data=010000103
+Parameter
+Command	Group Address	Brightness
+0x01	0x000010	0xFD
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Other Commands
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF4&data=0B000010
+Command	Command	Group Address	Command	Command	Group Address
+On
+
+0x4
+
+0x000010
+
+LSD
+
+0x14
+
+0x000010
+
+Off
+
+0x05
+
+0x000010
+
+Fire
+
+0x15
+
+0x000010
+
+Off & Save
+
+0x06
+
+0x000010
+
+Flashes
+
+0x16
+
+0x000010
+
+UserEffect1
+
+0x07
+
+0x000010
+
+Bursts
+
+0x17
+
+0x000010
+
+UserEffect2
+
+0x08
+
+0x000010
+
+UserEffect3
+
+0x09
+
+0x000010
+
+EffectUp
+
+0x0A
+
+0x000010
+
+EffectDown
+
+0x0B
+
+0x000010
+
+ColorUp
+
+0x0C
+
+0x000010
+
+ColorDown
+
+0x0D
+
+0x000010
+
+BrightnessUp
+
+0x0E
+
+0x000010
+
+BrightnessDown
+
+0x0F
+
+0x000010
+
+Normal Col Ch
+
+0x10
+
+0x000010
+
+Medium Col Ch
+
+0x11
+
+0x000010
+
+slow Col CH
+
+0x12
+
+0x000010
+
+Blob
+
+0x13
+
+0x000010
+
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set single Color
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF4&data=1800001032
+Befehl	Befehl	Group Address	Brightness
+red	0x18	0x000010	0x32
+green	0x19	0x000010	0x32
+blue	0x1A	0x000010	0x32
+white	0x1B	0x000010	0x32
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Color Table for Color+ and Color
+Nr	R	G	B	W	Hex
+1
+
+241
+
+216
+
+173
+
+255
+
+0xf1d8adff
+
+2
+
+120
+
+122
+
+184
+
+169
+
+0x787ab8a9
+
+3
+
+63
+
+63
+
+203
+
+107
+
+0x3f3fcb6b
+
+4
+
+26
+
+26
+
+255
+
+0
+
+0x1a1aff00
+
+5
+
+0
+
+0
+
+255
+
+0
+
+0x0000ff00
+
+6
+
+0
+
+143
+
+255
+
+0
+
+0x008fff00
+
+7
+
+0
+
+255
+
+255
+
+0
+
+0x00ffff00
+
+8
+
+0
+
+255
+
+134
+
+0
+
+0x00ff8600
+
+9
+
+0
+
+255
+
+0
+
+0
+
+0x00ff0000
+
+10
+
+123
+
+255
+
+0
+
+0
+
+0x7bff0000
+
+11
+
+255
+
+255
+
+0
+
+0
+
+0xffff0000
+
+12
+
+255
+
+172
+
+0
+
+0
+
+0xffac0000
+
+13
+
+255
+
+93
+
+0
+
+0
+
+0xff5d0000
+
+14
+
+255
+
+0
+
+0
+
+0
+
+0xff000000
+
+15
+
+255
+
+0
+
+134
+
+0
+
+0xff008600
+
+16
+
+255
+
+0
+
+255
+
+0
+
+0xff00ff00
+
+
+Barthelme Chromoflex 3 (RC)
+Gateway Login
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=addSensor&type=CF3&adr=08
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set Color
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF3&data=0208FAFBFC
+Parameter
+Command	Net/Canal	R	G	B
+0x02	0x08	0xFA	0xFB	0xFC
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set Brightness
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF3&data=010832
+Parameter
+Command	Group Address	Brightness
+0x01	0x08	0x01 - 0xFF
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Other Commands
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF3&data=0B08
+Command	Command	Group Address
+On
+
+0x4
+
+0x08
+
+Off
+
+0x05
+
+0x08
+
+Off & Save
+
+0x06
+
+0x08
+
+UserEffect1
+
+0x07
+
+0x08
+
+UserEffect2
+
+0x08
+
+0x08
+
+UserEffect3
+
+0x09
+
+0x08
+
+EffectUp
+
+0x0A
+
+0x08
+
+EffectDown
+
+0x0B
+
+0x08
+
+ColorUp
+
+0x0C
+
+0x08
+
+ColorDown
+
+0x0D
+
+0x08
+
+BrightnessUp
+
+0x0E
+
+0x08
+
+BrightnessDown
+
+0x0F
+
+0x08
+
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Set single Color
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSC&type=CF3&data=180832
+Befehl	Befehl	Group Address	Brightness
+red	0x18	0x08	0x32
+green	0x19	0x08	0x32
+blue	0x1A	0x08	0x32
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+ */
 
 class BeckerCentronic extends \stdClass
 {
+
+	const Type = 'BK';
 	const Reserved = '01';
 	const On = '00';
 	const Off = '02';
@@ -291,8 +796,202 @@ class BeckerCentronic extends \stdClass
 	const MediumBrightness = '04';
 }
 
+/*
+ * Becker Centronic
+Learning Becker Centronic devices
+To learn a Becker Centronic device the learning mode must be enabled on the the device. After the learning mode has been enabled the LearnSC must be called twice. This also registers the actuator as a sensor at the gateway
+
+When learning a Becker Centronic device a special Becker ID (serialnumber) is required. Five groups can be learned with each serial number. If you would like to use Becker Centronic in commercial applications please contact mediola first
+
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=LearnSc&type=BK&adr=GROUP+SERIAL
+Parameter
+XC_FNC	LearnSC
+type	BK
+adr	Group + Becker serial
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Adr (Address)
+
+Byte
+
+offset
+
+Size
+
+(Byte)
+
+Value
+
+0
+
+1
+
+0x02
+
+Group (1…5)
+
+1
+
+3
+
+0x0B956E
+
+Serial (provided by mediola or Becker)
+
+Example: Learning a Becker Centronic device
+
+GET /cmd?XC_FNC=LearnSc&type=BK&adr=020B956E
+Controlling Becker Centronic devices
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=SendSc&type=BK&data=01020B956E00
+Parameter
+XC_FNC	SendSC
+type	BK
+data	data
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Data
+
+Byte
+
+offset
+
+Size
+
+(Byte)
+
+Value
+
+0
+
+1
+
+0x01
+
+Reserved
+
+1
+
+1
+
+0x02
+
+Group
+
+2
+
+3
+
+0x0B956E
+
+Serial
+
+5
+
+1
+
+0x00
+
+Command
+
+Becker Centronic Command list
+
+Commands
+
+Value
+
+Blind
+
+Dimmer
+
+0x00
+
+Up
+
+On
+
+0x01
+
+Open
+
+On
+
+0x02
+
+Stop
+
+Off
+
+0x03
+
+Position 1
+
+Max. brightness
+
+0x04
+
+Position 2
+
+Miedium brightness
+
+0x05
+
+3s Down
+
+On
+
+0x06
+
+3s Up
+
+On
+
+0x07
+
+Delete
+
+Delete
+
+0x08
+
+Brighter
+
+0x09
+
+Darker
+
+Remove Becker Centronic devices
+To remove an actuator, press the teach-in-button on the master transmitter for 3 seconds and call the following URL:
+
+GET /cmd?XC_FNC=SendSc&type=BK&data=01020B956E07
+Receiving this command the Gateway sends the radio command "teach-in button 3s pressed" and immediately afterwards the radio command "teach-in button 10s pressed"
+If the last actuator / last group of a serial number has been deleted, the serial number can be removed from the gateway by calling the following URL:
+
+GET /cmd?XC_FNC=DelSensor&type=BK&adr=0B956E
+A sensor is automatically created during the teach-in-process to store the counter for the copy guard.The sensor can also be applied manually for test purposes.
+
+GET /cmd?XC_FNC=AddSensor&type=BK&adr=0B956E&config=1234
+  {
+
+ "type": "BK",
+
+ "adr": "0B956E",
+
+ "state": "1234"
+
+ }
+ */
+
 class Brennenstuhl extends \stdClass
 {
+	const Type = 'DY';
 	const Stop = '0000';
 	const DimDown = '0101';
 	const StepDown = '0102';
@@ -308,8 +1007,140 @@ class Brennenstuhl extends \stdClass
 
 class ConradRSL extends \stdClass
 {
-
+	const Type = 'CR';
 }
+
+/*
+ * Conrad RSL
+Learning components
+CMD
+
+Learning a system component
+
+GET /cmd?XC_FNC=LearnSC&type=CR
+Response Code: 200 Type : text/html
+{"XC_SUC":{"6DC8D603"}}
+If only 3 bytes (6 characters) are returned as code, it must be treated as multicomfort, because there are two different types of RSL products that are not compatible with each other.
+
+Control components
+CMD
+
+Control a system component
+
+
+On (Kanal 1)
+
+GET /cmd?XC_FNC=SendSC&type=CR&data=6DC8D603
+Off (Kanal 1)
+
+GET /cmd?XC_FNC=SendSC&type=CR&data=7DC8D603
+Start dimming
+
+GET /cmd?XC_FNC=SendSC&type=CR&data=6DC8D6030A
+Response Code: 200 Type : text/html
+{"XC_SUC":{}}
+Last byte(0x0A): Number of repetitions.
+
+Instead of learning the remote control, you can choose aswell from the 16 the channels available.
+
+Other Commands
+Canal	On	Off
+1
+
+6DC8D603
+
+7DC8D603
+
+2
+
+71C8D603
+
+81C8D603
+
+3
+
+65C8D603
+
+75C8D603
+
+4
+
+69C8D603
+
+79C8D603
+
+5
+
+9DC8D603
+
+ADC8D603
+
+6
+
+A1C8D603
+
+B1C8D603
+
+7
+
+95C8D603
+
+A5C8D603
+
+8
+
+99C8D603
+
+A9C8D603
+
+9
+
+0DC8D603
+
+1DC8D603
+
+10
+
+11C8D603
+
+21C8D603
+
+11
+
+05C8D603
+
+15C8D603
+
+12
+
+09C8D603
+
+19C8D603
+
+13
+
+3DC8D603
+
+4DC8D603
+
+14
+
+41C8D603
+
+51C8D603
+
+15
+
+35C8D603
+
+45C8D603
+
+16
+
+39C8D603
+
+49C8D603
+ */
 
 class Dooya extends \stdClass
 {
@@ -323,16 +1154,17 @@ class Dooya extends \stdClass
 
 class Dooya2 extends \stdClass // Kaiser Nienhaus
 {
-
+	const Type = 'DY2';
 }
 
 class GiraFunkbus extends \stdClass
 {
-
+	const Type = 'DY';
 }
 
 class Elero extends \stdClass
 {
+	const Type = 'ER';
 	const Down = '00';
 	const Up = '01';
 	const On = '01';
@@ -356,16 +1188,17 @@ class Elero extends \stdClass
 
 class EnOcean extends \stdClass
 {
-
+	const Type = 'EO';
 }
 
 class FHT80B extends \stdClass
 {
-
+	const Type = 'FHT80b';
 }
 
 class FS20 extends \stdClass
 {
+	const Type = 'FS20';
 	const On = '1000';
 	const Off = '0000';
 	const Last = '1100';
@@ -393,21 +1226,43 @@ class FS20 extends \stdClass
 
 class GreenteqFunk extends \stdClass
 {
-
+	const Type = 'GQ';
 }
+
+/*
+ * Greenteq Funk
+Create components
+CMD
+
+Create a System component
+
+GET/cmd?XC_FNC=learnSc&type=GQ
+Response Code: 200 Type : text/html
+{“XC_SUC”:{"CODE":"6440C63411"}
+Control components
+CMD
+
+Control a System component
+
+11	Up
+55	Stop
+33	Down
+GET/cmd?XC_FNC=SendSC&type=GQ&data=6440C63455
+ */
 
 class HOMEeasy extends \stdClass
 {
-
+	const Type = 'DY';
 }
 
 class Homematic extends \stdClass
 {
-
+	const Type = 'HM';
 }
 
 class Instabus extends \stdClass
 {
+	const Type = 'IA';
 	const Stop = '0000';
 	const DimDown = '0101';
 	const StepDown = '0102';
@@ -422,46 +1277,94 @@ class Instabus extends \stdClass
 
 class Internorm extends \stdClass
 {
+	const Type = 'IN';
+    const InternormSearch = 'inSearchBlinds';
+    // Command for shutter
+    const Down = '000D'; // Down , Off
+    const Up = '000C'; // Up / On
+    const Stop = '0007'; // Stop
+    // 0x0040 - 0x004F	slat positions
+    // 0x0140 - 0x0047	Save position
+    // 0x0148 - 0x014F	Approach position
+    // 0x1800 - 0x1864	0-100% drive
+
+    //Command for ventilator:
+    const increase = '011B'; // increase
+    const reduce = '011D'; // reduce
+    const level_1 = '0040'; // level 1
+    const level_2 = '0041'; // level 2
+    const level_3 = '0042'; // level 3
+    const standby = '0043'; // standby
+    const automatic = '0044'; // automatic
+    const manual = '0045'; // manual
+    const turbo = '0046'; // turbo
+    const Blow_on_Mode_1 = '0054'; // Night Mode / Blow on Mode 1
+    const Blow_on_Mode_2 = '0055'; // Night Mode / Blow on Mode 2
+    const Blow_on_Mode_3 = '0056'; // Night Mode / Blow on Mode 3
+    const Blow_off_Mode_1 = '0057'; // Night Mode / Blow off Mode 1
+    const Blow_off_Mode_2 = '0058'; // Night Mode / Blow off Mode 2
+    const Blow_off_Mode_3 = '0059'; // Night Mode / Blow off Mode 3
+
 
 }
 
 class KoppFreeControl extends \stdClass
 {
-
+	const Type = 'KOPP';
 }
 
 class LEDController extends \stdClass
 {
-
+	const Type = 'LS';
 }
 
 class Nueva extends \stdClass // Temperatur-/ Feuchtigkeitssensor
 {
-
+	const Type = 'NTH';
 }
 
 class PCA301 extends \stdClass
 {
-
+	const Type = 'PE';
 }
 
 class SchalkFX3 extends \stdClass
 {
-
+	const Type = 'FX3';
 }
 
 class SomfyRTS extends \stdClass
 {
-
+	const Type = 'RT';
 }
 
 class systeQ extends \stdClass // qleverADAPTER
 {
+	const Type = 'QA';
+}
 
+class Sygonix extends \stdClass // Renkforce Sygonix
+{
+	const Type = 'R2';
+	const Switch = '40';
+	const Dimmer = '41';
+	const On = '0001';
+	const Off = '0002';
+	const Set10 = '0A';
+	const Set20 = '14';
+	const Set30 = '1E';
+	const Set40 = '28';
+	const Set50 = '32';
+	const Set60 = '3C';
+	const Set70 = '46';
+	const Set80 = '50';
+	const Set90 = '5A';
+	const Set100 = '0A';
 }
 
 class WIR extends \stdClass
 {
+	const Type = 'WR';
 	const MotorControl = '01';
 	const LightingControl = '02';
 	const Reserved = '01';
@@ -479,5 +1382,3 @@ class WIR extends \stdClass
 	const AutoOn = '0C';
 	const AutoOff = '0D';
 }
-
-?>

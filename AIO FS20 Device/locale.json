@@ -1,0 +1,33 @@
+{
+  "translations": {
+    "de": {
+      "Look up values in the AIO NEO": "Werte im AIO NEO nachschauen",
+      "AIO FS20 device": "AIO FS20 Gerät",
+      "FS20 address": "FS20 Adresse",
+      "FS20 type": "FS20 Typ",
+      "The AIO Gateway FS 20 address is calculated automatically.": "Die AIO Gateway FS 20 Adresse wird automatisch berechnet.",
+      "Alternatively, only the AIO Gateway FS 20 address can be entered, then HC1, HC2, address can be empty.": "Alternativ kann auch nur die AIO Gateway FS 20 Adresse eingetragen werden, dann kann HC1, HC2, Adresse leer sein.",
+      "AIO FS20 address": "AIO FS 20 Adresse",
+      "Please choose": "Bitte auswählen",
+      "Please Select": "Bitte auswählen",
+      "key": "Befehl",
+      "On": "Ein",
+      "Off": "Aus",
+      "Send": "Senden",
+      "Send key": "Befehl senden",
+      "Creating instance.": "Instanz wird angelegt.",
+      "AIO FS20 device created": "AIO FS20 Gerät angelegt",
+      "AIO FS20 device is inactive": "AIO FS20 Gerät ist inaktiv",
+      "Information invalid. Fields can not be empty.": "Angaben ungültig. Felder dürfen nicht leer sein.",
+      "No active AIO I/O.": "Verbindung zum AIO Gateway verloren.",
+      "HC1 can only consist of 4 numbers.": "HC1 darf nur aus 4 Zahlen bestehen.",
+      "HC2 can only consist of 4 numbers.": "HC2 darf nur aus 4 Zahlen bestehen.",
+      "address can only consist of 4 numbers.": "Adresse darf nur aus 4 Zahlen bestehen.",
+      "address may only consist of 6 characters.": "Adresse darf nur aus 6 Zeichen bestehen.",
+      "Calculated address and input do not match.": "Berechnete Adresse und Eingabe stimmen nicht überein.",
+      "Please follow the instructions.": "Bitte der Anleitung folgen.",
+      "Device code must not be empty.": "Geräte Code darf nicht leer sein.",
+      "Device code has not the correct lenght.": "Geräte Code hat nicht die korrekte Länge."
+    }
+  }
+}

@@ -1,15 +1,33 @@
 {
-	"translations": {
-		"de": {
-			"gateway type": "Gateway Typ",
-			"IP address AIO Gateway": "IP Adresse des AIO Gateway",
-			"IP address": "IP Adresse",
-			"Creating instance.": "Die Instanz wird erstellt.",
-			"No valid IP address.":"Keine gültige IP Adresse.",
-			"AIO gateway active.": "AIO Gateway ereichbar.",
-			"Interface closed.": "Interface geschlossen.",
-			"AIO Gateway IP address must not be empty.": "AIO Gateway IP Adresse darf nicht leer sein.",
-			"Connection lost to AIO Gateway.": "Verbindung zum AIO Gateway verloren."
-		}
-	}
+  "translations": {
+    "de": {
+      "gateway type": "Gateway Typ",
+      "IP address AIO Gateway": "IP Adresse des AIO Gateway",
+      "IP address": "IP Adresse",
+      "older AIO Gateway models (for example V4 / V4 Plus) standard port 1902, please adjust accordingly": "ältere AIO Gateway Modelle (z.B. V4, V4 Plus) / Port Standard 1902, bitte passend einstellen",
+      "AIO Gateway model from V5 (V5 / V5 Plus) standard port 1901, please adjust accordingly": "AIO Gateway Modelle ab V5 (V5 / V5 Plus) / Port Standard 1901, bitte passend einstellen",
+      "gateway port": "Gateway Port",
+      "LED in the case of the AIO Gateway": "LED im Gehäuse des AIO Gateway",
+      "LED": "LED",
+      "optional password for the gateway": "Optional Passwort für das Gateway",
+      "password": "Passwort",
+      "category": "Kategorie",
+      "category for system variables": "Systemvariablen Kategorie",
+      "Create system variables from the AIO Gateway in IP-Symcon": "Systemvariablen des AIO Gateway in IP-Symcon anlegen",
+      "Creating instance.": "Die Instanz wird erstellt.",
+      "No valid IP address.": "Keine gültige IP Adresse.",
+      "AIO gateway active.": "AIO Gateway ereichbar.",
+      "Interface closed.": "Interface geschlossen.",
+      "AIO Gateway IP address must not be empty.": "AIO Gateway IP Adresse darf nicht leer sein.",
+      "Connection lost to AIO Gateway.": "Verbindung zum AIO Gateway verloren.",
+      "AIO Gateway User": "AIO Gateway Benutzer",
+      "AIO Gateway Password": "AIO Gateway Passwort",
+      "rename IO multicast socket with proper AIO Gateway name": "IO Multicast Socket umbennen auf passenden AIO Gatewaynamen",
+      "Rename IO Socket": "IO Socket umbennen",
+      "Get AIO Gateway Information": "AIO Gateway Information auslesen",
+      "Gateway Information": "Gateway Informationen",
+      "AIO Gateway Get System Infomation": "AIO Gateway System Infomation auslesen",
+      "System Information": "System Information"
+    }
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "id": "{C0D41B38-F09B-9DC7-4948-5B3FC0B5594E}",
+  "name": "AIOGatewayDiscovery",
+  "type": 5,
+  "vendor": "Mediola",
+  "aliases": [
+    "AIO Gateway Discovery"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "AIOGatewayDiscovery"
+}
