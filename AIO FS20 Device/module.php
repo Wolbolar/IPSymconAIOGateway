@@ -808,17 +808,17 @@ class AIOFS20Device extends IPSModule
 	{
 		$form = [
 			[
-				'code' => 101,
+				'code' => IS_CREATING,
 				'icon' => 'inactive',
 				'caption' => 'Creating instance.'
 			],
 			[
-				'code' => 102,
+				'code' => IS_ACTIVE,
 				'icon' => 'active',
 				'caption' => 'AIO FS20 device created'
 			],
 			[
-				'code' => 104,
+				'code' => IS_INACTIVE,
 				'icon' => 'inactive',
 				'caption' => 'AIO Fs20 device is inactive'
 			],

@@ -42,7 +42,6 @@ class AIOSplitter extends IPSModule
 		$this->RegisterPropertyString("Host", "");
 		$this->RegisterPropertyInteger("Port", 1902);
 		$this->RegisterPropertyBoolean("Open", false);
-		$this->RegisterPropertyBoolean("GatewayLED", false);
         $this->RegisterPropertyString("User", "user");
 		$this->RegisterPropertyString("Password", "");
 		$this->RegisterPropertyInteger("gatewaytype", 0);
@@ -209,17 +208,17 @@ class AIOSplitter extends IPSModule
 
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
-		$GatewayLED = $this->ReadPropertyBoolean("GatewayLED");
-		if ($GatewayLED) {
-			//Profil anlegen
-			$this->RegisterProfileLEDGateway("LED.AIOGateway", "Bulb", "", "");
+        $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+        if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+            //Profil anlegen
+            $this->RegisterProfileLEDGateway("LED.AIOGateway", "Bulb", "", "");
 
 
-			//Variablen anlegen
-			//Farbe
-			$this->RegisterVariableInteger("Farbe", "Farbe", "LED.AIOGateway", $this->_getPosition());
-			$this->EnableAction("Farbe");
-		}
+            //Variablen anlegen
+            //Color
+            $this->RegisterVariableInteger("Color", $this->Translate("Color"), "LED.AIOGateway", $this->_getPosition());
+            $this->EnableAction("Color");
+        }
 		if (!filter_var($ip, FILTER_VALIDATE_IP) === false) {
 			$this->SendDebug("AIO Gateway", "IP valid", 0);
 		} else {
@@ -227,12 +226,14 @@ class AIOSplitter extends IPSModule
 			$this->SetStatus(203); //IP Adresse ist ungültig
 		}
 
-
+        $this->GetConfigurationForParent();
 
 		// Wenn I/O verbunden ist
 		if ($this->HasActiveParent()) {
 			$this->SetStatus(IS_ACTIVE);
 		}
+
+        $this->GetConfigurationForParent();
 
 // Eigene Profile
 
@@ -768,7 +769,7 @@ class AIOSplitter extends IPSModule
 	{
 
 		switch ($Ident) {
-			case "Farbe":
+			case "Color":
 				switch ($Value) {
 					case 0: //Off
 						$this->LEDOff();
@@ -926,7 +927,7 @@ class AIOSplitter extends IPSModule
 		IPS_SetVariableProfileIcon($Name, $Icon);
 		IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
 		IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 f�r transparent
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Color ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 f�r transparent
 		IPS_SetVariableProfileAssociation($Name, 0, "Aus", "", 0x585858);
 		IPS_SetVariableProfileAssociation($Name, 1, "Grün", "", 0x088A08);
 		IPS_SetVariableProfileAssociation($Name, 2, "Blau", "", 0x013ADF);
@@ -941,7 +942,7 @@ class AIOSplitter extends IPSModule
 	public function LEDOff()
 	{
 		$command = "0100";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 0);
+		SetValueInteger($this->GetIDForIdent('Color'), 0);
 		$this->SendDebug("AIO Gateway", "LED aus", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -950,7 +951,7 @@ class AIOSplitter extends IPSModule
 	public function Green()
 	{
 		$command = "0101";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 1);
+		SetValueInteger($this->GetIDForIdent('Color'), 1);
 		$this->SendDebug("AIO Gateway", "LED grün", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -959,7 +960,7 @@ class AIOSplitter extends IPSModule
 	public function Blue()
 	{
 		$command = "0102";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 2);
+		SetValueInteger($this->GetIDForIdent('Color'), 2);
 		$this->SendDebug("AIO Gateway", "LED blau", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -968,7 +969,7 @@ class AIOSplitter extends IPSModule
 	public function Red()
 	{
 		$command = "0103";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 3);
+		SetValueInteger($this->GetIDForIdent('Color'), 3);
 		$this->SendDebug("AIO Gateway", "LED rot", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -977,7 +978,7 @@ class AIOSplitter extends IPSModule
 	public function Yellow()
 	{
 		$command = "0104";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 4);
+		SetValueInteger($this->GetIDForIdent('Color'), 4);
 		$this->SendDebug("AIO Gateway", "LED gelb", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -986,7 +987,7 @@ class AIOSplitter extends IPSModule
 	public function White()
 	{
 		$command = "0105";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 5);
+		SetValueInteger($this->GetIDForIdent('Color'), 5);
 		$this->SendDebug("AIO Gateway", "LED weiß", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -995,7 +996,7 @@ class AIOSplitter extends IPSModule
 	public function Purple()
 	{
 		$command = "0106";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 6);
+		SetValueInteger($this->GetIDForIdent('Color'), 6);
 		$this->SendDebug("AIO Gateway", "LED violett", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -1004,7 +1005,7 @@ class AIOSplitter extends IPSModule
 	public function Cyan()
 	{
 		$command = "0107";
-		SetValueInteger($this->GetIDForIdent('Farbe'), 7);
+		SetValueInteger($this->GetIDForIdent('Color'), 7);
 		$this->SendDebug("AIO Gateway", "LED cyan", 0);
 		return $this->Set_LEDGW($command);
 	}
@@ -1015,7 +1016,7 @@ class AIOSplitter extends IPSModule
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS) {
 				$status = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=RGB&data=" . $command);
 				$this->SendDebug("AIOGateway", "Senden an Gateway mit Passwort", 0);
 				$this->SendDebug("Send to AIO Gateway", "http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=RGB&data=" . $command, 0);
@@ -1403,63 +1404,6 @@ class AIOSplitter extends IPSModule
         return $form;
     }
 
-
-    /*
-
-* {
-"elements": [
-
-{
-"name": "Host",
-"type": "ValidationTextBox",
-"caption": "IP address"
-},
-{
-"type": "Label",
-"label": "older AIO Gateway models (for example V4 / V4 Plus) standard port 1902, please adjust accordingly"
-},
-{
-"type": "Label",
-"label": "AIO Gateway model from V5 (V5 / V5 Plus) standard port 1901, please adjust accordingly"
-},
-{
-"name": "Port",
-"type": "NumberSpinner",
-"caption": "gateway port"
-},
-{
-"type": "Label",
-"label": "LED in the case of the AIO Gateway"
-},
-{
-"type": "CheckBox",
-"name": "GatewayLED",
-"caption": "LED"
-},
-{
-"type": "Label",
-"label": "optional password for the gateway"
-},
-{
-"name": "Passwort",
-"type": "ValidationTextBox",
-"caption": "password"
-},
-{
-"type": "Label",
-"caption": "category for system variables"
-},
-{
-"type": "SelectCategory",
-"name": "SysvarCategoryID",
-"caption": "category"
-}
-],
-
-
-*/
-
-
     /**
      * return form actions by token
      * @return array
@@ -1474,6 +1418,14 @@ class AIOSplitter extends IPSModule
         else{
             $listsystem_visible = true;
         }
+        $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+        if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+            $led_visible = true;
+        }
+        else{
+            $led_visible = false;
+        }
+
         $form = [
             [
                 'type'     => 'List',
@@ -1582,8 +1534,63 @@ class AIOSplitter extends IPSModule
                 'onClick' => 'AIOG_GetSystemInformation($id);'
             ],
             [
+                'type' => 'Label',
+                'visible' => $led_visible,
+                'caption' => 'AIO Gateway LED'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Off',
+                'onClick' => 'AIOG_LEDOff($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Green',
+                'onClick' => 'AIOG_Green($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Blue',
+                'onClick' => 'AIOG_Blue($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Red',
+                'onClick' => 'AIOG_Red($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Yellow',
+                'onClick' => 'AIOG_Yellow($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED White',
+                'onClick' => 'AIOG_White($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Purple',
+                'onClick' => 'AIOG_Purple($id);'
+            ],
+            [
+                'type' => 'Button',
+                'visible' => $led_visible,
+                'caption' => 'LED Cyan',
+                'onClick' => 'AIOG_Cyan($id);'
+            ]
+            /*
+            [
                 'type' => 'TestCenter'
             ]
+            */
         ];
         return $form;
     }
