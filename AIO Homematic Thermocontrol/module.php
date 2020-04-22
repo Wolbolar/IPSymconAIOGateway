@@ -1,4 +1,4 @@
-<?
+<?php
 
 require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
 
@@ -437,5 +437,3 @@ class IPSVarType extends stdClass
     
 
 }
-
-?>

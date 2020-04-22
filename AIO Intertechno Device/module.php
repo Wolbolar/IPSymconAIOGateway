@@ -1,4 +1,4 @@
-<?
+<?php
 
 require_once(__DIR__ . DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."AIOGatewayClass.php");  // diverse Klassen
 
@@ -668,5 +668,3 @@ class AIOITDevice extends IPSModule
 
 
 }
-
-?>
