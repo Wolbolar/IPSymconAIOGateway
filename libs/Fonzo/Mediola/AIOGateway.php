@@ -6,6 +6,18 @@ class AIOGateway
 {
 	public $DeviceInstanceID;
 
+    const V1 = 1;
+    const V2 = 2;
+    const V3 = 3;
+    const V4 = 4;
+    const V4PLUS = 5;
+    const V5 = 6;
+    const V5PLUS = 7;
+    const V6MINI = 8;
+    const V6MINIE = 9;
+    const V6 = 10;
+    const V6E = 11;
+
 	function __construct($DeviceInstanceID)
 	{
 
@@ -226,7 +238,7 @@ class V6MiniE extends V6
 
 }
 
-class V5 extends \stdClass
+class V5 extends AIOGateway
 {
 	const Reserved = '01';
 }
@@ -266,7 +278,7 @@ class AIODevice
 
 }
 
-class BarthelmeChromoFlex extends \stdClass
+class BarthelmeChromoFlex extends AIOGateway
 {
 	const Type = 'CF4';
 }
@@ -774,7 +786,7 @@ Response Code: 200 Type : text/html
 {"XC_SUC":{}}
  */
 
-class BeckerCentronic extends \stdClass
+class BeckerCentronic extends AIOGateway
 {
 
 	const Type = 'BK';
@@ -989,7 +1001,7 @@ GET /cmd?XC_FNC=AddSensor&type=BK&adr=0B956E&config=1234
  }
  */
 
-class Brennenstuhl extends \stdClass
+class Brennenstuhl extends AIOGateway
 {
 	const Type = 'DY';
 	const Stop = '0000';
@@ -1005,7 +1017,7 @@ class Brennenstuhl extends \stdClass
 }
 
 
-class ConradRSL extends \stdClass
+class ConradRSL extends AIOGateway
 {
 	const Type = 'CR';
 }
@@ -1142,7 +1154,7 @@ A9C8D603
 49C8D603
  */
 
-class Dooya extends \stdClass
+class Dooya extends AIOGateway
 {
 	const Type = 'DY';
 	const MoveUp = '22';
@@ -1152,17 +1164,17 @@ class Dooya extends \stdClass
 	const Stop = '55';
 }
 
-class Dooya2 extends \stdClass // Kaiser Nienhaus
+class Dooya2 extends AIOGateway // Kaiser Nienhaus
 {
 	const Type = 'DY2';
 }
 
-class GiraFunkbus extends \stdClass
+class GiraFunkbus extends AIOGateway
 {
 	const Type = 'DY';
 }
 
-class Elero extends \stdClass
+class Elero extends AIOGateway
 {
 	const Type = 'ER';
 	const Down = '00';
@@ -1186,17 +1198,17 @@ class Elero extends \stdClass
 	const ASMove = '10';
 }
 
-class EnOcean extends \stdClass
+class EnOcean extends AIOGateway
 {
 	const Type = 'EO';
 }
 
-class FHT80B extends \stdClass
+class FHT80B extends AIOGateway
 {
 	const Type = 'FHT80b';
 }
 
-class FS20 extends \stdClass
+class FS20 extends AIOGateway
 {
 	const Type = 'FS20';
 	const On = '1000';
@@ -1224,7 +1236,7 @@ class FS20 extends \stdClass
 	const Set100 = 'DIM100';
 }
 
-class GreenteqFunk extends \stdClass
+class GreenteqFunk extends AIOGateway
 {
 	const Type = 'GQ';
 }
@@ -1250,17 +1262,17 @@ Control a System component
 GET/cmd?XC_FNC=SendSC&type=GQ&data=6440C63455
  */
 
-class HOMEeasy extends \stdClass
+class HOMEeasy extends AIOGateway
 {
 	const Type = 'DY';
 }
 
-class Homematic extends \stdClass
+class Homematic extends AIOGateway
 {
 	const Type = 'HM';
 }
 
-class Instabus extends \stdClass
+class Instabus extends AIOGateway
 {
 	const Type = 'IA';
 	const Stop = '0000';
@@ -1275,7 +1287,7 @@ class Instabus extends \stdClass
 	const DoScene = '0302';
 }
 
-class Internorm extends \stdClass
+class Internorm extends AIOGateway
 {
 	const Type = 'IN';
     const InternormSearch = 'inSearchBlinds';
@@ -1308,42 +1320,81 @@ class Internorm extends \stdClass
 
 }
 
-class KoppFreeControl extends \stdClass
+class Intertechno extends AIOGateway
+{
+
+    const IT_ACTION_1 = '80';
+    const IT_ACTION_2 = '81';
+    const IT_ACTION_3 = '00';
+    const IT_ACTION_1_ON = '90';
+    const IT_ACTION_1_OFF = '80';
+    const IT_ACTION_2_ON = '91';
+    const IT_ACTION_2_OFF = '81';
+    const IT_ACTION_3_ON = '10';
+    const IT_ACTION_3_OFF = '00';
+    const ON = 'E';
+    const OFF = '6';
+    const SET_10_1 = 'E00'; // dim to 10%
+    const SET_10_2 = '00'; // dim to 10%
+    const SET_20_1 = 'E10'; // dim to 20%
+    const SET_20_2 = '10'; // dim to 20%
+    const SET_30_1 = 'E20'; // dim to 30%
+    const SET_30_2 = '20'; // dim to 30%
+    const SET_40_1 = 'E30'; // dim to 40%
+    const SET_40_2 = '30'; // dim to 40%
+    const SET_50_1 = 'E40'; // dim to 50%
+    const SET_50_2 = '50'; // dim to 50%
+    const SET_60_1 = 'E50'; // dim to 60%
+    const SET_60_2 = '70'; // dim to 60%
+    const SET_70_1 = 'E60'; // dim to 70%
+    const SET_70_2 = '90'; // dim to 70%
+    const SET_80_1 = 'E70'; // dim to 80%
+    const SET_80_2 = 'B0'; // dim to 80%
+    const SET_90_1 = 'E80'; // dim to 90%
+    const SET_90_2 = 'D0'; // dim to 90%
+    const SET_100_1 = 'E'; // dim to 100%
+    const SET_100_2 = 'F0'; // dim to 100%
+}
+
+class KoppFreeControl extends AIOGateway
 {
 	const Type = 'KOPP';
 }
 
-class LEDController extends \stdClass
+class LEDController extends AIOGateway
 {
 	const Type = 'LS';
 }
 
-class Nueva extends \stdClass // Temperatur-/ Feuchtigkeitssensor
+class Nueva extends AIOGateway // Temperatur-/ Feuchtigkeitssensor
 {
 	const Type = 'NTH';
 }
 
-class PCA301 extends \stdClass
+class PCA301 extends AIOGateway
 {
 	const Type = 'PE';
 }
 
-class SchalkFX3 extends \stdClass
+class SchalkFX3 extends AIOGateway
 {
 	const Type = 'FX3';
 }
 
-class SomfyRTS extends \stdClass
+class SomfyRTS extends AIOGateway
 {
 	const Type = 'RT';
+    const UP = '20';
+    const DOWN = '40';
+    const STOP = '10';
 }
 
-class systeQ extends \stdClass // qleverADAPTER
+class systeQ extends AIOGateway // qleverADAPTER
 {
 	const Type = 'QA';
 }
 
-class Sygonix extends \stdClass // Renkforce Sygonix
+class Sygonix extends AIOGateway // Renkforce Sygonix
 {
 	const Type = 'R2';
 	const Switch = '40';
@@ -1362,7 +1413,7 @@ class Sygonix extends \stdClass // Renkforce Sygonix
 	const Set100 = '0A';
 }
 
-class WIR extends \stdClass
+class WIR extends AIOGateway
 {
 	const Type = 'WR';
 	const MotorControl = '01';
