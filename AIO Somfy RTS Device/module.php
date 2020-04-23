@@ -200,21 +200,26 @@ class AIOSomfyRTSDevice extends IPSModule
 		
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
+        $this->SendDebug("AIO Gateway", "Password set " . $GatewayPassword, 0);
         if ($GatewayPassword !== "")
 		{
             if($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E)
             {
                 $gwcheck = file_get_contents("http://".$aiogatewayip."/command?auth=".$GatewayPassword."&XC_FNC=SendSC&type=".SomfyRTS::Type."&data=".$command.$address);
+                $this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=" . SomfyRTS::Type . "&data=" . $command.$address, 0);
             }
             else
             {
                 $gwcheck = file_get_contents("http://".$aiogatewayip."/command?XC_USER=user&XC_PASS=".$GatewayPassword."&XC_FNC=SendSC&type=".SomfyRTS::Type."&data=".$command.$address);
+                $this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?XC_USER=user&XC_PASS=" . $GatewayPassword . "&XC_FNC=SendSC&type=" . SomfyRTS::Type . "&data=" . $command.$address, 0);
             }
 		}
 		else
 		{
 			$gwcheck = file_get_contents("http://".$aiogatewayip."/command?XC_FNC=SendSC&type=".SomfyRTS::Type."&data=".$command.$address);
+            $this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?XC_FNC=SendSC&type=" . SomfyRTS::Type . "&data=" . $command.$address, 0);
 		}
+        $this->SendDebug("AIO Gateway Recieve", $gwcheck, 0);
 		if ($gwcheck == "{XC_SUC}")
 			{
 			$this->response = true;	
@@ -403,6 +408,6 @@ class SomfyRTS
     const UP = '20';
     const DOWN = '40';
     const STOP = '10';
-    const ON = '10'; // ?
-    const OFF = '10'; // ?
+    const ON = 'A0'; // ?
+    const OFF = 'B0'; // ?
 }
