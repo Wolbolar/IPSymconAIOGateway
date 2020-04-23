@@ -656,30 +656,32 @@ class AIOImport extends IPSModule
 					if (isset($device->info->address) && isset($device->info->data)) //Lightmanager hat keinen data typ
 					{
 						switch ($type) {
-							case $this->GetDeviceType(self::FS20): //FS20
-								// Anpassen der Daten
+							case $this->GetDeviceType(self::FS20): // FS20
 								$subtype = ucfirst($data); //erster Buchstabe groß
 								$address = str_replace(".", "", $address);
 								$this->SendDebug("AIO Import FS20:", "Device:  " . $name .", Address: ".$address.", Type: ".$subtype, 0);
 								$array = $this->AddDevicetoList(self::FS20, $name, $index, $address, $type, $subtype, $room_id, "FS20");
 								$this->SendDebug("AIO Import FS20:", "List:  " . json_encode($array), 0);
 								break;
-							case $this->GetDeviceType(self::INSTABUS): //
-								// Anpassen der Daten
+							case $this->GetDeviceType(self::INSTABUS): // Instabus
 								$subtype = ucfirst($data); //erster Buchstabe groß
 								$this->SendDebug("AIO Import Instabus:", "Device:  " . $name .", Address: ".$address.", Type: ".$subtype, 0);
 								$array = $this->AddDevicetoList(self::INSTABUS, $name, $index, $address, $type, $subtype, $room_id, "Gira");
 								$this->SendDebug("AIO Import Instabus:", "List:  " . json_encode($array), 0);
 								break;
-							case $this->GetDeviceType(self::SOMFY): //Somfy
-								// Anpassen der Daten
+							case $this->GetDeviceType(self::SOMFY): // Somfy
 								$type = $data;
 								$this->SendDebug("AIO Import Somfy:", "Device:  " . $name .", Address: ".$address.", Type: ".$type, 0);
 								$array = $this->AddDevicetoList(self::SOMFY, $name, $index, $address, $type, $subtype, $room_id, "Somfy");
 								$this->SendDebug("AIO Import Somfy:", "List:  " . json_encode($array), 0);
 								break;
-							case $this->GetDeviceType(self::ELRO): //ELRO
-								// Anpassen der Daten
+                            case $this->GetDeviceType(self::DOOYA): // Dooya
+                                $type = $data;
+                                $this->SendDebug("AIO Import Dooya:", "Device:  " . $name .", Address: ".$address.", Type: ".$type, 0);
+                                $array = $this->AddDevicetoList(self::DOOYA, $name, $index, $address, $type, $subtype, $room_id, "Dooya");
+                                $this->SendDebug("AIO Import Dooya:", "List:  " . json_encode($array), 0);
+                                break;
+							case $this->GetDeviceType(self::ELRO): // ELRO
 								$type = $data;
 								$this->SendDebug("AIO Import ELRO:", "Device:  " . $name .", Address: ".$address.", Type: ".$type, 0);
 								$array = $this->AddDevicetoList(self::ELRO, $name, $index, $address, $type, $subtype, $room_id, "ELRO");
@@ -2002,7 +2004,7 @@ Grau	#DFDFDF
 										"device_id" => $index,
 										"address" => $address
 									],
-                                    "location" => $this->SetLocation($module_name, $room_name),
+                                    "location" => $this->SetLocation($module_name, $room_name)
 								]
 							]
 						];
