@@ -1,0 +1,23 @@
+{
+  "translations": {
+    "de": {
+      "AIO IR device": "AIO IR Gerät",
+      "key label": "Befehlsname",
+      "code": "Code",
+      "key": "Befehl",
+      "Learn key": "Befehl anlernen",
+      "Send key": "Befehl senden",
+      "Learn": "Anlernen",
+      "Send": "Senden",
+      "available commands": "Verfügbare Befehle",
+      "Please Select": "Bitte auswählen",
+      "Please choose": "Bitte auswählen",
+      "Creating instance.": "Instanz wird angelegt.",
+      "AIO IR device created": "AIO IR Gerät angelegt",
+      "AIO IR device is inactive": "AIO IR Gerät ist inaktiv",
+      "Please follow the instructions.": "Bitte der Anleitung folgen.",
+      "Device code must not be empty.": "Geräte Code darf nicht leer sein.",
+      "Device code has not the correct lenght.": "Geräte Code hat nicht die korrekte Länge."
+    }
+  }
+}

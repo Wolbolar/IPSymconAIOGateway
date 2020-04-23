@@ -6,6 +6,8 @@
     "aliases": ["AIO Intertechno Device"],
     "parentRequirements": ["{2E262F47-7706-479D-B826-CCCA503A59E2}"],
     "childRequirements": [],
-    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+  "implemented": [
+    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
+  ],
     "prefix": "AIOIT"
 }

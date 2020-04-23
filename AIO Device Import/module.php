@@ -359,35 +359,35 @@ class AIOImport extends IPSModule
 	private function DeviceTypes()
 	{
 		$device_types = [
-			self::BARTHELME => ["device_type" => "CF4", "subtype" => "CF4"],
-			self::BECKERCENTRONIC => ["device_type" => "BK", "subtype" => "BK"],
-			self::BRENNENSTUHL => ["device_type" => "", "subtype" => ""],
-			self::CONRADRSL => ["device_type" => "CR", "subtype" => "CR"],
-			self::DOOYA => ["device_type" => "DY", "subtype" => "DY"],
-			self::ELERO => ["device_type" => "ER", "subtype" => "ER"],
-			self::ELRO => ["device_type" => "ELRO", "subtype" => "ELRO"],
-			self::ENOCEAN => ["device_type" => "EO", "subtype" => "EO"],
-			self::FHT => ["device_type" => "FHT80b", "subtype" => "FHT80b"],
-			self::FS20 => ["device_type" => "FS20", "subtype" => "FS20"],
-			self::GREENTEQ => ["device_type" => "GQ", "subtype" => "GQ"],
-			self::HOMEEASY => ["device_type" => "", "subtype" => ""],
-			self::HOMEMATIC => ["device_type" => "HM", "subtype" => "HM"],
-			self::INSTABUS => ["device_type" => "IA", "subtype" => "IA"],
-			self::INTERNORM => ["device_type" => "IN", "subtype" => "IN"],
-			self::INTERTECHNO => ["device_type" => "IT", "subtype" => "IT"],
-			self::IRDEVICE => ["device_type" => "CODE", "subtype" => "IR"],
-			self::KAISERNIENHAUS => ["device_type" => "DY2", "subtype" => "DY2"],
-			self::KOPPFREECONTROL => ["device_type" => "KOPP", "subtype" => "KOPP"],
-			self::LIGHT1 => ["device_type" => "LEDS", "subtype" => "LED1"],
-			self::LIGHT2 => ["device_type" => "L2", "subtype" => "LED2"],
-			self::NUEVA => ["device_type" => "NTH", "subtype" => "NTH"],
-			self::PCA => ["device_type" => "PE", "subtype" => "PE"],
-			self::RFDEVICE => ["device_type" => "CODE", "subtype" => "RF"],
-			self::SCHALK => ["device_type" => "FX3", "subtype" => "FX3"],
-			self::SOMFY => ["device_type" => "RT", "subtype" => "RT"],
-			self::SYSTEQ => ["device_type" => "QA", "subtype" => "QA"],
-			self::WAREMA => ["device_type" => "", "subtype" => ""],
-			self::WIR => ["device_type" => "WR", "subtype" => "WR"]
+			self::BARTHELME => ["device_type" => "CF4", "subtype" => "CF4", "alias" => "BARTHELME"],
+			self::BECKERCENTRONIC => ["device_type" => "BK", "subtype" => "BK", "alias" => "BECKERCENTRONIC"],
+			self::BRENNENSTUHL => ["device_type" => "", "subtype" => "", "alias" => "BRENNENSTUHL"],
+			self::CONRADRSL => ["device_type" => "CR", "subtype" => "CR", "alias" => "CONRADRSL"],
+			self::DOOYA => ["device_type" => "DY", "subtype" => "DY", "alias" => "DOOYA"],
+			self::ELERO => ["device_type" => "ER", "subtype" => "ER", "alias" => "ELERO"],
+			self::ELRO => ["device_type" => "ELRO", "subtype" => "ELRO", "alias" => "ELRO"],
+			self::ENOCEAN => ["device_type" => "EO", "subtype" => "EO", "alias" => "ENOCEAN"],
+			self::FHT => ["device_type" => "FHT80b", "subtype" => "FHT80b", "alias" => "FHT"],
+			self::FS20 => ["device_type" => "FS20", "subtype" => "FS20", "alias" => "FS20"],
+			self::GREENTEQ => ["device_type" => "GQ", "subtype" => "GQ", "alias" => "GREENTEQ"],
+			self::HOMEEASY => ["device_type" => "", "subtype" => "", "alias" => "HOMEEASY"],
+			self::HOMEMATIC => ["device_type" => "HM", "subtype" => "HM", "alias" => "HOMEMATIC"],
+			self::INSTABUS => ["device_type" => "IA", "subtype" => "IA", "alias" => "INSTABUS"],
+			self::INTERNORM => ["device_type" => "IN", "subtype" => "IN", "alias" => "INTERNORM"],
+			self::INTERTECHNO => ["device_type" => "IT", "subtype" => "IT", "alias" => "INTERTECHNO"],
+			self::IRDEVICE => ["device_type" => "CODE", "subtype" => "IR", "alias" => "IRDEVICE"],
+			self::KAISERNIENHAUS => ["device_type" => "DY2", "subtype" => "DY2", "alias" => "KAISERNIENHAUS"],
+			self::KOPPFREECONTROL => ["device_type" => "KOPP", "subtype" => "KOPP", "alias" => "KOPPFREECONTROL"],
+			self::LIGHT1 => ["device_type" => "LEDS", "subtype" => "LED1", "alias" => "LIGHT1"],
+			self::LIGHT2 => ["device_type" => "L2", "subtype" => "LED2", "alias" => "LIGHT2"],
+			self::NUEVA => ["device_type" => "NTH", "subtype" => "NTH", "alias" => "NUEVA"],
+			self::PCA => ["device_type" => "PE", "subtype" => "PE", "alias" => "PCA"],
+			self::RFDEVICE => ["device_type" => "CODE", "subtype" => "RF", "alias" => "RFDEVICE"],
+			self::SCHALK => ["device_type" => "FX3", "subtype" => "FX3", "alias" => "SCHALK"],
+			self::SOMFY => ["device_type" => "RT", "subtype" => "RT", "alias" => "SOMFY"],
+			self::SYSTEQ => ["device_type" => "QA", "subtype" => "QA", "alias" => "SYSTEQ"],
+			self::WAREMA => ["device_type" => "", "subtype" => "", "alias" => "WAREMA"],
+			self::WIR => ["device_type" => "WR", "subtype" => "WR", "alias" => "WIR"]
 		];
 		return $device_types;
 	}
@@ -1724,9 +1724,14 @@ Grau	#DFDFDF
 
 	private function GetModuleName($device_guid)
 	{
-		$module_info = IPS_GetModule($device_guid);
-		$module_name = $module_info["Aliases"][0];
-		return $module_name;
+        $device_types = $this->DeviceTypes();
+        $key = array_key_exists($device_guid, $device_types);
+        $module_name = "Unkown";
+        if($key)
+        {
+            $module_name = $device_types[$device_guid]["alias"];
+        }
+        return $module_name;
 	}
 
 	private function GetConfigurationList($device_guid, $number_devices)
@@ -1739,7 +1744,7 @@ Grau	#DFDFDF
 		$configurator = [
 			'type' => 'Configurator',
 			'name' => 'Configuration_' . $device_ident,
-			'caption' => 'configuration ' . $module_name,
+			'caption' => $this->Translate('configuration ') . $module_name,
 			'rowCount' => $number_devices,
 			'add' => false,
 			'delete' => false,
@@ -1832,7 +1837,7 @@ Grau	#DFDFDF
 					}
 					$address = $device["Address"];
 					foreach ($InstanceIDList as $Device_InstanceID) {
-						if ($index == IPS_GetProperty($Device_InstanceID, 'device_id')) {
+						if ($index == @IPS_GetProperty($Device_InstanceID, 'device_id')) {
 							$instance_name = IPS_GetName($Device_InstanceID);
 							$this->SendDebug('AIO Config', 'existing device found: ' . utf8_decode($instance_name) . ' (' . $Device_InstanceID . ') with index ' .$index, 0);
 							$instanceID = $Device_InstanceID;

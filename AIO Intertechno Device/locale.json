@@ -1,0 +1,27 @@
+{
+  "translations": {
+    "de": {
+      "Look up values in the AIO NEO": "Werte im AIO NEO nachschauen",
+      "AIO Intertechno device": "AIO Intertechno Gerät",
+      "family code": "Familiencode",
+      "device code": "Gerätecode",
+      "Intertechno address": "Intertechno Adresse",
+      "Intertechno device type": "Intertechno Gerätetyp",
+      "AIO Intertechno address": "AIO Intertechno Adresse",
+      "Please choose": "Bitte auswählen",
+      "Please Select": "Bitte auswählen",
+      "key": "Befehl",
+      "On": "Ein",
+      "Off": "Aus",
+      "Send": "Senden",
+      "Send key": "Befehl senden",
+      "Creating instance.": "Instanz wird angelegt.",
+      "AIO Intertechno device created": "AIO intertechno Gerät angelegt",
+      "AIO Intertechno device is inactive": "AIO Intertechno Gerät ist inaktiv",
+      "Information invalid. Fields can not be empty.": "Eingabe ungültig. Felder dürfen nicht leer sein.",
+      "Family code consists of a letter or a string of 7 characters.": "Familiencode besteht aus einem Buchstaben oder einer Zeichenfolge von 7 Zeichen.",
+      "Device code consists of a digit.": "Devicecode besteht aus einer Ziffer.",
+      "Device code is not made of letters but of a number.": "Devicecode besteht nicht aus Buchstaben sondern aus einer Ziffer."
+    }
+  }
+}

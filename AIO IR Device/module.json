@@ -6,6 +6,8 @@
     "aliases": ["AIO IR Device"],
     "parentRequirements": ["{35DE1449-FED2-4DE5-9E2C-13A619ACC210}"],
     "childRequirements": [],
-    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+  "implemented": [
+    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
+  ],
     "prefix": "AIOIR"
 }

@@ -416,7 +416,7 @@ class AIOFS20Device extends IPSModule
 		}
 
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$gwcheck = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=" . FS20::Type . "&data=" . $FS20 . $command);
 				$this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?XC_USER=user&XC_PASS=" . $GatewayPassword . "&XC_FNC=SendSC&type=" . FS20::Type . "&data=" . $FS20 . $command, 0);
 			} else {
@@ -448,7 +448,7 @@ class AIOFS20Device extends IPSModule
 		$aiogatewayip = $aiogateway->GetIPGateway();
 
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$address = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=LearnSC&type=" . FS20::Type);
 				$this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=LearnSC&type=" . FS20::Type, 0);
 			} else {
