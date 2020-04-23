@@ -5,6 +5,7 @@
       "AIO FS20 device": "AIO FS20 Gerät",
       "FS20 address": "FS20 Adresse",
       "FS20 type": "FS20 Typ",
+      "device type": "Gerätetyp",
       "The AIO Gateway FS 20 address is calculated automatically.": "Die AIO Gateway FS 20 Adresse wird automatisch berechnet.",
       "Alternatively, only the AIO Gateway FS 20 address can be entered, then HC1, HC2, address can be empty.": "Alternativ kann auch nur die AIO Gateway FS 20 Adresse eingetragen werden, dann kann HC1, HC2, Adresse leer sein.",
       "AIO FS20 address": "AIO FS 20 Adresse",

@@ -1154,15 +1154,7 @@ A9C8D603
 49C8D603
  */
 
-class Dooya extends AIOGateway
-{
-	const Type = 'DY';
-	const MoveUp = '22';
-	const MoveDown = '44';
-	const StepUp = '11';
-	const StepDown = '22';
-	const Stop = '55';
-}
+
 
 class Dooya2 extends AIOGateway // Kaiser Nienhaus
 {
@@ -1206,34 +1198,6 @@ class EnOcean extends AIOGateway
 class FHT80B extends AIOGateway
 {
 	const Type = 'FHT80b';
-}
-
-class FS20 extends AIOGateway
-{
-	const Type = 'FS20';
-	const On = '1000';
-	const Off = '0000';
-	const Last = '1100';
-	const Toggle = '1200';
-	const DimUp = '1300';
-	const DimDown = '1400';
-	const Set0 = 'DIM0';
-	const Set6 = '0100';
-	const Set10 = '0200';
-	const Set20 = '0300';
-	const Set25 = '0400';
-	const Set30 = '0500';
-	const Set40 = '0600';
-	const Set44 = '0700';
-	const Set50 = '0800';
-	const Set60 = '0900';
-	const Set63 = '0A00';
-	const Set70 = '0B00';
-	const Set75 = '0C00';
-	const Set80 = '0D00';
-	const Set90 = '0E00';
-	const Set94 = '0F00';
-	const Set100 = 'DIM100';
 }
 
 class GreenteqFunk extends AIOGateway
@@ -1320,42 +1284,6 @@ class Internorm extends AIOGateway
 
 }
 
-class Intertechno extends AIOGateway
-{
-
-    const IT_ACTION_1 = '80';
-    const IT_ACTION_2 = '81';
-    const IT_ACTION_3 = '00';
-    const IT_ACTION_1_ON = '90';
-    const IT_ACTION_1_OFF = '80';
-    const IT_ACTION_2_ON = '91';
-    const IT_ACTION_2_OFF = '81';
-    const IT_ACTION_3_ON = '10';
-    const IT_ACTION_3_OFF = '00';
-    const ON = 'E';
-    const OFF = '6';
-    const SET_10_1 = 'E00'; // dim to 10%
-    const SET_10_2 = '00'; // dim to 10%
-    const SET_20_1 = 'E10'; // dim to 20%
-    const SET_20_2 = '10'; // dim to 20%
-    const SET_30_1 = 'E20'; // dim to 30%
-    const SET_30_2 = '20'; // dim to 30%
-    const SET_40_1 = 'E30'; // dim to 40%
-    const SET_40_2 = '30'; // dim to 40%
-    const SET_50_1 = 'E40'; // dim to 50%
-    const SET_50_2 = '50'; // dim to 50%
-    const SET_60_1 = 'E50'; // dim to 60%
-    const SET_60_2 = '70'; // dim to 60%
-    const SET_70_1 = 'E60'; // dim to 70%
-    const SET_70_2 = '90'; // dim to 70%
-    const SET_80_1 = 'E70'; // dim to 80%
-    const SET_80_2 = 'B0'; // dim to 80%
-    const SET_90_1 = 'E80'; // dim to 90%
-    const SET_90_2 = 'D0'; // dim to 90%
-    const SET_100_1 = 'E'; // dim to 100%
-    const SET_100_2 = 'F0'; // dim to 100%
-}
-
 class KoppFreeControl extends AIOGateway
 {
 	const Type = 'KOPP';
@@ -1381,13 +1309,7 @@ class SchalkFX3 extends AIOGateway
 	const Type = 'FX3';
 }
 
-class SomfyRTS extends AIOGateway
-{
-	const Type = 'RT';
-    const UP = '20';
-    const DOWN = '40';
-    const STOP = '10';
-}
+
 
 class systeQ extends AIOGateway // qleverADAPTER
 {

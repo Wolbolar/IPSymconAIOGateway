@@ -6,8 +6,6 @@ require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs"
 require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
-use Fonzo\Mediola\FS20;
-
 
 class AIOFS20Device extends IPSModule
 {
@@ -415,7 +413,7 @@ class AIOFS20Device extends IPSModule
 				$command = FS20::On;
 				break;
 		}
-
+        $this->SendDebug("AIO Gateway", "Password set " . $GatewayPassword, 0);
 		if ($GatewayPassword !== "") {
 			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$gwcheck = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=" . FS20::Type . "&data=" . $FS20 . $command);
@@ -447,8 +445,9 @@ class AIOFS20Device extends IPSModule
 		$gatewaytype = $aiogateway->GetGatewaytype();
 		$GatewayPassword = $aiogateway->GetPassword();
 		$aiogatewayip = $aiogateway->GetIPGateway();
-
+        $this->SendDebug("AIO Gateway", "Password set " . $GatewayPassword, 0);
 		if ($GatewayPassword !== "") {
+
 			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$address = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=LearnSC&type=" . FS20::Type);
 				$this->SendDebug("String to AIO Gateway", "http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=LearnSC&type=" . FS20::Type, 0);
@@ -530,44 +529,6 @@ class AIOFS20Device extends IPSModule
 		}
 
 	}
-
-	public function SendCommandKey(int $list_number)
-	{
-		$command_name = $this->GetListCommandName($list_number);
-		$command = $this->GetListCommand($command_name);
-		if ($command_name != false) {
-			$this->SendDebug("FS20 Send:", "send command name " . $command_name, 0);
-			$this->SendCommand($command);
-		}
-	}
-
-	protected function GetListCommandName($list_number)
-	{
-		$commands = $this->GetAvailableCommands();
-		$i = 1;
-		foreach ($commands as $key => $command) {
-			if ($list_number == $i) {
-				return $key;
-			}
-			$i++;
-		}
-		return false;
-	}
-
-	protected function GetListCommand($command_name)
-	{
-		$command = false;
-		$commands = [
-			"On" => FS20::On,
-			"Off" => FS20::Off
-		];
-		if(key_exists($command_name, $commands))
-		{
-			$command = $commands[$command_name];
-		}
-		return $command;
-	}
-
 
 	public function DebugConfigurationForm()
 	{
@@ -654,7 +615,7 @@ class AIOFS20Device extends IPSModule
 							[
 								'type' => 'Select',
 								'name' => 'FS20Type',
-								'caption' => 'key',
+								'caption' => 'device type',
 								'options' => [
 									[
 										'caption' => 'Switch',
@@ -663,7 +624,11 @@ class AIOFS20Device extends IPSModule
 									[
 										'caption' => 'Dimmer',
 										'value' => 'Dimmer'
-									]
+									],
+                                    [
+                                        'caption' => 'Shutter',
+                                        'value' => 'Shutter'
+                                    ]
 								]
 							],
 						]
@@ -820,6 +785,32 @@ class AIOFS20Device extends IPSModule
 
 		return $form;
 	}
+}
 
-
+class FS20
+{
+    const Type = 'FS20';
+    const On = '1000';
+    const Off = '0000';
+    const Last = '1100';
+    const Toggle = '1200';
+    const DimUp = '1300';
+    const DimDown = '1400';
+    const Set0 = 'DIM0';
+    const Set6 = '0100';
+    const Set10 = '0200';
+    const Set20 = '0300';
+    const Set25 = '0400';
+    const Set30 = '0500';
+    const Set40 = '0600';
+    const Set44 = '0700';
+    const Set50 = '0800';
+    const Set60 = '0900';
+    const Set63 = '0A00';
+    const Set70 = '0B00';
+    const Set75 = '0C00';
+    const Set80 = '0D00';
+    const Set90 = '0E00';
+    const Set94 = '0F00';
+    const Set100 = 'DIM100';
 }

@@ -6,7 +6,6 @@ require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs"
 require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
-use Fonzo\Mediola\Dooya;
 
 class AIODooyaDevice extends IPSModule
 {
@@ -100,7 +99,7 @@ class AIODooyaDevice extends IPSModule
     public function RequestAction($Ident, $Value)
     {
         switch($Ident) {
-            case "Dooya":
+            case "CONTROL":
                 switch($Value) {
                     case 0: // Move Up
                         $this->MoveUp();
@@ -158,7 +157,7 @@ class AIODooyaDevice extends IPSModule
         $gatewaytype = $aiogateway->GetGatewaytype();
         $GatewayPassword = $aiogateway->GetPassword();
         $aiogatewayip = $aiogateway->GetIPGateway();
-        $address = $this->ReadPropertyString('Adresse');
+        $address = $this->ReadPropertyString('address');
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "Dooya Command:" , $command );
 		if ($GatewayPassword !== "")
@@ -372,4 +371,14 @@ class AIODooyaDevice extends IPSModule
 
         return $form;
     }
+}
+
+class Dooya
+{
+    const Type = 'DY';
+    const MoveUp = '22';
+    const MoveDown = '44';
+    const StepUp = '11';
+    const StepDown = '22';
+    const Stop = '55';
 }

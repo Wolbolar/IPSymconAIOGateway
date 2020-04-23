@@ -11,19 +11,6 @@ class AIOSplitter extends IPSModule
 {
 	use ProfileHelper;
 
-	private const V1 = 1;
-    private const V2 = 2;
-    private const V3 = 3;
-    private const V4 = 4;
-    private const V4PLUS = 5;
-    private const V5 = 6;
-    private const V5PLUS = 7;
-    private const V6MINI = 8;
-    private const V6MINIE = 9;
-    private const V6 = 10;
-    private const V6E = 11;
-
-
 	// helper properties
 	private $position = 0;
 
@@ -74,7 +61,7 @@ class AIOSplitter extends IPSModule
 
         /*
          * 		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
-		if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS) {
+		if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS) {
 
 			$this->RegisterVariableString("Hardware_Version", "Hardware Version", "", $this->_getPosition());
 			$this->RegisterVariableString("Hardware_Revision", "Hardware Revision", "", $this->_getPosition());
@@ -209,7 +196,7 @@ class AIOSplitter extends IPSModule
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
         $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
-        if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+        if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             //Profil anlegen
             $this->RegisterProfileLEDGateway("LED.AIOGateway", "Bulb", "", "");
 
@@ -281,7 +268,7 @@ class AIOSplitter extends IPSModule
 	public function GetConfigurationForParent()
 	{
 		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
-		if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+		if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             $Config['Open'] = true;
 			$Config['Host'] = $this->GetHostIP();
 			$Config['Port'] = 1901;
@@ -381,13 +368,13 @@ class AIOSplitter extends IPSModule
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-            if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+            if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
                 $root = "http://" . $aiogatewayip . "/cmd?auth=" . $GatewayPassword . "&";
             } else {
                 $root = "http://" . $aiogatewayip . "/cmd?XC_USER=user&XC_PASS=" . $GatewayPassword . "&";
             }
 		} else {
-            if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+            if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
                 $root = "http://" . $aiogatewayip . "/cmd?";
             } else {
                 $root = "http://" . $aiogatewayip . "/command?";
@@ -414,7 +401,7 @@ class AIOSplitter extends IPSModule
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$data = file_get_contents("http://" . $aiogatewayip . "/info?auth=" . $GatewayPassword);
 			} else {
 				$data = file_get_contents("http://" . $aiogatewayip . "/info?XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -1016,7 +1003,7 @@ class AIOSplitter extends IPSModule
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS) {
 				$status = file_get_contents("http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=RGB&data=" . $command);
 				$this->SendDebug("AIOGateway", "Senden an Gateway mit Passwort", 0);
 				$this->SendDebug("Send to AIO Gateway", "http://" . $aiogatewayip . "/command?auth=" . $GatewayPassword . "&XC_FNC=SendSC&type=RGB&data=" . $command, 0);
@@ -1174,47 +1161,47 @@ class AIOSplitter extends IPSModule
                     ],
                     [
                         'caption' => 'Telefunken Gateway V1',
-                        'value' => self::V1
+                        'value' => AIOGateway::V1
                     ],
                     [
                         'caption' => 'AIO Gateway V2',
-                        'value' => self::V2
+                        'value' => AIOGateway::V2
                     ],
                     [
                         'caption' => 'AIO Gateway V3',
-                        'value' => self::V3
+                        'value' => AIOGateway::V3
                     ],
                     [
                         'caption' => 'AIO Gateway V4',
-                        'value' => self::V4
+                        'value' => AIOGateway::V4
                     ],
                     [
                         'caption' => 'AIO Gateway V4 +',
-                        'value' => self::V4PLUS
+                        'value' => AIOGateway::V4PLUS
                     ],
                     [
                         'caption' => 'AIO Gateway V5',
-                        'value' => self::V5
+                        'value' => AIOGateway::V5
                     ],
                     [
                         'caption' => 'AIO Gateway V5 +',
-                        'value' => self::V5PLUS
+                        'value' => AIOGateway::V5PLUS
                     ],
                     [
                         'caption' => 'AIO Gateway V6 Mini',
-                        'value' => self::V6MINI
+                        'value' => AIOGateway::V6MINI
                     ],
                     [
                         'caption' => 'AIO Gateway V6 Mini E',
-                        'value' => self::V6MINIE
+                        'value' => AIOGateway::V6MINIE
                     ],
                     [
                         'caption' => 'AIO Gateway V6',
-                        'value' => self::V6
+                        'value' => AIOGateway::V6
                     ],
                     [
                         'caption' => 'AIO Gateway V6 E',
-                        'value' => self::V6E
+                        'value' => AIOGateway::V6E
                     ]
                 ]
             ],
@@ -1419,7 +1406,7 @@ class AIOSplitter extends IPSModule
             $listsystem_visible = true;
         }
         $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
-        if ($gatewaytype == self::V5 || $gatewaytype == self::V5PLUS || $gatewaytype == self::V6MINI || $gatewaytype == self::V6MINIE || $gatewaytype == self::V6 || $gatewaytype == self::V6E) {
+        if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             $led_visible = true;
         }
         else{

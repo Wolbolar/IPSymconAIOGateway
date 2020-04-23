@@ -6,7 +6,6 @@ require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs"
 require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
-use Fonzo\Mediola\SomfyRTS;
 
 class AIOSomfyRTSDevice extends IPSModule
 {
@@ -201,10 +200,9 @@ class AIOSomfyRTSDevice extends IPSModule
 		
 		IPS_LogMessage( "Adresse:" , $address );
 		IPS_LogMessage( "RTS Command:" , $command );
-		//IPS_LogMessage( "AIO Gateway:" , "http://".$this->GetIPGateway()."/command?XC_FNC=SendSC&type=RT&data=".$command.$address );
         if ($GatewayPassword !== "")
 		{
-            if($gatewaytype == 6 || $gatewaytype == 7)
+            if($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E)
             {
                 $gwcheck = file_get_contents("http://".$aiogatewayip."/command?auth=".$GatewayPassword."&XC_FNC=SendSC&type=".SomfyRTS::Type."&data=".$command.$address);
             }
@@ -397,4 +395,14 @@ class AIOSomfyRTSDevice extends IPSModule
 
         return $form;
     }
+}
+
+class SomfyRTS
+{
+    const Type = 'RT';
+    const UP = '20';
+    const DOWN = '40';
+    const STOP = '10';
+    const ON = '10'; // ?
+    const OFF = '10'; // ?
 }
