@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . "/../bootstrap.php");
-require_once __DIR__ . '/../libs/ProfileHelper.php';
-require_once __DIR__ . '/../libs/ConstHelper.php';
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
 use Fonzo\Mediola\Dooya;
@@ -93,8 +93,8 @@ class AIODooyaDevice extends IPSModule
 
 	protected function SetupVar()
 		{
-			$this->RegisterVariableInteger("Dooya", "Dooya", "~ShutterMoveStep", 1);
-			$this->EnableAction("Dooya");
+			$this->RegisterVariableInteger("CONTROL", $this->Translate("Control"), "~ShutterMoveStep", 1);
+			$this->EnableAction("CONTROL");
 		}
 
     public function RequestAction($Ident, $Value)
@@ -125,27 +125,27 @@ class AIODooyaDevice extends IPSModule
     }
 
 	public function MoveUp() {
-		SetValueInteger($this->GetIDForIdent('Dooya'), 0);
+		SetValueInteger($this->GetIDForIdent('CONTROL'), 0);
 		return $this->SendCommand(Dooya::MoveUp);
 	}
 
 	public function MoveDown() {
-		SetValueInteger($this->GetIDForIdent('Dooya'), 4);
+		SetValueInteger($this->GetIDForIdent('CONTROL'), 4);
 		return $this->SendCommand(Dooya::MoveDown);
 	}
 
 	public function StepUp() {
-		SetValueInteger($this->GetIDForIdent('Dooya'), 1);
+		SetValueInteger($this->GetIDForIdent('CONTROL'), 1);
 		return $this->SendCommand(Dooya::StepUp);
         }
 	
 	public function StepDown() {
-		SetValueInteger($this->GetIDForIdent('Dooya'), 3);
+		SetValueInteger($this->GetIDForIdent('CONTROL'), 3);
 		return $this->SendCommand(Dooya::StepDown);
         }
 	
 	public function Stop() {
-		SetValueInteger($this->GetIDForIdent('Dooya'), 2);
+		SetValueInteger($this->GetIDForIdent('CONTROL'), 2);
 		return $this->SendCommand(Dooya::Stop);
         }
 	
@@ -269,6 +269,9 @@ class AIODooyaDevice extends IPSModule
             $button_visibility = true;
         }
         $form = [
+            [
+                'type' => 'TestCenter'
+            ],
             [
                 'type' => 'Button',
                 'caption' => 'Move up',
