@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . "/../bootstrap.php");
-require_once __DIR__ . '/../libs/ProfileHelper.php';
-require_once __DIR__ . '/../libs/ConstHelper.php';
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
 use Fonzo\Mediola\SomfyRTS;
@@ -22,13 +22,12 @@ class AIOSomfyRTSDevice extends IPSModule
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
 		$this->RegisterPropertyString("name", "");
 		$this->RegisterPropertyString("room_name", "");
-		$this->RegisterPropertyString("type", "");
+		$this->RegisterPropertyString("type", "switch");
 		$this->RegisterPropertyInteger("room_id", 0);
 		$this->RegisterPropertyString("device_id", "");
 		$this->RegisterPropertyString("address", "");
 		$this->RegisterPropertyString("Adresse", "");
 		$this->RegisterAttributeString('address', "");
-		    
     }
 
     public function ApplyChanges()
@@ -51,9 +50,6 @@ class AIOSomfyRTSDevice extends IPSModule
 		{
 			
 			$AIORTSAdresse = $this->ReadPropertyString("Adresse");
-			
-				
-			
 			if ($AIORTSAdresse != '')
 					{
 						//AIORTSAdresse prüfen
@@ -87,28 +83,33 @@ class AIOSomfyRTSDevice extends IPSModule
 
 			}
 			else 
-			{	
-				
-				
+			{
 				//Eingabe überprüfen Länge 4 Zeichen nur Zahlen
 				
 						// Status aktiv
 						$this->SetStatus(IS_ACTIVE);
-						$this->SetupVar();
-			}	
-			
-			
-			
-			
+			}
 		}
 
 	protected function SetupVar()
 		{
 			//Status-Variablen anlegen
-			$stateId = $this->RegisterVariableInteger("Somfy", "Somfy", "~ShutterMoveStop", 1);
-			$this->EnableAction("Somfy");
-			
-			
+            $type = $this->ReadPropertyString("type");
+            if($type == "shutter")
+            {
+                $this->RegisterVariableInteger("CONTROL", $this->Translate("Control"), "~ShutterMoveStop", 1);
+                $this->EnableAction("CONTROL");
+            }
+            if($type == "switch")
+            {
+                $this->RegisterVariableBoolean("STATE", $this->Translate("State"), "~Switch", 1);
+                $this->EnableAction("STATE");
+            }
+            if($type == "blind")
+            {
+                $this->RegisterVariableInteger("CONTROL", $this->Translate("Control"), "~ShutterMoveStop", 1);
+                $this->EnableAction("CONTROL");
+            }
 		}
 	
 	
@@ -116,7 +117,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	public function RequestAction($Ident, $Value)
     {
         switch($Ident) {
-            case "Somfy":
+            case "STATE":
                 switch($Value) {
                     case 4: // Down, Schließen
 						$this->Down();
@@ -261,6 +262,31 @@ class AIOSomfyRTSDevice extends IPSModule
                 'type' => 'ValidationTextBox',
                 'caption' => 'Somfy address'
             ],
+            [
+                'type' => 'ExpansionPanel',
+                'caption' => 'Somfy type',
+                'items' => [
+                    [
+                        'type' => 'Select',
+                        'name' => 'type',
+                        'caption' => 'device type',
+                        'options' => [
+                            [
+                                'caption' => 'Blind',
+                                'value' => 'blind'
+                            ],
+                            [
+                                'caption' => 'Shutter',
+                                'value' => 'shutter'
+                            ],
+                            [
+                                'caption' => 'Switch',
+                                'value' => 'switch'
+                            ]
+                        ]
+                    ],
+                ]
+            ]
         ];
         return $form;
     }
@@ -271,32 +297,9 @@ class AIOSomfyRTSDevice extends IPSModule
      */
     protected function FormActions()
     {
-        $address = $this->ReadAttributeString("address");
-        if($address == "")
-        {
-            $button_visibility = false;
-        }
-        else{
-            $button_visibility = true;
-        }
         $form = [
             [
-                'type' => 'Button',
-                'caption' => 'Up',
-                'visible' => $button_visibility,
-                'onClick' => 'AIOSOMFYRTS_Up($id);'
-            ],
-            [
-                'type' => 'Button',
-                'caption' => 'Stop',
-                'visible' => $button_visibility,
-                'onClick' => 'AIOSOMFYRTS_Stop($id);'
-            ],
-            [
-                'type' => 'Button',
-                'caption' => 'Down',
-                'visible' => $button_visibility,
-                'onClick' => 'AIOSOMFYRTS_Down($id);'
+                'type' => 'TestCenter',
             ]
         ];
         return $form;
