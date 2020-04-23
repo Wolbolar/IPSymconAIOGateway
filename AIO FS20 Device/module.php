@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . "/../bootstrap.php");
-require_once __DIR__ . '/../libs/ProfileHelper.php';
-require_once __DIR__ . '/../libs/ConstHelper.php';
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
 use Fonzo\Mediola\FS20;
+
 
 class AIOFS20Device extends IPSModule
 {
@@ -363,55 +364,55 @@ class AIOFS20Device extends IPSModule
 		$this->SendDebug("AIO Gateway:", "Send Command " . $command, 0);
 
 		switch ($command) {
-			case "1000": //An
+			case FS20::On: //An
 				SetValueBoolean($this->GetIDForIdent('Status'), true);
 
 				if (@$this->GetIDForIdent("Dimmer")) {
 					SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
 				}
 				break;
-			case "0000": //Aus
+			case FS20::Off: //Aus
 				SetValueBoolean($this->GetIDForIdent('Status'), false);
 				if (@$this->GetIDForIdent("Dimmer")) {
 					SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
 				}
 				break;
-			case "DIM0": //0
+			case FS20::Set0: //0
 				SetValueBoolean($this->GetIDForIdent('Status'), false);
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 0);
-				$command = "0000";
+				$command = FS20::Off;
 				break;
-			case "0200": //10
+			case FS20::Set10: //10
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 1);
 				break;
-			case "0300": //20
+			case FS20::Set20: //20
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 2);
 				break;
-			case "0500": //30
+			case FS20::Set30: //30
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 3);
 				break;
-			case "0600": //40
+			case FS20::Set40: //40
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 4);
 				break;
-			case "0800": //50
+			case FS20::Set50: //50
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 5);
 				break;
-			case "0900": //60
+			case FS20::Set60: //60
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 6);
 				break;
-			case "0B00": //70
+			case FS20::Set70: //70
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 7);
 				break;
-			case "0D00": //80
+			case FS20::Set80: //80
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 8);
 				break;
-			case "0E00": //90
+			case FS20::Set90: //90
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 9);
 				break;
-			case "DIM100": //100
+			case FS20::Set100: //100
 				SetValueBoolean($this->GetIDForIdent('Status'), true);
 				SetValueInteger($this->GetIDForIdent('Dimmer'), 10);
-				$command = "1000";
+				$command = FS20::On;
 				break;
 		}
 
@@ -744,60 +745,13 @@ class AIOFS20Device extends IPSModule
 					'caption' => 'Send key',
 					'items' => [
 						[
-							'type' => 'Select',
-							'name' => 'sendkey',
-							'caption' => 'key',
-							'options' => $this->GetSendListCommands()
-						],
-						[
-							'type' => 'Button',
-							'caption' => 'Send',
-							'onClick' => 'AIOFS20_SendCommandKey($id, $sendkey);'
+							'type' => 'TestCenter'
 						]
 					]
 				]
 			]
 		);
 		return $form;
-	}
-
-	protected function GetSendListCommands()
-	{
-		$form = [
-			[
-				'label' => 'Please Select',
-				'value' => -1
-			]
-		];
-		$commands = $this->GetAvailableCommands();
-		$i = 1;
-		foreach ($commands as $key => $command) {
-			$form = array_merge_recursive(
-				$form,
-				[
-					[
-						'label' => $key,
-						'value' => $i
-					]
-				]
-			);
-			$i++;
-		}
-		return $form;
-	}
-
-	public function GetAvailableCommands()
-	{
-		$FS20Type = $this->ReadPropertyString("FS20Type");
-		$commands = [];
-		if ($FS20Type == "Switch") {
-			$commands["On"] = 1;
-			$commands["Off"] = 2;
-		} else {
-			$commands["On"] = 1;
-			$commands["Off"] = 2;
-		}
-		return $commands;
 	}
 
 	/**
