@@ -117,7 +117,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	public function RequestAction($Ident, $Value)
     {
         switch($Ident) {
-            case "STATE":
+            case "CONTROL":
                 switch($Value) {
                     case 4: // Down, Schließen
 						$this->Down();
@@ -129,10 +129,29 @@ class AIOSomfyRTSDevice extends IPSModule
 					    $this->Up();
 						break;	
                 }
-                break;	
+                break;
+            case "STATE":
+                if($Value)
+                {
+                    $this->On();
+                }
+                else{
+                    $this->Off();
+                }
+                break;
             default:
                 throw new Exception("Invalid ident");
         }
+    }
+
+    public function On() {
+        $command = SomfyRTS::ON;
+        return $this->SendCommand($command);
+    }
+
+    public function Off() {
+        $command = SomfyRTS::OFF;
+        return $this->SendCommand($command);
     }
 
 	public function Up() {
@@ -162,15 +181,21 @@ class AIOSomfyRTSDevice extends IPSModule
         $aiogatewayip = $aiogateway->GetIPGateway();
 		switch($command) 
 		{
-                    case SomfyRTS::UP: // Up, Öffnen
-						SetValueInteger($this->GetIDForIdent('Somfy'), 0);
-						break;
-                    case SomfyRTS::DOWN: // Down, Schließen
-                        SetValueInteger($this->GetIDForIdent('Somfy'), 4);
-						break;
-					case SomfyRTS::STOP: //Stop
-						SetValueInteger($this->GetIDForIdent('Somfy'), 2);
-                        break;	
+            case SomfyRTS::UP: // Up, Öffnen
+                SetValueInteger($this->GetIDForIdent('CONTROL'), 0);
+                break;
+            case SomfyRTS::DOWN: // Down, Schließen
+                SetValueInteger($this->GetIDForIdent('CONTROL'), 4);
+                break;
+            case SomfyRTS::STOP: // Stop
+                SetValueInteger($this->GetIDForIdent('CONTROL'), 2);
+                break;
+            case SomfyRTS::ON: // On
+                SetValueBoolean($this->GetIDForIdent('STATE'), true);
+                break;
+            case SomfyRTS::OFF: // Off
+                SetValueBoolean($this->GetIDForIdent('STATE'), false);
+                break;
 		}
 		
 		
