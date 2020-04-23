@@ -1636,7 +1636,8 @@ class AIOIRDevice extends IPSModule
 		$commands = [];
 		foreach($current_values as $value)
 			{
-				$commands[$value[0]] = $value[1];
+				// $commands[$value[0]] = $value[1];
+                $commands[$value["key"]] = $value["code"];
 			}
 		return $commands;
 	}
