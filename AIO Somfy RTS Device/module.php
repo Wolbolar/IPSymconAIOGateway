@@ -27,6 +27,7 @@ class AIOSomfyRTSDevice extends IPSModule
 		$this->RegisterPropertyString("device_id", "");
 		$this->RegisterPropertyString("address", "");
 		$this->RegisterPropertyString("Adresse", "");
+		$this->RegisterAttributeString('address', "");
 		    
     }
 
@@ -58,20 +59,32 @@ class AIOSomfyRTSDevice extends IPSModule
 						//AIORTSAdresse prüfen
 						if (strlen($AIORTSAdresse)<6 or strlen($AIORTSAdresse)>6)//Länge prüfen
 						{
-							$this->SetStatus(207);	
+						    $this->SetStatus(207);
 						}
 						else
 						{
-						$this->SetupVar();
-						// Status aktiv
-						$this->SetStatus(IS_ACTIVE);
+                            $this->WriteAttributeString('address', $AIORTSAdresse);
+                            $this->SetupVar();
+                            // Status aktiv
+                            $this->SetStatus(IS_ACTIVE);
 						}
 						
 					}
 			elseif ($AIORTSAdresse == '')
 			{
-				// Status inaktiv
-				$this->SetStatus(202);
+                $AIORTS_address = $this->ReadPropertyString("address");
+                if($AIORTS_address == "")
+                {
+                    // Status inaktiv
+                    $this->SetStatus(202);
+                }
+                else{
+                    $this->WriteAttributeString('address', $AIORTSAdresse);
+                    $this->SetupVar();
+                    // Status aktiv
+                    $this->SetStatus(IS_ACTIVE);
+                }
+
 			}
 			else 
 			{	
@@ -141,7 +154,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	private $response = false;
 	protected function SendCommand(string $command)
     {
-		$address = $this->ReadPropertyString('Adresse');
+        $address = $this->ReadAttributeString('address');
         $aiogateway = new AIOGateway($this->InstanceID);
         $gatewaytype = $aiogateway->GetGatewaytype();
         $GatewayPassword = $aiogateway->GetPassword();
@@ -190,38 +203,170 @@ class AIOSomfyRTSDevice extends IPSModule
 		return $this->response;
 		}
 
-	protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize) {
-        
-        if(!IPS_VariableProfileExists($Name)) {
-            IPS_CreateVariableProfile($Name, 1);
-        } else {
-            $profile = IPS_GetVariableProfile($Name);
-            if($profile['ProfileType'] != 1)
-            throw new Exception("Variable profile type does not match for profile ".$Name);
-        }
-        
-        IPS_SetVariableProfileIcon($Name, $Icon);
-        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
-        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-        
+    /***********************************************************
+     * Configuration Form
+     ***********************************************************/
+
+    /**
+     * build configuration form
+     * @return string
+     */
+    public function GetConfigurationForm()
+    {
+        // return current form
+        return json_encode([
+                               'elements' => $this->FormElements(),
+                               'actions' => $this->FormActions(),
+                               'status' => $this->FormStatus()
+                           ]);
     }
-	
-	protected function RegisterProfileIntegerEx($Name, $Icon, $Prefix, $Suffix, $Associations) {
-        if ( sizeof($Associations) === 0 ){
-            $MinValue = 0;
-            $MaxValue = 0;
-        } else {
-            $MinValue = $Associations[0][0];
-            $MaxValue = $Associations[sizeof($Associations)-1][0];
+
+    /**
+     * return form configurations on configuration step
+     * @return array
+     */
+    protected function FormElements()
+    {
+        $address = $this->ReadAttributeString("address");
+        $address_old = $this->ReadPropertyString("Adresse");
+        if($address == "" && $address_old == "")
+        {
+            $address_visibility = true;
+            $address_old_visibility = false;
         }
-        
-        $this->RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, 0);
-        
-        foreach($Associations as $Association) {
-            IPS_SetVariableProfileAssociation($Name, $Association[0], $Association[1], $Association[2], $Association[3]);
+        elseif($address != "")
+        {
+            $address_visibility = true;
+            $address_old_visibility = false;
         }
-        
-    }	
-	
-	
+        else{
+            $address_visibility = false;
+            $address_old_visibility = true;
+        }
+
+        $form = [
+            [
+                'type' => 'Label',
+                'caption' => 'AIO Somfy device'
+            ],
+            [
+                'name' => 'Adresse',
+                'type' => 'ValidationTextBox',
+                'visible' => $address_old_visibility,
+                'caption' => 'Somfy address'
+            ],
+            [
+                'name' => 'address',
+                'visible' => $address_visibility,
+                'type' => 'ValidationTextBox',
+                'caption' => 'Somfy address'
+            ],
+        ];
+        return $form;
+    }
+
+    /**
+     * return form actions by token
+     * @return array
+     */
+    protected function FormActions()
+    {
+        $address = $this->ReadAttributeString("address");
+        if($address == "")
+        {
+            $button_visibility = false;
+        }
+        else{
+            $button_visibility = true;
+        }
+        $form = [
+            [
+                'type' => 'Button',
+                'caption' => 'Up',
+                'visible' => $button_visibility,
+                'onClick' => 'AIOSOMFYRTS_Up($id);'
+            ],
+            [
+                'type' => 'Button',
+                'caption' => 'Stop',
+                'visible' => $button_visibility,
+                'onClick' => 'AIOSOMFYRTS_Stop($id);'
+            ],
+            [
+                'type' => 'Button',
+                'caption' => 'Down',
+                'visible' => $button_visibility,
+                'onClick' => 'AIOSOMFYRTS_Down($id);'
+            ]
+        ];
+        return $form;
+    }
+
+
+    /**
+     * return from status
+     * @return array
+     */
+    protected function FormStatus()
+    {
+        $form = [
+            [
+                'code' => IS_CREATING,
+                'icon' => 'inactive',
+                'caption' => 'Creating instance.'
+            ],
+            [
+                'code' => IS_ACTIVE,
+                'icon' => 'active',
+                'caption' => 'Somfy device created'
+            ],
+            [
+                'code' => IS_INACTIVE,
+                'icon' => 'inactive',
+                'caption' => 'Somfy device is inactive'
+            ],
+            [
+                'code' => 201,
+                'icon' => 'inactive',
+                'caption' => 'Please follow the instructions.'
+            ],
+            [
+                'code' => 202,
+                'icon' => 'error',
+                'caption' => 'Information invalid. Fields can not be empty.'
+            ],
+            [
+                'code' => 203,
+                'icon' => 'error',
+                'caption' => 'No active AIO I/O.'
+            ],
+            [
+                'code' => 204,
+                'icon' => 'error',
+                'caption' => 'HC1 can only consist of 4 numbers.'
+            ],
+            [
+                'code' => 205,
+                'icon' => 'error',
+                'caption' => 'HC2 can only consist of 4 numbers.'
+            ],
+            [
+                'code' => 206,
+                'icon' => 'error',
+                'caption' => 'address can only consist of 4 numbers.'
+            ],
+            [
+                'code' => 207,
+                'icon' => 'error',
+                'caption' => 'address may only consist of 6 characters.'
+            ],
+            [
+                'code' => 208,
+                'icon' => 'error',
+                'caption' => 'Calculated address and input do not match.'
+            ]
+        ];
+
+        return $form;
+    }
 }

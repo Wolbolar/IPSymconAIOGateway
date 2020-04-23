@@ -1,9 +1,11 @@
 {
   "translations": {
     "de": {
-      "Instabus devicetype (switch / dimmer / shutter):": "Instabus Gerätetyp (Schalter / Dimmer / Rollladen):",
+      "Somfy devicetype (switch / dimmer / shutter):": "Somfy Gerätetyp (Schalter / Dimmer / Rollladen):",
+      "AIO Somfy device": "AIO Somfy Gerät",
+      "Somfy address": "Somfy Adresse",
       "device type": "Gerätetyp",
-      "Instabus devicecode:": "Instabus Gerätecode:",
+      "Somfy devicecode:": "Somfy Gerätecode:",
       "device code": "Gerätecode",
       "Update interval in seconds:": "Aktualisierungsintervall in Sekunden:",
       "seconds": "Sekunden",
@@ -20,7 +22,8 @@
       "Dim up": "Hochdimmen",
       "Stop": "Stop",
       "Creating instance.": "Instanz wird angelegt.",
-      "Instabus device created.": "Instabus Gerät angelegt",
+      "Somfy device created": "Somfy Gerät angelegt",
+      "Somfy device is inactive": "Somfy Gerät ist inaktiv",
       "interface closed.": "Schnittstelle geschlossen",
       "Please follow the instructions.": "Bitte der Anleitung folgen.",
       "Device code must not be empty.": "Geräte Code darf nicht leer sein.",
