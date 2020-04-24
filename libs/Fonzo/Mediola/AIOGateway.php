@@ -6,17 +6,17 @@ class AIOGateway
 {
 	public $DeviceInstanceID;
 
-    const V1 = 1;
-    const V2 = 2;
-    const V3 = 3;
-    const V4 = 4;
-    const V4PLUS = 5;
-    const V5 = 6;
-    const V5PLUS = 7;
-    const V6MINI = 8;
-    const V6MINIE = 9;
-    const V6 = 10;
-    const V6E = 11;
+    const V1 = "V1";
+    const V2 = "V2";
+    const V3 = "V3";
+    const V4 = "V4";
+    const V4PLUS = "V4+";
+    const V5 = "V6";
+    const V5PLUS = "V5+";
+    const V6MINI = "V6Mini";
+    const V6MINIE = "V6MiniE";
+    const V6 = "V6";
+    const V6E = "V6E";
 
 	function __construct($DeviceInstanceID)
 	{

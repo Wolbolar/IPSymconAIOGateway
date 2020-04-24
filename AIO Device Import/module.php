@@ -1140,9 +1140,8 @@ Grau	#DFDFDF
 			// show list
 			$this->SelectImport();
 			// $rooms = $this->GetRooms();
-            $gateways = json_decode($this->ReadAttributeString('AIOGateways'));
-            // $number_gateways = count($gateways);
-            $number_gateways = 10; // todo fehler suchen count
+            $gateways = json_decode($this->ReadAttributeString('AIOGateways'), true);
+            $number_gateways = count($gateways);
             $form = array_merge_recursive(
                 $form,
                 [
@@ -1197,7 +1196,7 @@ Grau	#DFDFDF
                             [
                                 'caption' => 'SID',
                                 'name' => 'sid',
-                                'width' => '250px',
+                                'width' => '350px',
                                 'visible' => 'false'
                             ]
                         ],
@@ -1861,6 +1860,8 @@ Grau	#DFDFDF
                     $name = $gateway['name'];
                     $info = $gateway['info'];
                     $gatewayname = $info['name'];
+                    $gateway_arr = explode(" ", $gatewayname);
+                    $gateway_type = $gateway_arr[array_key_last($gateway_arr)];
                     $ip = $info['ip'];
                     $mac = $info['mac'];
                     $version = $info['version'];
@@ -1889,6 +1890,7 @@ Grau	#DFDFDF
                                 "configuration" => [
                                     "index" => $index,
                                     "gatewayname" => $gatewayname,
+                                    "gatewaytype" => $gateway_type,
                                     "Host" => $ip,
                                     "mac" => $mac,
                                     "version" => $version,
