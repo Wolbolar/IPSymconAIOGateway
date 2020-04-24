@@ -33,6 +33,10 @@ class AIOSplitter extends IPSModule
 		$this->RegisterPropertyString("Password", "");
 		$this->RegisterPropertyInteger("gatewaytype", 0);
 		$this->RegisterPropertyString("IPSHost", "");
+        $this->RegisterPropertyInteger("index", 0);
+        $this->RegisterPropertyString("gatewayname", "");
+        $this->RegisterPropertyString("firmware", "");
+        $this->RegisterPropertyString("sid", "");
 
         $this->RegisterPropertyString("name", "");
         $this->RegisterPropertyString("dhcp", "");

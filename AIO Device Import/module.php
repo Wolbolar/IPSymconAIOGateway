@@ -120,6 +120,7 @@ class AIOImport extends IPSModule
 		$this->RegisterAttributeString($this->GetModuleIdent(self::WAREMA), "[]");
 		$this->RegisterAttributeString($this->GetModuleIdent(self::WIR), "[]");
 		$this->RegisterAttributeString("Rooms", "[]");
+        $this->RegisterAttributeString("AIOGateways", "[]");
 
 	}
 
@@ -608,22 +609,9 @@ class AIOImport extends IPSModule
 		$data = $this->GetDatabase();
 		$devices = $data->devices;
 		$this->SendDebug("Import:", "finished reading device.db", 0);
-		//rooms auslesen
-		$rooms = $data->rooms;
-		$this->SendDebug("AIO Import:", "Rooms:  " . json_encode($rooms), 0);
 
-		$roomsneo = array();
-		foreach ($rooms as $key => $room) {
-			$roomname = $room->name;
-			$roomindex = $room->index;
-			$roomnameprogs = stripos($roomname, "_progs&sysvars");
-			$roomnamecamera = stripos($roomname, "_cameras");
-			$roomnamewebpages = stripos($roomname, "_webpages");
-			if (($roomnamewebpages === false) && ($roomnameprogs === false) && ($roomnamecamera === false)) {
-				$roomsneo[$roomindex] = array("name" => $roomname, "index" => $roomindex);
-			}
-			$this->WriteAttributeString("Rooms", json_encode($roomsneo));
-		}
+		$this->SaveRooms($data);
+        $this->SaveMediolaGateways($data);
 
 		// copy the devices array to a php var
 		//$devices = $json->devices;
@@ -878,6 +866,53 @@ class AIOImport extends IPSModule
 		}
 	}
 
+	private function SaveMediolaGateways($data)
+    {
+        $gateways_all = $data->gateways;
+        $gateways = [];
+        foreach($gateways_all as $gateway)
+        {
+            $gateway_info = $gateway->info;
+            if(property_exists($gateway_info, 'gateway_vendor'))
+            {
+                $vendor = $gateway_info->gateway_vendor;
+                if($vendor == "mediola")
+                {
+                    $gateways [$gateway->index] = $gateway;
+                }
+            }
+        }
+        $this->WriteAttributeString("AIOGateways", json_encode($gateways));
+        return $gateways;
+    }
+
+    public function GetAIOGateways()
+    {
+        $AIOGateways = $this->ReadAttributeString('AIOGateways');
+        return $AIOGateways;
+    }
+
+    private function SaveRooms($data)
+    {
+        //rooms auslesen
+        $rooms = $data->rooms;
+        $this->SendDebug("AIO Import:", "Rooms:  " . json_encode($rooms), 0);
+
+        $roomsneo = array();
+        foreach ($rooms as $key => $room) {
+            $roomname = $room->name;
+            $roomindex = $room->index;
+            $roomnameprogs = stripos($roomname, "_progs&sysvars");
+            $roomnamecamera = stripos($roomname, "_cameras");
+            $roomnamewebpages = stripos($roomname, "_webpages");
+            if (($roomnamewebpages === false) && ($roomnameprogs === false) && ($roomnamecamera === false)) {
+                $roomsneo[$roomindex] = array("name" => $roomname, "index" => $roomindex);
+            }
+        }
+        $this->WriteAttributeString("Rooms", json_encode($roomsneo));
+        return $rooms;
+    }
+
 
 	protected function ListColumnColour($type)
 	{
@@ -1105,6 +1140,75 @@ Grau	#DFDFDF
 			// show list
 			$this->SelectImport();
 			// $rooms = $this->GetRooms();
+            $gateways = json_decode($this->ReadAttributeString('AIOGateways'));
+            // $number_gateways = count($gateways);
+            $number_gateways = 10; // todo fehler suchen count
+            $form = array_merge_recursive(
+                $form,
+                [
+                    [
+                        'type' => 'Configurator',
+                        'name' => 'Configuration_AIOGateways',
+                        'caption' => $this->Translate('configuration ') . "AIO Gateways",
+                        'rowCount' => $number_gateways,
+                        'add' => false,
+                        'delete' => false,
+                        'sort' => [
+                            'column' => 'name',
+                            'direction' => 'ascending'
+                        ],
+                        'columns' => [
+                            [
+                                'caption' => 'ID',
+                                'name' => 'id',
+                                'width' => '200px',
+                                'visible' => false
+                            ],
+                            [
+                                'caption' => 'Name',
+                                'name' => 'name',
+                                'width' => 'auto'
+                            ],
+                            [
+                                'caption' => 'Gateway Name',
+                                'name' => 'gatewayname',
+                                'width' => '200px'
+                            ],
+                            [
+                                'caption' => 'IP',
+                                'name' => 'ip_gateway',
+                                'width' => '200px'
+                            ],
+                            [
+                                'caption' => 'MAC',
+                                'name' => 'mac',
+                                'width' => '200px'
+                            ],
+                            [
+                                'caption' => 'Version',
+                                'name' => 'version',
+                                'width' => '100px'
+                            ],
+                            [
+                                'caption' => 'Firmware',
+                                'name' => 'firmware',
+                                'width' => '100px'
+                            ],
+                            [
+                                'caption' => 'SID',
+                                'name' => 'sid',
+                                'width' => '250px',
+                                'visible' => 'false'
+                            ]
+                        ],
+                        'values' => $this->GetConfigurationListAIOGateways($number_gateways)
+                    ]
+                ]
+            );
+
+
+
+
 			$barthelme_devices = $this->GetDeviceNumber(self::BARTHELME);
 			$name = $this->GetModuleName(self::BARTHELME);
 			$this->SendDebug("AIO Barthelme:", "From " . $name . " " . $barthelme_devices . " instances were found.", 0);
@@ -1736,6 +1840,70 @@ Grau	#DFDFDF
         return $module_name;
 	}
 
+	private function GetConfigurationListAIOGateways($number_gateways)
+    {
+        $config_list = [];
+        if($number_gateways == 0)
+        {
+            $config_list = [];
+        }
+        else
+        {
+            $instanceID = 0;
+            $imported_gateways = $this->ReadAttributeString('AIOGateways');
+            $InstanceIDList = $this->GetInstanceList("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
+            if($imported_gateways != "[]")
+            {
+                $gateways = json_decode($imported_gateways, true);
+                $this->SendDebug("Import List AIO Gateways:", json_encode($gateways), 0);
+                foreach ($gateways as $gateway) {
+                    $index = $gateway['index'];
+                    $name = $gateway['name'];
+                    $info = $gateway['info'];
+                    $gatewayname = $info['name'];
+                    $ip = $info['ip'];
+                    $mac = $info['mac'];
+                    $version = $info['version'];
+                    $firmware = $info['firmware'];
+                    $sid = $info['sid'];
+                    foreach ($InstanceIDList as $Device_InstanceID) {
+                        if ($index == @IPS_GetProperty($Device_InstanceID, 'index') && $mac == @IPS_GetProperty($Device_InstanceID, 'mac')) {
+                            $instance_name = IPS_GetName($Device_InstanceID);
+                            $this->SendDebug('AIO Config', 'existing device found: ' . utf8_decode($instance_name) . ' (' . $Device_InstanceID . ') with index ' .$index, 0);
+                            $instanceID = $Device_InstanceID;
+                        }
+                    }
+                    $config_list[] = [
+                        "instanceID" => $instanceID,
+                        "id" => $index,
+                        "name" => $name,
+                        "gatewayname" => $gatewayname,
+                        "ip_gateway" => $ip,
+                        "mac" => $mac,
+                        "version" => $version,
+                        "firmware" => $firmware,
+                        "sid" => $sid,
+                        "create" => [
+                            [
+                                "moduleID" => "{7E03C651-E5BF-4EC6-B1E8-397234992DB4}",
+                                "configuration" => [
+                                    "index" => $index,
+                                    "gatewayname" => $gatewayname,
+                                    "Host" => $ip,
+                                    "mac" => $mac,
+                                    "version" => $version,
+                                    "firmware" => $firmware,
+                                    "sid" => $sid
+                                ]
+                            ]
+                        ]
+                    ];
+                }
+            }
+        }
+        return $config_list;
+    }
+
 	private function GetConfigurationList($device_guid, $number_devices)
 	{
 		$module_name = $this->GetModuleName($device_guid);
@@ -1766,6 +1934,11 @@ Grau	#DFDFDF
 					'name' => 'name',
 					'width' => 'auto'
 				],
+                [
+                    'caption' => 'Gateway',
+                    'name' => 'gateway',
+                    'width' => '200px'
+                ],
 				[
 					'caption' => 'Type',
 					'name' => 'type',
