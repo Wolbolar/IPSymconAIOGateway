@@ -173,7 +173,7 @@ class AIOSomfyRTSDevice extends IPSModule
 	private $response = false;
 	protected function SendCommand(string $command)
     {
-        $address = $this->ReadAttributeString('address');
+        $address = $this->ReadPropertyString('address');
         $aiogateway = new AIOGateway($this->InstanceID);
         $gatewaytype = $aiogateway->GetGatewaytype();
         $GatewayPassword = $aiogateway->GetPassword();
