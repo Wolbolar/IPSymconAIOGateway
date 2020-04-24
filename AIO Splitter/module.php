@@ -31,7 +31,7 @@ class AIOSplitter extends IPSModule
 		$this->RegisterPropertyBoolean("Open", false);
         $this->RegisterPropertyString("User", "user");
 		$this->RegisterPropertyString("Password", "");
-		$this->RegisterPropertyInteger("gatewaytype", 0);
+		$this->RegisterPropertyString("gatewaytype", "V5");
 		$this->RegisterPropertyString("IPSHost", "");
         $this->RegisterPropertyInteger("index", 0);
         $this->RegisterPropertyString("gatewayname", "");
@@ -199,7 +199,7 @@ class AIOSplitter extends IPSModule
 
 //IP Prüfen
 		$ip = $this->ReadPropertyString('Host');
-        $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+        $gatewaytype = $this->GetGatewayType();
         if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             //Profil anlegen
             $this->RegisterProfileLEDGateway("LED.AIOGateway", "Bulb", "", "");
@@ -271,7 +271,7 @@ class AIOSplitter extends IPSModule
 
 	public function GetConfigurationForParent()
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             $Config['Open'] = true;
 			$Config['Host'] = $this->GetHostIP();
@@ -293,6 +293,12 @@ class AIOSplitter extends IPSModule
 		}
 		return json_encode($Config);
 	}
+
+	private function GetGatewayType()
+    {
+        $gatewaytype = $this->ReadPropertyString("gatewaytype");
+        return $gatewaytype;
+    }
 
     protected function GetHostIP()
     {
@@ -368,7 +374,7 @@ class AIOSplitter extends IPSModule
 
 	public function GetRoot()
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
@@ -401,7 +407,7 @@ class AIOSplitter extends IPSModule
 	 */
 	public function GetInfo()
 	{
-	    $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+	    $gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
@@ -622,11 +628,11 @@ class AIOSplitter extends IPSModule
 
 	protected function SetsConfigurationParameter($parameter, $value)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$response = file_get_contents("http://" . $aiogatewayip . "/config?" . $parameter . "=" . $value . "&auth=" . $GatewayPassword);
 			} else {
 				$response = file_get_contents("http://" . $aiogatewayip . "/config?" . $parameter . "=" . $value . "&XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -643,11 +649,11 @@ class AIOSplitter extends IPSModule
 	 */
 	protected function SetTimezone($timezone)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$response = file_get_contents("http://" . $aiogatewayip . "/XC_FNC=setTZ&data=" . $timezone . "&auth=" . $GatewayPassword);
 			} else {
 				$response = file_get_contents("http://" . $aiogatewayip . "/XC_FNC=setTZ&data=" . $timezone . "&XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -665,11 +671,11 @@ class AIOSplitter extends IPSModule
 	 */
 	protected function SetLocation($latitude, $longitude)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$response = file_get_contents("http://" . $aiogatewayip . "/XC_FNC=setLocation&lat=" . $latitude . "&long=" . $longitude . "&auth=" . $GatewayPassword);
 			} else {
 				$response = file_get_contents("http://" . $aiogatewayip . "/XC_FNC=setLocation&lat=" . $latitude . "&long=" . $longitude . "&XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -697,11 +703,11 @@ class AIOSplitter extends IPSModule
 	 */
 	public function ConnectWLAN(string $ssid, string $password)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$response = file_get_contents("http://" . $aiogatewayip . "/connect?ssid=" . $ssid . "&pwd=" . $password . "&auth=" . $GatewayPassword);
 			} else {
 				$response = file_get_contents("http://" . $aiogatewayip . "/connect?ssid=" . $ssid . "&pwd=" . $password . "&XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -718,11 +724,11 @@ class AIOSplitter extends IPSModule
 	 */
 	protected function SetSensorMode($sensormode)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
+			if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
 				$response = file_get_contents("http://" . $aiogatewayip . "/cmd?XC_FNC=setRFM&data=" . $sensormode . "&auth=" . $GatewayPassword);
 			} else {
 				$response = file_get_contents("http://" . $aiogatewayip . "/cmd?XC_FNC=setRFM&data=" . $sensormode . "&XC_USER=user&XC_PASS=" . $GatewayPassword);
@@ -1003,7 +1009,7 @@ class AIOSplitter extends IPSModule
 
 	protected function Set_LEDGW($command)
 	{
-		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+		$gatewaytype = $this->GetGatewayType();
 		$GatewayPassword = $this->ReadPropertyString("Password");
 		$aiogatewayip = $this->ReadPropertyString("Host");
 		if ($GatewayPassword !== "") {
@@ -1161,7 +1167,7 @@ class AIOSplitter extends IPSModule
                 'options' => [
                     [
                         'caption' => 'Please select a gateway',
-                        'value' => 0
+                        'value' => "Select"
                     ],
                     [
                         'caption' => 'Telefunken Gateway V1',
@@ -1409,7 +1415,7 @@ class AIOSplitter extends IPSModule
         else{
             $listsystem_visible = true;
         }
-        $gatewaytype = $this->ReadPropertyInteger("gatewaytype");
+        $gatewaytype = $this->GetGatewayType();
         if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS || $gatewaytype == AIOGateway::V6MINI || $gatewaytype == AIOGateway::V6MINIE || $gatewaytype == AIOGateway::V6 || $gatewaytype == AIOGateway::V6E) {
             $led_visible = true;
         }
