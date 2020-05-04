@@ -4,10 +4,10 @@
 	"name": "Mediola AIO Gateway",
 	"url": "www.mediola.com",
 	"compatibility": {
-	"version": "4.2",
+	"version": "5.2",
 	"date": 1492639200
 	},
-	"version": "0.2",
+	"version": "0.5",
 	"build": 1,
 	"date": 0
 }
