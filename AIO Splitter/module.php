@@ -101,10 +101,11 @@ class AIOSplitter extends IPSModule
             $this->EnableAction("Color");
         }
 		if (!filter_var($ip, FILTER_VALIDATE_IP) === false) {
+            $this->SendDebug("AIO Gateway", "IP valid", 0);
+
+		} else {
             $this->SendDebug("AIO Gateway", "IP not valid", 0);
             $this->SetStatus(203); //IP Adresse ist ungültig
-		} else {
-            $this->SendDebug("AIO Gateway", "IP valid", 0);
 		}
 
         $this->GetConfigurationForParent();
