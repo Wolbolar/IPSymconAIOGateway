@@ -1874,36 +1874,112 @@ Grau	#DFDFDF
                             $instanceID = $Device_InstanceID;
                         }
                     }
-                    $config_list[] = [
-                        "instanceID" => $instanceID,
-                        "id" => $index,
-                        "name" => $name,
-                        "gatewayname" => $gatewayname,
-                        "ip_gateway" => $ip,
-                        "mac" => $mac,
-                        "version" => $version,
-                        "firmware" => $firmware,
-                        "sid" => $sid,
-                        "create" => [
-                            [
-                                "moduleID" => "{7E03C651-E5BF-4EC6-B1E8-397234992DB4}",
-                                "configuration" => [
-                                    "index" => $index,
-                                    "gatewayname" => $gatewayname,
-                                    "gatewaytype" => $gateway_type,
-                                    "Host" => $ip,
-                                    "mac" => $mac,
-                                    "version" => $version,
-                                    "firmware" => $firmware,
-                                    "sid" => $sid
+
+                    if ($gateway_type == 'V5' || $gateway_type == 'V5+' || $gateway_type == 'V6' || $gateway_type == 'V6Mini') {
+                        $config_list[] = [
+                            "instanceID" => $instanceID,
+                            "id" => $index,
+                            "name" => $name,
+                            "gatewayname" => $gatewayname,
+                            "ip_gateway" => $ip,
+                            "mac" => $mac,
+                            "version" => $version,
+                            "firmware" => $firmware,
+                            "sid" => $sid,
+                            "create" => [
+                                [
+                                    "moduleID" => "{7E03C651-E5BF-4EC6-B1E8-397234992DB4}",
+                                    "configuration" => [
+                                        "index" => $index,
+                                        'name' => $name,
+                                        "gatewayname" => $gatewayname,
+                                        "gatewaytype" => $gateway_type,
+                                        "Host" => $ip,
+                                        "mac" => $mac,
+                                        "version" => $version,
+                                        "firmware" => $firmware,
+                                        "sid" => $sid
+                                    ]
+                                ],
+                                [
+                                    'moduleID' => '{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}',
+                                    'configuration' => [
+                                        'Host' => $this->GetHostIP(),
+                                        'Port' => 1901,
+                                        'MulticastIP' => "239.255.255.250",
+                                        'BindPort' => 1901,
+                                        'EnableBroadcast' => true,
+                                        'EnableReuseAddress' => true,
+                                        'EnableLoopback' => false,
+                                        'Open' => true
+                                    ]
                                 ]
                             ]
-                        ]
-                    ];
+                        ];
+                    }
+                    else{
+                        $config_list[] = [
+                            "instanceID" => $instanceID,
+                            "id" => $index,
+                            "name" => $name,
+                            "gatewayname" => $gatewayname,
+                            "ip_gateway" => $ip,
+                            "mac" => $mac,
+                            "version" => $version,
+                            "firmware" => $firmware,
+                            "sid" => $sid,
+                            "create" => [
+                                [
+                                    "moduleID" => "{7E03C651-E5BF-4EC6-B1E8-397234992DB4}",
+                                    "configuration" => [
+                                        "index" => $index,
+                                        'name' => $name,
+                                        "gatewayname" => $gatewayname,
+                                        "gatewaytype" => $gateway_type,
+                                        "Host" => $ip,
+                                        "mac" => $mac,
+                                        "version" => $version,
+                                        "firmware" => $firmware,
+                                        "sid" => $sid
+                                    ]
+                                ],
+                                [
+                                    'moduleID' => '{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}',
+                                    'configuration' => [
+                                        'Host' => $this->GetHostIP(),
+                                        'Port' => 1902,
+                                        'MulticastIP' => "239.255.255.250",
+                                        'BindPort' => 1902,
+                                        'EnableBroadcast' => true,
+                                        'EnableReuseAddress' => true,
+                                        'EnableLoopback' => false,
+                                        'Open' => true
+                                    ]
+                                ]
+                            ]
+                        ];
+                    }
                 }
             }
         }
         return $config_list;
+    }
+
+    protected function GetHostIP()
+    {
+        $ip = exec("sudo ifconfig eth0 | grep 'inet Adresse:' | cut -d: -f2 | awk '{ print $1}'");
+        if ($ip == "") {
+            $ipinfo = Sys_GetNetworkInfo();
+            foreach($ipinfo as $networkcard)
+            {
+                $hyper_v = strpos($networkcard['Description'], 'Virtual Ethernet Adapter');
+                if($networkcard['IP'] != '0.0.0.0' && $hyper_v == false)
+                {
+                    $ip = $networkcard['IP'];
+                }
+            }
+        }
+        return $ip;
     }
 
 	private function GetConfigurationList($device_guid, $number_devices)

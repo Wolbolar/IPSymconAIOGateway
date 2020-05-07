@@ -52,6 +52,7 @@ class AIOSplitter extends IPSModule
         $this->RegisterPropertyString("tz", "");
         $this->RegisterPropertyString("vid", "");
 
+        $this->RegisterAttributeString('gatewayindex', '');
         $this->RegisterAttributeString('mac', '');
         $this->RegisterAttributeString("Hardware_Version", "");
         $this->RegisterAttributeString("Hardware_Revision", "");
@@ -63,124 +64,13 @@ class AIOSplitter extends IPSModule
         $this->RegisterAttributeString("Latitude", "");
         $this->RegisterAttributeString("RGB", "");
 
-        /*
-         * 		$gatewaytype = $this->ReadPropertyInteger("gatewaytype");
-		if ($gatewaytype == AIOGateway::V5 || $gatewaytype == AIOGateway::V5PLUS) {
-
-			$this->RegisterVariableString("Hardware_Version", "Hardware Version", "", $this->_getPosition());
-			$this->RegisterVariableString("Hardware_Revision", "Hardware Revision", "", $this->_getPosition());
-			$this->RegisterVariableString("Firmware_Version", "Firmware Version", "", $this->_getPosition());
-			$this->RegisterVariableString("Build", "Build", "", $this->_getPosition());
-			$this->RegisterVariableString("Gateway_IP", "Gateway IP", "", $this->_getPosition());
-
-			$this->RegisterVariableString("Gateway_Serial", "Serialnumber", "", $this->_getPosition());
-			$this->RegisterVariableString("Gateway_SID", "SID", "", $this->_getPosition());
-			$this->RegisterVariableString("Gateway_WIFI", "WIFI", "", $this->_getPosition());
-		}
-         *
-         *
-         * 		if (isset($data->XC_SUC)) {
-			$info = $data->XC_SUC;
-			if (isset($info->name)) {
-				$name = $info->name;
-				$this->SendDebug("AIO Gateway", "Name: " . $name, 0);
-				$this->SetValue("Gateway_Name", $name);
-			}
-			if (isset($info->mhv)) {
-				$mhv = $info->mhv;
-				$this->SendDebug("AIO Gateway", "mhv: " . $mhv, 0);
-
-			}
-			if (isset($info->msv)) {
-				$msv = $info->msv;
-				$this->SendDebug("AIO Gateway", "msv: " . $msv, 0);
-				$this->SetValue("Firmware_Version", $msv);
-			}
-			if (isset($info->hwv)) {
-				$hwv = $info->hwv;
-				$this->SendDebug("AIO Gateway", "hwv: " . $hwv, 0);
-				$this->SetValue("Hardware_Version", $hwv);
-			}
-			if (isset($info->vid)) {
-				$vid = $info->vid;
-				$this->SendDebug("AIO Gateway", "vid: " . $vid, 0);
-			}
-			if (isset($info->mem)) {
-				$mem = $info->mem;
-				$this->SendDebug("AIO Gateway", "mem: " . $mem, 0);
-			}
-			if (isset($info->ip)) {
-				$ip = $info->ip;
-				$this->SendDebug("AIO Gateway", "ip: " . $ip, 0);
-				$this->SetValue("Gateway_IP", $ip);
-			}
-			if (isset($info->sn)) {
-				$sn = $info->sn;
-				$this->SendDebug("AIO Gateway", "sn: " . $sn, 0);
-			}
-			if (isset($info->gw)) {
-				$gw = $info->gw;
-				$this->SendDebug("AIO Gateway", "gw: " . $gw, 0);
-			}
-			if (isset($info->dns)) {
-				$dns = $info->dns;
-				$this->SendDebug("AIO Gateway", "dns: " . $dns, 0);
-			}
-
-			if (isset($info->ntp)) {
-				$ntp = $info->ntp;
-				$this->SendDebug("AIO Gateway", "ntp: " . $ntp, 0);
-			}
-			if (isset($info->start)) {
-				$start = $info->start;
-				$this->SendDebug("AIO Gateway", "start: " . $start, 0);
-			}
-			if (isset($info->time)) {
-				$time = $info->time;
-				$this->SendDebug("AIO Gateway", "time: " . $time, 0);
-			}
-			if (isset($info->loc)) {
-				$loc = $info->loc;
-				$this->SendDebug("AIO Gateway", "loc: " . $loc, 0);
-			}
-			if (isset($info->serial)) {
-				$serial = $info->serial;
-				$this->SendDebug("AIO Gateway", "serial: " . $serial, 0);
-				$this->SetValue("Gateway_Serial", $serial);
-			} else {
-				$serial = "unknown";
-			}
-			if (isset($info->io)) {
-				$io = $info->io;
-				$this->SendDebug("AIO Gateway", "io: " . $io, 0);
-			}
-			if (isset($info->cfg)) {
-				$cfg = $info->cfg;
-				$this->SendDebug("AIO Gateway", "cfg: " . $cfg, 0);
-			}
-			if (isset($info->server)) {
-				$server = $info->server;
-				$this->SendDebug("AIO Gateway", "server: " . $server, 0);
-			}
-			if (isset($info->sid)) {
-				$sid = $info->sid;
-				$this->SendDebug("AIO Gateway", "sid: " . $sid, 0);
-				$this->SetValue("Gateway_SID", $sid);
-			}
-			if (isset($info->wifi)) {
-				$wifi = $info->wifi;
-				$this->SendDebug("AIO Gateway", "wifi: " . $wifi, 0);
-				$this->SetValue("Gateway_WIFI", $wifi);;
-			}
-			$device = ["name" => $name, "serial" => $serial, "mac" => $mac];
-			return $device;
-		} else {
-			$info = $data->XC_ERR;
-			$code = $info->CODE;
-			$device = ["info" => $info, "code" => $code];
-			return $device;
-		}
-         */
+        $this->RegisterPropertyString("mhv", "");
+        $this->RegisterPropertyString("msv", "");
+        $this->RegisterPropertyString("hwv", "");
+        $this->RegisterPropertyString("mem", "");
+        $this->RegisterPropertyString("serial", "");
+        $this->RegisterPropertyString("io", "");
+        $this->RegisterPropertyString("cfg", "");
 	}
 
 	public function ApplyChanges()
@@ -211,10 +101,10 @@ class AIOSplitter extends IPSModule
             $this->EnableAction("Color");
         }
 		if (!filter_var($ip, FILTER_VALIDATE_IP) === false) {
-			$this->SendDebug("AIO Gateway", "IP valid", 0);
+            $this->SendDebug("AIO Gateway", "IP not valid", 0);
+            $this->SetStatus(203); //IP Adresse ist ungültig
 		} else {
-			$this->SendDebug("AIO Gateway", "IP not valid", 0);
-			$this->SetStatus(203); //IP Adresse ist ungültig
+            $this->SendDebug("AIO Gateway", "IP valid", 0);
 		}
 
         $this->GetConfigurationForParent();
@@ -223,9 +113,6 @@ class AIOSplitter extends IPSModule
 		if ($this->HasActiveParent()) {
 			$this->SetStatus(IS_ACTIVE);
 		}
-
-        $this->GetConfigurationForParent();
-
 // Eigene Profile
 
 // Eigene Variablen

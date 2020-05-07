@@ -4,10 +4,8 @@
     "type": 4,
     "vendor": "Mediola",
     "aliases": ["AIO Device Import"],
-    "parentRequirements": ["{DB8F8FA5-8723-44B6-AEA8-1A59F154C623}"],
+    "parentRequirements": [],
     "childRequirements": [],
-  "implemented": [
-    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
-  ],
+  "implemented": [],
     "prefix": "AIOImport"
 }
