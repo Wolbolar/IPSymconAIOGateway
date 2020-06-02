@@ -11,7 +11,7 @@ class AIOGateway
     const V3 = "V3";
     const V4 = "V4";
     const V4PLUS = "V4+";
-    const V5 = "V6";
+    const V5 = "V5";
     const V5PLUS = "V5+";
     const V6MINI = "V6Mini";
     const V6MINIE = "V6MiniE";
@@ -72,7 +72,7 @@ class AIOGateway
 		return $root;
 	}
 
-	public function SendAIOCommand($url)
+	public function SendAIOCommand(string $url)
 	{
 		$response = file_get_contents($url);
 		return $response;
@@ -81,7 +81,7 @@ class AIOGateway
 
 
 
-	public function Learn($devicetype)
+	public function Learn(string $devicetype)
 	{
 		$gatewaytype = $this->GetGatewaytype();
 		$GatewayPassword = $this->GetPassword();

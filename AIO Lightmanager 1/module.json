@@ -6,6 +6,8 @@
     "aliases": ["AIO Lightmanager 1"],
     "parentRequirements": ["{8086DAFF-9DB4-4E74-9F1E-451C03C73522}"],
     "childRequirements": [],
-    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+  "implemented": [
+    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
+  ],
     "prefix": "AIOLight1"
 }

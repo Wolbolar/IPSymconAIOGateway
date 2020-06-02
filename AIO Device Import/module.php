@@ -419,13 +419,13 @@ class AIOImport extends IPSModule
 		return $roomname;
 	}
 
-	public function GetAttribute($guid)
+	public function GetAttribute(string $guid)
 	{
 		$content =$this->ReadAttributeString($this->GetModuleIdent($guid));
 		return $content;
 	}
 
-	public function SetAttribute($guid, $content)
+	public function SetAttribute(string $guid, string $content)
 	{
 		$this->WriteAttributeString($this->GetModuleIdent($guid), $content);
 	}

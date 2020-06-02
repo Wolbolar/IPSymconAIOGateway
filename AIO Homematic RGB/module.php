@@ -1,6 +1,11 @@
 <?php
+declare(strict_types=1);
 
-require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
+
+use Fonzo\Mediola\AIOGateway;
 
 class AIOHomematicRGB extends IPSModule
 {
@@ -11,9 +16,14 @@ class AIOHomematicRGB extends IPSModule
         //Never delete this line!
         parent::Create();
 
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. Verfï¿½gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
-		
+		$this->RegisterPropertyString("name", "");
+		$this->RegisterPropertyString("room_name", "");
+		$this->RegisterPropertyString("type", "");
+		$this->RegisterPropertyInteger("room_id", 0);
+		$this->RegisterPropertyString("device_id", "");
+		$this->RegisterPropertyString("address", "");
 		$this->RegisterPropertyString("HomematicAddress", "");
 		$this->RegisterPropertyString("HomematicData", "");
 		$this->RegisterPropertyString("HomematicType", "");
@@ -29,7 +39,7 @@ class AIOHomematicRGB extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
 		
-		// HomematicAddress prüfen
+		// HomematicAddress prï¿½fen
         $HomematicAddress = $this->ReadPropertyString('HomematicAddress');
         $LearnAddressHomematic = $this->ReadPropertyBoolean('LearnAddressHomematic');
 				
@@ -44,15 +54,15 @@ class AIOHomematicRGB extends IPSModule
         }
 		else 
 		{
-			//Eingabe überprüfen
+			//Eingabe ï¿½berprï¿½fen
 			
 			
 			// Status aktiv
             $this->SetStatus(102);
 			//Status-Variablen anlegen
 			/*
-			•	error
-			•	state
+			ï¿½	error
+			ï¿½	state
 			*/
 			$ErrorId = $this->RegisterVariableBoolean("Error", "Error", "~Switch", 1);
 			//$this->EnableAction("Error");
@@ -67,8 +77,8 @@ class AIOHomematicRGB extends IPSModule
 	}
 	
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur Verfï¿½gung, wenn das Modul ï¿½ber die "Module Control" eingefï¿½gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfï¿½gung gestellt:
     *
     * ABC_MeineErsteEigeneFunktion($id);
     *
@@ -181,7 +191,7 @@ class AIOHomematicRGB extends IPSModule
 		}
 	
 	private $response = false;
-	//Anmelden eines Homematic Geräts an das a.i.o. gateway:
+	//Anmelden eines Homematic Gerï¿½ts an das a.i.o. gateway:
 	//http://{IP-Adresse-des-Gateways}/command?XC_FNC=LearnSC&type=ELRO
 	public function Learn()
 		{
@@ -199,7 +209,7 @@ class AIOHomematicRGB extends IPSModule
 				$this->SendDebug("String to AIO Gateway","http://".$this->GetIPGateway()."/command?XC_FNC=learnSC&adr=".$HomematicSNR,0);
 				$this->SendDebug("Homematic Adress",$address,0);
 			}
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wï¿½hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($aioresponse == "{XC_ERR}Failed to learn code")//Bei Fehler
 			{
@@ -208,7 +218,7 @@ class AIOHomematicRGB extends IPSModule
 			$address = "Das Gateway konnte keine Adresse empfangen.";
 			$this->SendDebug("Homematic Adresse:",$address,0);
 			IPS_LogMessage( "Homematic Adresse:" , $address );
-			echo "Die Adresse vom Homematic Gerät konnte nicht angelernt werden.";
+			echo "Die Adresse vom Homematic Gerï¿½t konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnAddressHomematic", false); //Haken entfernen.			
 			}
 		else
@@ -228,15 +238,15 @@ class AIOHomematicRGB extends IPSModule
 		return $this->response;
 		}
 	
-	//Adresse hinzufügen
+	//Adresse hinzufï¿½gen
 	protected function AddAddress($address, $type)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "HomematicAddress", $address); //Adresse setzten.
 		IPS_SetProperty($instance, "HomematicType", $type); // Typ setzten.
 		IPS_SetProperty($instance, "LearnAddressHomematic", false); //Haken entfernen.
-		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "Homematic Adresse hinzugefügt:" , $address );
+		IPS_ApplyChanges($instance); //Neue Konfiguration ï¿½bernehmen
+		IPS_LogMessage( "Homematic Adresse hinzugefï¿½gt:" , $address );
 		// Status aktiv
         $this->SetStatus(102);
 		//Status-Variablen anlegen

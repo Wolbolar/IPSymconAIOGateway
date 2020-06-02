@@ -6,6 +6,8 @@
     "aliases": ["AIO RF Device"],
     "parentRequirements": ["{33D609D5-DBD3-444C-853B-13C60898CB2D}"],
     "childRequirements": [],
-    "implemented": ["{1ED9A538-909B-44A6-A4C3-36D8EEB5A38A}"],
+  "implemented": [
+    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
+  ],
     "prefix": "AIORF"
 }

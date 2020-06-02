@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . "/../bootstrap.php");
-require_once __DIR__ . '/../libs/ProfileHelper.php';
-require_once __DIR__ . '/../libs/ConstHelper.php';
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
 
 use Fonzo\Mediola\AIOGateway;
 
@@ -281,7 +281,7 @@ class AIOSplitter extends IPSModule
 		return $root;
 	}
 
-	public function SendAIOCommand($command)
+	public function SendAIOCommand(string $command)
 	{
         $root = $this->GetRoot();
         $url = $root . $command;
@@ -467,7 +467,7 @@ class AIOSplitter extends IPSModule
 	 * @param $subnet
 	 * @return bool|string
 	 */
-	public function SetSubnet($subnet)
+	public function SetSubnet(string $subnet)
 	{
 		$response = $this->SetsConfigurationParameter("sn", $subnet);
 		return $response;
@@ -478,7 +478,7 @@ class AIOSplitter extends IPSModule
 	 * @param $gateway
 	 * @return bool|string
 	 */
-	public function SetGateway($gateway)
+	public function SetGateway(string $gateway)
 	{
 		$response = $this->SetsConfigurationParameter("gw", $gateway);
 		return $response;
@@ -488,7 +488,7 @@ class AIOSplitter extends IPSModule
 	 * @param $dns
 	 * @return bool|string
 	 */
-	public function SetDNS($dns)
+	public function SetDNS(string $dns)
 	{
 		$response = $this->SetsConfigurationParameter("dns", $dns);
 		return $response;
@@ -498,7 +498,7 @@ class AIOSplitter extends IPSModule
 	 * @param $password
 	 * @return bool|string
 	 */
-	public function SetUserpassword($password)
+	public function SetUserpassword(string $password)
 	{
 		$response = $this->SetsConfigurationParameter("pwd", $password);
 		return $response;
@@ -508,7 +508,7 @@ class AIOSplitter extends IPSModule
 	 * @param $adminpassword
 	 * @return bool|string
 	 */
-	public function SetAdminPassword($adminpassword)
+	public function SetAdminPassword(string $adminpassword)
 	{
 		$response = $this->SetsConfigurationParameter("apwd", $adminpassword);
 		return $response;

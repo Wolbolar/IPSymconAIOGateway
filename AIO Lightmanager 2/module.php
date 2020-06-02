@@ -1,6 +1,11 @@
 <?php
+declare(strict_types=1);
 
-require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
+
+use Fonzo\Mediola\AIOGateway;
 
 class AIOLightmanager2 extends IPSModule
 {
@@ -13,7 +18,12 @@ class AIOLightmanager2 extends IPSModule
 
         // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
-		
+		$this->RegisterPropertyString("name", "");
+		$this->RegisterPropertyString("room_name", "");
+		$this->RegisterPropertyString("type", "");
+		$this->RegisterPropertyInteger("room_id", 0);
+		$this->RegisterPropertyString("device_id", "");
+		$this->RegisterPropertyString("address", "");
 		$this->RegisterPropertyString("LEDAdresse", "");
 		$this->RegisterPropertyBoolean("LearnAddressLED", false);
        

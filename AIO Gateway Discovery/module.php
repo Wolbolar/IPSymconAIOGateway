@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 class AIOGatewayDiscovery extends IPSModule
 {
-
-    private const V1 = 1;
-    private const V2 = 2;
-    private const V3 = 3;
-    private const V4 = 4;
-    private const V4PLUS = 5;
-    private const V5 = 6;
-    private const V5PLUS = 7;
-    private const V6MINI = 8;
-    private const V6MINIE = 9;
-    private const V6 = 10;
-    private const V6E = 11;
+    private const V1 = "V1";
+    private const V2 = "V2";
+    private const V3 = "V3";
+    private const V4 = "V4";
+    private const V4PLUS = "V4+";
+    private const V5 = "V6";
+    private const V5PLUS = "V5+";
+    private const V6MINI = "V6Mini";
+    private const V6MINIE = "V6MiniE";
+    private const V6 = "V6";
+    private const V6E = "V6E";
 
 	public function Create()
 	{
@@ -165,7 +164,7 @@ class AIOGatewayDiscovery extends IPSModule
 					}
 				}
 
-                if ($model == 'EA' || $model == 7) {
+                if ($model == 'EA' || $model == 'C1' || $model == 'C3') {
                     $config_list[] = [
                         "instanceID" => $instanceID,
                         "id" => $device_id,
@@ -175,14 +174,6 @@ class AIOGatewayDiscovery extends IPSModule
 
                         "model" => $this->GetModelType($model),
                         "create" => [
-                            [
-                                'moduleID' => '{35B16C2A-1B3C-42A7-8580-A4E9E4AE9CF5}',
-                                'configuration' => [
-                                    'mac' => $mac,
-                                    'model' => $model,
-                                    'version' => $version,
-                                ]
-                            ],
                             [
                                 'moduleID' => '{7E03C651-E5BF-4EC6-B1E8-397234992DB4}',
                                 'configuration' => [
@@ -204,7 +195,7 @@ class AIOGatewayDiscovery extends IPSModule
                                     'ff' => $ff,
                                     'tz' => $tz,
                                     'vid' => $vid,
-                                    'gatewaytype' => $this->GetModelNumber($model)
+                                    'gatewaytype' => $this->GetGatewayType($model)
                                 ]
                             ],
                             [
@@ -233,14 +224,6 @@ class AIOGatewayDiscovery extends IPSModule
                         "model" => $this->GetModelType($model),
                         "create" => [
                             [
-                                'moduleID' => '{35B16C2A-1B3C-42A7-8580-A4E9E4AE9CF5}',
-                                'configuration' => [
-                                    'mac' => $mac,
-                                    'model' => $model,
-                                    'version' => $version
-                                ]
-                            ],
-                            [
                                 'moduleID' => '{7E03C651-E5BF-4EC6-B1E8-397234992DB4}',
                                 'configuration' => [
                                     'name' => $name,
@@ -261,7 +244,7 @@ class AIOGatewayDiscovery extends IPSModule
                                     'ff' => $ff,
                                     'tz' => $tz,
                                     'vid' => $vid,
-                                    'gatewaytype' => $this->GetModelNumber($model)
+                                    'gatewaytype' => $this->GetGatewayType($model)
                                 ]
                             ],
                             [
@@ -270,7 +253,7 @@ class AIOGatewayDiscovery extends IPSModule
                                     'Host' => $this->GetHostIP(),
                                     'Port' => 1902,
                                     'MulticastIP' => "239.255.255.250",
-                                    'BindPort' => 1901,
+                                    'BindPort' => 1902,
                                     'EnableBroadcast' => true,
                                     'EnableReuseAddress' => true,
                                     'EnableLoopback' => false,
@@ -285,29 +268,37 @@ class AIOGatewayDiscovery extends IPSModule
 		return $config_list;
 	}
 
-    private function GetModelNumber($model)
+    private function GetGatewayType($model)
     {
-        if($model == 'F1?') // Telefunken Gateway V1
+        if($model == 'F8') // Telefunken Gateway V1
         {
             $typenumber = self::V1;
         }
-        elseif($model == 'F2?') // AIO Gateway V2
+        elseif($model == 'F1') // AIO Gateway V2
         {
             $typenumber = self::V2;
         }
-        elseif($model == 'F3?') // AIO Gateway V3
+        elseif($model == 'F3') // AIO Gateway V3
         {
             $typenumber = self::V3;
+        }
+        elseif($model == 'F3F8') // AIO Gateway V4
+              {
+              $typenumber = self::V4;
+        }
+        elseif($model == 'F9') // AIO Gateway V4
+        {
+            $typenumber = self::V4;
         }
         elseif($model == 'F3') // AIO Gateway V4
         {
             $typenumber = self::V4;
         }
-        elseif($model == 'F4') // AIO Gateway V4 +
+        elseif($model == 'FA') // AIO Gateway V4 +
         {
             $typenumber = self::V4PLUS;
         }
-        elseif($model == 'EA?') // AIO Gateway V5
+        elseif($model == 'E1') // AIO Gateway V5
         {
             $typenumber = self::V5;
         }
@@ -315,15 +306,15 @@ class AIOGatewayDiscovery extends IPSModule
         {
             $typenumber = self::V5PLUS;
         }
-        elseif($model == 'B0?') // AIO Gateway V6 Mini
+        elseif($model == 'C4') // AIO Gateway V6 Mini
         {
             $typenumber = self::V6MINI;
         }
-        elseif($model == 'B1?') // AIO Gateway V6 Mini E
+        elseif($model == 'C2') // AIO Gateway V6 Mini E
         {
             $typenumber = self::V6MINIE;
         }
-        elseif($model == 'C4') // AIO Gateway V6
+        elseif($model == 'C3') // AIO Gateway V6
         {
             $typenumber = self::V6;
         }
@@ -340,17 +331,56 @@ class AIOGatewayDiscovery extends IPSModule
 
 	private function GetModelType($model)
     {
-        if($model == 'F3')
+        if($model == 'F8')
+        {
+            $type = 'Telefunken Gateway V1';
+        }
+        elseif($model == 'F1')
+        {
+            $type = 'AIO Gateway V2';
+        }
+        elseif($model == 'F3')
+        {
+            $type = 'AIO Gateway V3';
+        }
+        elseif($model == 'F9')
         {
             $type = 'AIO Gateway V4';
         }
-        if($model == 'A1')
+        elseif($model == 'F3F8')
+        {
+            $type = 'AIO Gateway V4';
+        }
+        elseif($model == 'E1')
+        {
+            $type = 'AIO Gateway V5';
+        }
+        elseif($model == 'A1')
         {
             $type = 'NEO Server';
         }
-        if($model == 'EA')
+        elseif($model == 'EA')
         {
             $type = 'AIO Gateway V5+';
+        }
+        elseif($model == 'C4')
+        {
+            $type = 'AIO Gateway V6 Mini';
+        }
+        elseif($model == 'C2')
+        {
+            $type = 'AIO Gateway V6 Mini E';
+        }
+        elseif($model == 'C1')
+        {
+            $type = 'AIO Gateway V6 E';
+        }
+        elseif($model == 'C3')
+        {
+            $type = 'AIO Gateway V6';
+        }
+        else{
+           $type = $model;
         }
         return $type;
     }

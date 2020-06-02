@@ -1,6 +1,11 @@
 <?php
+declare(strict_types=1);
 
-require_once(__DIR__ . "/../AIOGatewayClass.php");  // diverse Klassen
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "bootstrap.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ProfileHelper.php");
+require_once(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "ConstHelper.php");
+
+use Fonzo\Mediola\AIOGateway;
 
 class AIOLightmanager1 extends IPSModule
 {
@@ -11,9 +16,14 @@ class AIOLightmanager1 extends IPSModule
         //Never delete this line!
         parent::Create();
 
-        // 1. Verfügbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
+        // 1. VerfÃ¼gbarer AIOSplitter wird verbunden oder neu erzeugt, wenn nicht vorhanden.
         $this->ConnectParent("{7E03C651-E5BF-4EC6-B1E8-397234992DB4}");
-		
+		$this->RegisterPropertyString("name", "");
+		$this->RegisterPropertyString("room_name", "");
+		$this->RegisterPropertyString("type", "");
+		$this->RegisterPropertyInteger("room_id", 0);
+		$this->RegisterPropertyString("device_id", "");
+		$this->RegisterPropertyString("address", "");
 		$this->RegisterPropertyString("LEDAdresse", "");
 		$this->RegisterPropertyBoolean("LearnAddressLED", false);
        
@@ -26,7 +36,7 @@ class AIOLightmanager1 extends IPSModule
         parent::ApplyChanges();
 		
 		
-		// Adresse prüfen
+		// Adresse prÃ¼fen
         $LEDAdresse = $this->ReadPropertyString('LEDAdresse');
 		$LearnAddressLED = $this->ReadPropertyBoolean('LearnAddressLED');
 				
@@ -41,7 +51,7 @@ class AIOLightmanager1 extends IPSModule
         }
 		else 
 		{
-			//Eingabe überprüfen
+			//Eingabe Ã¼berprÃ¼fen
 			if (strlen($LEDAdresse)<3 or strlen($LEDAdresse)>3)
 				{
 					$this->SetStatus(202);	
@@ -105,8 +115,8 @@ class AIOLightmanager1 extends IPSModule
 	}
 	
 	/**
-    * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+    * Die folgenden Funktionen stehen automatisch zur VerfÃ¼gung, wenn das Modul Ã¼ber die "Module Control" eingefÃ¼gt wurden.
+    * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur VerfÃ¼gung gestellt:
     *
     *
     */
@@ -248,7 +258,7 @@ class AIOLightmanager1 extends IPSModule
 	// Aufruf LED
 	// http://{GATEWAY_IP}/command?XC_FNC=SendSC&type=LS&data=AAACMD
 	// String /command?XC_FNC=SendSC&type=LS&data=
-	// Der Wert für data setzt sich hierbei zusammen aus Adresse (AAA) und Kommando (CMD)
+	// Der Wert fÃ¼r data setzt sich hierbei zusammen aus Adresse (AAA) und Kommando (CMD)
 	// Beispiel: schalte ABC auf gelb:
 	// http://{GATEWAY_IP}/command?XC_FNC=SendSC&type=LS&data=ABC0F0
 	private $response = false;
@@ -273,7 +283,7 @@ class AIOLightmanager1 extends IPSModule
 		elseif ($gwcheck == "{XC_AUTH}")
 			{
 			$this->response = false;
-			echo "Keine Authentifizierung möglich. Das Passwort für das Gateway ist falsch.";
+			echo "Keine Authentifizierung mï¿½glich. Das Passwort fï¿½r das Gateway ist falsch.";
 			}
 		return $this->response;
 	}
@@ -446,14 +456,14 @@ class AIOLightmanager1 extends IPSModule
 			$address = file_get_contents("http://".$ip_aiogateway."/command?XC_FNC=learnSC&type=LS");
 		}
 		
-		//kurze Pause während das Gateway im Lernmodus ist
+		//kurze Pause wÃ¤hrend das Gateway im Lernmodus ist
 		IPS_Sleep(1000); //1000 ms
 		if ($address == "{XC_ERR}Failed to learn code")
 			{
 			$this->response = false;
 			$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 			$address = "Das Gateway konnte keine Adresse empfangen.";
-			$this->SendDebug("AIO Gateway","LED Adresse: ".$adress,0);
+			$this->SendDebug("AIO Gateway","LED Adresse: ".$address,0);
 			echo "Die Adresse des LED Controllers konnte nicht angelernt werden.";
 			IPS_SetProperty($instance, "LearnAddressLED", false); //Haken entfernen.			
 			}
@@ -462,7 +472,7 @@ class AIOLightmanager1 extends IPSModule
 				//Adresse auswerten {XC_SUC}
 				//bei Erfolg {XC_SUC}{"CODE","ABCDEF00"} erste 6 Stellen sind die Adresse
 				(string)$address = substr($address, 17, 3);
-				$this->SendDebug("AIO Gateway","LED Adresse: ".$adress,0);
+				$this->SendDebug("AIO Gateway","LED Adresse: ".$address,0);
 				$this->AddAddress($address);
 				$this->response = true;	
 			}
@@ -470,14 +480,14 @@ class AIOLightmanager1 extends IPSModule
 		return $this->response;
 		}
 	
-	//LED Adresse hinzufügen
+	//LED Adresse hinzufÃ¼gen
 	protected function AddAddress($address)
 	{
 		$instance = IPS_GetInstance($this->InstanceID)["InstanceID"];
 		IPS_SetProperty($instance, "LEDAdresse", $address); //Adresse setzten.
 		IPS_SetProperty($instance, "LearnAddressLED", false); //Haken entfernen.
-		IPS_ApplyChanges($instance); //Neue Konfiguration übernehmen
-		IPS_LogMessage( "LED Controller Adresse hinzugefügt:" , $address );	
+		IPS_ApplyChanges($instance); //Neue Konfiguration Ã¼bernehmen
+		IPS_LogMessage( "LED Controller Adresse hinzugefÃ¼gt:" , $address );
 	}
 	
 	protected function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize) {
@@ -493,7 +503,7 @@ class AIOLightmanager1 extends IPSModule
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 für transparent
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF fï¿½r Blau). Sonderfall: -1 fï¿½r transparent
 		IPS_SetVariableProfileAssociation($Name, 1, "Wert 1", "Speaker", 0xFFFFFF);
         
     }
@@ -513,15 +523,15 @@ class AIOLightmanager1 extends IPSModule
         IPS_SetVariableProfileIcon($Name, $Icon);
         IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
         IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
-		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF für Blau). Sonderfall: -1 für transparent
+		// boolean IPS_SetVariableProfileAssociation ( string $ProfilName, float $Wert, string $Name, string $Icon, integer $Farbe ) Farbwert im HTML Farbcode (z.b. 0x0000FF fï¿½r Blau). Sonderfall: -1 fï¿½r transparent
 		IPS_SetVariableProfileAssociation($Name, 0, "Rot", "", 0xFE2E2E);
 		IPS_SetVariableProfileAssociation($Name, 1, "Orange", "", 0xFFBF00);
 		IPS_SetVariableProfileAssociation($Name, 2, "Gelb", "", 0xF7FE2E);
-		IPS_SetVariableProfileAssociation($Name, 3, "Grün", "", 0x64FE2E);
+		IPS_SetVariableProfileAssociation($Name, 3, "GrÃ¼n", "", 0x64FE2E);
 		IPS_SetVariableProfileAssociation($Name, 4, "Cyan", "", 0x81F7F3);
 		IPS_SetVariableProfileAssociation($Name, 5, "Blau", "", 0x0000FF);
 		IPS_SetVariableProfileAssociation($Name, 6, "Lila", "", 0xDA81F5);
-		IPS_SetVariableProfileAssociation($Name, 7, "Weiß", "", 0xFFFFFF);
+		IPS_SetVariableProfileAssociation($Name, 7, "WeiÃŸ", "", 0xFFFFFF);
         
     }
 	
