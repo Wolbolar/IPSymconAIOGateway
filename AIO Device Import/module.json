@@ -1,11 +1,17 @@
 {
-    "id": "{35B16C2A-1B3C-42A7-8580-A4E9E4AE9CF5}",
-    "name": "AIOImport",
-    "type": 4,
-    "vendor": "Mediola",
-    "aliases": ["AIO Device Import"],
-    "parentRequirements": [],
-    "childRequirements": [],
-  "implemented": [],
-    "prefix": "AIOImport"
+  "id": "{35B16C2A-1B3C-42A7-8580-A4E9E4AE9CF5}",
+  "name": "AIOImport",
+  "type": 4,
+  "vendor": "Mediola",
+  "aliases": [
+    "AIO Device Import"
+  ],
+  "parentRequirements": [
+    "{77ED2CA9-9D77-AE5C-B94A-A048D76EBC0A}"
+  ],
+  "childRequirements": [],
+  "implemented": [
+    "{C8D0BA3C-CB15-A3B6-A032-C7631E324E87}"
+  ],
+  "prefix": "AIOImport"
 }

@@ -1035,7 +1035,7 @@ Grau	#DFDFDF
 			],
 			[
 				'type' => 'Label',
-				'label' => 'choose the AIO Creator version:'
+				'caption' => 'choose the AIO Creator version:'
 			],
 			[
 				'name' => 'Version',
@@ -1043,15 +1043,15 @@ Grau	#DFDFDF
 				'caption' => 'Version Creator',
 				'options' => [
 					[
-						'label' => 'Please select Creator Version',
+						'caption' => 'Please select Creator Version',
 						'value' => 0
 					],
 					[
-						'label' => 'AIO Creator NEO',
+						'caption' => 'AIO Creator NEO',
 						'value' => 1
 					],
 					[
-						'label' => 'AIO Creator (old version)',
+						'caption' => 'AIO Creator (old version)',
 						'value' => 2
 					]
 				]
@@ -1064,7 +1064,7 @@ Grau	#DFDFDF
 				[
 					[
 						'type' => 'Label',
-						'label' => 'AIO Creator NEO, import device_db, can be found in the folder AIO CREATOR NEO/tenants/[ID of the remote]/'
+						'caption' => 'AIO Creator NEO, import device_db, can be found in the folder AIO CREATOR NEO/tenants/[ID of the remote]/'
 					],
 					[
 						'name' => 'device_db',
@@ -1082,11 +1082,11 @@ Grau	#DFDFDF
 				[
 					[
 						'type' => 'Label',
-						'label' => 'AIO Creator, import ircodes.xml and devices.xml'
+						'caption' => 'AIO Creator, import ircodes.xml and devices.xml'
 					],
 					[
 						'type' => 'Label',
-						'label' => 'choose ircodes.xml, can be found in the folder of the a.i.o. Creator'
+						'caption' => 'choose ircodes.xml, can be found in the folder of the a.i.o. Creator'
 					],
 					[
 						'name' => 'ircodes',
@@ -1096,7 +1096,7 @@ Grau	#DFDFDF
 					],
 					[
 						'type' => 'Label',
-						'label' => 'choose devices.xml, can be found in the folder of the a.i.o. Creator'
+						'caption' => 'choose devices.xml, can be found in the folder of the a.i.o. Creator'
 					],
 					[
 						'name' => 'devices',
@@ -1113,7 +1113,7 @@ Grau	#DFDFDF
 			[
 				[
 					'type' => 'Label',
-					'label' => 'category for import of the devices:'
+					'caption' => 'category for import of the devices:'
 				],
 				[
 					'name' => 'ImportCategoryID',
@@ -1123,7 +1123,7 @@ Grau	#DFDFDF
 				/*,
 				[
 					'type' => 'Label',
-					'label' => 'import categories and device in rooms:'
+					'caption' => 'import categories and device in rooms:'
 				],
 				[
 					'name' => 'RoomImport',
