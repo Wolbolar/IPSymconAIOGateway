@@ -1,7 +1,8 @@
 <?php
 
-namespace Fonzo;
+declare(strict_types=1);
 
+namespace Fonzo;
 
 /**
  * A PHP PSR-0 Autoloader Class.
@@ -9,7 +10,6 @@ namespace Fonzo;
  */
 class AutoLoader
 {
-
     /**
      * @var array Base directories to be searched for classes.
      * @see AutoLoader::AddBaseDir()
@@ -56,7 +56,9 @@ class AutoLoader
             // Try to load the class from the directory structure
             $success = self::LoadFromPath($baseDir, $className);
             // Break if the class was found
-            if ($success) break;
+            if ($success) {
+                break;
+            }
         }
 
         // Return the result
@@ -75,16 +77,15 @@ class AutoLoader
         $fileName = $baseDir . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
 
         // Return false if the file doesn't exist
-        if (! file_exists($fileName)) {
+        if (!file_exists($fileName)) {
             return false;
         }
 
         // Require the file
         /** @noinspection PhpIncludeInspection */
-        @require_once($fileName);
+        @require_once $fileName;
 
         // Check whether the class now exists and return the result
         return class_exists($className);
     }
-
 }

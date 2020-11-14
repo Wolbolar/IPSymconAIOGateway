@@ -1,286 +1,266 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fonzo\Mediola;
 
 class AIOGateway
 {
-	public $DeviceInstanceID;
+    const V1 = 'V1';
+    const V2 = 'V2';
+    const V3 = 'V3';
+    const V4 = 'V4';
+    const V4PLUS = 'V4+';
+    const V5 = 'V5';
+    const V5PLUS = 'V5+';
+    const V6MINI = 'V6Mini';
+    const V6MINIE = 'V6MiniE';
+    const V6 = 'V6';
+    const V6E = 'V6E';
+    public $DeviceInstanceID;
 
-    const V1 = "V1";
-    const V2 = "V2";
-    const V3 = "V3";
-    const V4 = "V4";
-    const V4PLUS = "V4+";
-    const V5 = "V5";
-    const V5PLUS = "V5+";
-    const V6MINI = "V6Mini";
-    const V6MINIE = "V6MiniE";
-    const V6 = "V6";
-    const V6E = "V6E";
+    public function __construct($DeviceInstanceID)
+    {
+        $this->DeviceInstanceID = $DeviceInstanceID;
+    }
 
-	function __construct($DeviceInstanceID)
-	{
+    public function GetParent()
+    {
+        $instance = IPS_GetInstance($this->DeviceInstanceID); //array
+        return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false; //ConnectionID
+    }
 
-		$this->DeviceInstanceID = $DeviceInstanceID;
-	}
+    //IP Gateway
+    public function GetIPGateway()
+    {
+        $ParentID = $this->GetParent();
+        $IPGateway = IPS_GetProperty($ParentID, 'Host');
+        return $IPGateway;
+    }
 
-	public function GetParent()
-	{
-		$instance = IPS_GetInstance($this->DeviceInstanceID);//array
-		return ($instance['ConnectionID'] > 0) ? $instance['ConnectionID'] : false;//ConnectionID
-	}
+    public function GetPassword()
+    {
+        $ParentID = $this->GetParent();
+        $GatewayPassword = IPS_GetProperty($ParentID, 'Password');
+        return $GatewayPassword;
+    }
 
-	//IP Gateway
-	public function GetIPGateway()
-	{
-		$ParentID = $this->GetParent();
-		$IPGateway = IPS_GetProperty($ParentID, 'Host');
-		return $IPGateway;
-	}
+    public function GetGatewaytype()
+    {
+        $ParentID = $this->GetParent();
+        $Gatewaytype = IPS_GetProperty($ParentID, 'gatewaytype');
+        return $Gatewaytype;
+    }
 
-	public function GetPassword()
-	{
-		$ParentID = $this->GetParent();
-		$GatewayPassword = IPS_GetProperty($ParentID, 'Password');
-		return $GatewayPassword;
-	}
+    // API V5 A minimum firmware version of 1.0.17 is required.
 
-	public function GetGatewaytype()
-	{
-		$ParentID = $this->GetParent();
-		$Gatewaytype = IPS_GetProperty($ParentID, 'gatewaytype');
-		return $Gatewaytype;
-	}
+    public function GetRoot()
+    {
+        $gatewaytype = $this->GetGatewaytype();
+        $GatewayPassword = $this->GetPassword();
+        $aiogatewayip = $this->GetIPGateway();
+        if ($GatewayPassword !== '') {
+            if ($gatewaytype == 6 || $gatewaytype == 7) {
+                $root = 'http://' . $aiogatewayip . '/cmd?auth=' . $GatewayPassword . '&';
+            } else {
+                $root = 'http://' . $aiogatewayip . '/cmd?XC_USER=user&XC_PASS=' . $GatewayPassword . '&';
+            }
+        } else {
+            $root = 'http://' . $aiogatewayip . '/cmd?';
+        }
+        return $root;
+    }
 
+    public function SendAIOCommand(string $url)
+    {
+        $response = file_get_contents($url);
+        return $response;
+    }
 
-	// API V5 A minimum firmware version of 1.0.17 is required.
+    public function Learn(string $devicetype)
+    {
+        $gatewaytype = $this->GetGatewaytype();
+        $GatewayPassword = $this->GetPassword();
+        $aiogatewayip = $this->GetIPGateway();
+        if ($GatewayPassword !== '') {
+            if ($gatewaytype == 6 || $gatewaytype == 7) {
+                $response = file_get_contents('http://' . $aiogatewayip . '/cmd?auth=' . $GatewayPassword . '&XC_FNC=learnSc&type=' . $devicetype);
+            } else {
+                $response = file_get_contents('http://' . $aiogatewayip . '/command?XC_USER=user&XC_PASS=' . $GatewayPassword . '&XC_FNC=learnSc&type=' . $devicetype);
+            }
+        } else {
+            $response = file_get_contents('http://' . $aiogatewayip . '/command?XC_FNC=learnSc&type=' . $devicetype);
+        }
+        return $response;
+    }
 
-	public function GetRoot()
-	{
-		$gatewaytype = $this->GetGatewaytype();
-		$GatewayPassword = $this->GetPassword();
-		$aiogatewayip = $this->GetIPGateway();
-		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
-				$root = "http://" . $aiogatewayip . "/cmd?auth=" . $GatewayPassword . "&";
-			} else {
-				$root = "http://" . $aiogatewayip . "/cmd?XC_USER=user&XC_PASS=" . $GatewayPassword . "&";
-			}
-		} else {
-			$root = "http://" . $aiogatewayip . "/cmd?";
-		}
-		return $root;
-	}
+    // Sets configuration parameter
+    /*config
+    Parameter
+    name	Gateway name. Max. 16 chars
+    ntp	IPv4 address of the ntp server
+    dhcp	0 or 1. Enable/disable DHCP
+    ip	Set the IP address (IPv4 only)
+    sn	Set the subnet
+    gw	Set the network gateway address (IPv4 only)
+    dns	Set the DNS server (IPv4 only)
+    pwd	Set the user password (plain text)
+    apwd	Set the admin password (plain text)
+     */
 
-	public function SendAIOCommand(string $url)
-	{
-		$response = file_get_contents($url);
-		return $response;
-	}
+    // Sets the timezone
+    //XC_FNC	setTZ
+    // data	Timezone in HEX (i.e. 21 for UTC+1). See GetSI
 
+    // Sets the geolocation
+    // cmd?XC_FNC=setLocation&lat=LATITUDE&long=LONGITUDE
+    /*
+     * lat	2 Byte Hex (i.e. 13.5° east = 0087)
+    long	2 Byte Hex (i.e. 52.5° north = 020D)
 
+     */
 
+    // Setting sensormode
+    // /cmd?XC_FNC=setRFM&data=SENSORMODE
 
-	public function Learn(string $devicetype)
-	{
-		$gatewaytype = $this->GetGatewaytype();
-		$GatewayPassword = $this->GetPassword();
-		$aiogatewayip = $this->GetIPGateway();
-		if ($GatewayPassword !== "") {
-			if ($gatewaytype == 6 || $gatewaytype == 7) {
-				$response = file_get_contents("http://" . $aiogatewayip . "/cmd?auth=" . $GatewayPassword . "&XC_FNC=learnSc&type=" . $devicetype);
-			} else {
-				$response = file_get_contents("http://" . $aiogatewayip . "/command?XC_USER=user&XC_PASS=" . $GatewayPassword . "&XC_FNC=learnSc&type=" . $devicetype);
-			}
-		} else {
-			$response = file_get_contents("http://" . $aiogatewayip . "/command?XC_FNC=learnSc&type=" . $devicetype);
-		}
-		return $response;
-	}
+    /*
+     * Data Sensormode
+    Homematic	0D
+    FS20	13
+    KOPP	14
+    ABUS	15
+    RS2W	16
+    WIR	80
+     */
 
+    /*
+     * Setting LED color
+     * Data color
+    off	00
+    green	01
+    blue	02
+    red	03
+    yellow	04
+    white	05
+    purple	06
+    cyan	07
+    Setting red LED color:
 
-// Sets configuration parameter
-	/*config
-	Parameter
-	name	Gateway name. Max. 16 chars
-	ntp	IPv4 address of the ntp server
-	dhcp	0 or 1. Enable/disable DHCP
-	ip	Set the IP address (IPv4 only)
-	sn	Set the subnet
-	gw	Set the network gateway address (IPv4 only)
-	dns	Set the DNS server (IPv4 only)
-	pwd	Set the user password (plain text)
-	apwd	Set the admin password (plain text)
-	*/
+    GET /cmd?XC_FNC=SendSC&type=RGB&data=0103
+     */
 
-// Sets the timezone
-//XC_FNC	setTZ
-// data	Timezone in HEX (i.e. 21 for UTC+1). See GetSI
+    // udp socket (udp4) on port 1901
+    // broadcast address 255.255.255.255 and the multicast address 239.255.255.250
 
-// Sets the geolocation
-// cmd?XC_FNC=setLocation&lat=LATITUDE&long=LONGITUDE
-	/*
-	 * lat	2 Byte Hex (i.e. 13.5° east = 0087)
-	long	2 Byte Hex (i.e. 52.5° north = 020D)
+    // Discovering available wifi networks
+    //  /scan
+    /*
+    Response Code: 200 Type : text/html
 
-	 */
+    {"XC_SUC":
+    [
+    {"ssid":"mediola","enc":8,"rssi":-98},
+    {"ssid":"mediola-gast","enc":4,"rssi":-36}
+    ]
+    }
+     */
 
-// Setting sensormode
-// /cmd?XC_FNC=setRFM&data=SENSORMODE
+    public function SetGatewayPassword(string $password)
+    {
+    }
 
-	/*
-	 * Data Sensormode
-	Homematic	0D
-	FS20	13
-	KOPP	14
-	ABUS	15
-	RS2W	16
-	WIR	80
-	 */
-
-	/*
-	 * Setting LED color
-	 * Data color
-	off	00
-	green	01
-	blue	02
-	red	03
-	yellow	04
-	white	05
-	purple	06
-	cyan	07
-	Setting red LED color:
-
-	GET /cmd?XC_FNC=SendSC&type=RGB&data=0103
-	 */
-
-// udp socket (udp4) on port 1901
-// broadcast address 255.255.255.255 and the multicast address 239.255.255.250
-
-// Discovering available wifi networks
-//  /scan
-	/*
-	Response Code: 200 Type : text/html
-
-	{"XC_SUC":
-	[
-	{"ssid":"mediola","enc":8,"rssi":-98},
-	{"ssid":"mediola-gast","enc":4,"rssi":-36}
-	]
-	}
-	*/
-
-
-
-
-	public function SetGatewayPassword(string $password)
-	{
-
-	}
-
-// Before the cloud access can be used a password needs to be set on the gateway
+    // Before the cloud access can be used a password needs to be set on the gateway
 // /config?apwd=PASSWORD&pwd=PASSWORD
 
 // A gateway is registered at the cloud service with its public key
-	/*
-	 *  { "XC_SUC":
-		{
-		  "key":"b26445463718a9e09f3b241e2b354a5b61718299167dde269407ea2b9184602",
-		  "cloud":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-		}
-	  }
-	 */
+    /*
+     *  { "XC_SUC":
+        {
+          "key":"b26445463718a9e09f3b241e2b354a5b61718299167dde269407ea2b9184602",
+          "cloud":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      }
+     */
 
 // Registers a gateway at the mediola cloud service
 
-	/*
-	 * { "XC_SUC":
-		{
-		  "sid":"123456EE74563A8A89120FA674C7982C",
-		  "pk":"0a412e63884d5b6c7b87930f5f007949d1138415a6e78879c1824a596b788699314"
-		}
-	  }
-	 */
+    /*
+     * { "XC_SUC":
+        {
+          "sid":"123456EE74563A8A89120FA674C7982C",
+          "pk":"0a412e63884d5b6c7b87930f5f007949d1138415a6e78879c1824a596b788699314"
+        }
+      }
+     */
 
-	/*
-	 * When accessing the gateway over the internet any request can be executed. Simply the host has to be changed from the local IP address to https://CLOUD_SERVER/rapi/live/SID and the user has to authorized using Basic Auth using the username "user" and the gateway password.
-	 */
+    /*
+     * When accessing the gateway over the internet any request can be executed. Simply the host has to be changed from the local IP address to https://CLOUD_SERVER/rapi/live/SID and the user has to authorized using Basic Auth using the username "user" and the gateway password.
+     */
 
 // Enabling/disabling cloud access
-	/*
-	 * /config?cloud=VALUE&cserver=CLOUD_SERVER&cport=PORT&auth=PASSWORD
-	 *
-	 * cloud	Enable cloud access: 1
-	Disable cloud access: 0
-	cserver	Cloud server: v5ws.mediola.com
-	cport	Cloud port: 80
-	auth	Gateway password
-	 */
+    /*
+     * /config?cloud=VALUE&cserver=CLOUD_SERVER&cport=PORT&auth=PASSWORD
+     *
+     * cloud	Enable cloud access: 1
+    Disable cloud access: 0
+    cserver	Cloud server: v5ws.mediola.com
+    cport	Cloud port: 80
+    auth	Gateway password
+     */
 }
 
 class V6 extends AIOGateway
 {
-
 }
 
 class V6E extends V6
 {
-
 }
 
 class V6Mini extends V6
 {
-
 }
 
 class V6MiniE extends V6
 {
-
 }
 
 class V5 extends AIOGateway
 {
-	const Reserved = '01';
+    const Reserved = '01';
 }
 
 class V5Plus extends V5
 {
-
 }
 
 class V4 extends AIOGateway
 {
-
 }
 
 class V4Plus extends V4
 {
-
 }
 
 class V3 extends AIOGateway
 {
-
 }
 
 class V2 extends AIOGateway
 {
-
 }
 
 class V1 extends AIOGateway
 {
-
 }
 
 class AIODevice
 {
-
 }
 
 class BarthelmeChromoFlex extends AIOGateway
 {
-	const Type = 'CF4';
+    const Type = 'CF4';
 }
 
 /*
@@ -788,24 +768,23 @@ Response Code: 200 Type : text/html
 
 class BeckerCentronic extends AIOGateway
 {
-
-	const Type = 'BK';
-	const Reserved = '01';
-	const On = '00';
-	const Off = '02';
-	const Up = '00';
-	const Down = '00';
-	const Open = '01';
-	const Stop = '02';
-	const Position1 = '03';
-	const Position2 = '04';
-	const Down3S = '05';
-	const Up3S = '06';
-	const Delete = '07';
-	const Darker = '09';
-	const Brighter = '08';
-	const MaxBrightness = '03';
-	const MediumBrightness = '04';
+    const Type = 'BK';
+    const Reserved = '01';
+    const On = '00';
+    const Off = '02';
+    const Up = '00';
+    const Down = '00';
+    const Open = '01';
+    const Stop = '02';
+    const Position1 = '03';
+    const Position2 = '04';
+    const Down3S = '05';
+    const Up3S = '06';
+    const Delete = '07';
+    const Darker = '09';
+    const Brighter = '08';
+    const MaxBrightness = '03';
+    const MediumBrightness = '04';
 }
 
 /*
@@ -1003,23 +982,22 @@ GET /cmd?XC_FNC=AddSensor&type=BK&adr=0B956E&config=1234
 
 class Brennenstuhl extends AIOGateway
 {
-	const Type = 'DY';
-	const Stop = '0000';
-	const DimDown = '0101';
-	const StepDown = '0102';
-	const Off = '0102';
-	const MoveDown = '0103';
-	const DimUp = '0201';
-	const StepUp = '0202';
-	const On = '0202';
-	const MoveUp = '0203';
-	const DoScene = '0302';
+    const Type = 'DY';
+    const Stop = '0000';
+    const DimDown = '0101';
+    const StepDown = '0102';
+    const Off = '0102';
+    const MoveDown = '0103';
+    const DimUp = '0201';
+    const StepUp = '0202';
+    const On = '0202';
+    const MoveUp = '0203';
+    const DoScene = '0302';
 }
-
 
 class ConradRSL extends AIOGateway
 {
-	const Type = 'CR';
+    const Type = 'CR';
 }
 
 /*
@@ -1154,55 +1132,53 @@ A9C8D603
 49C8D603
  */
 
-
-
 class Dooya2 extends AIOGateway // Kaiser Nienhaus
 {
-	const Type = 'DY2';
+    const Type = 'DY2';
 }
 
 class GiraFunkbus extends AIOGateway
 {
-	const Type = 'DY';
+    const Type = 'DY';
 }
 
 class Elero extends AIOGateway
 {
-	const Type = 'ER';
-	const Down = '00';
-	const Up = '01';
-	const On = '01';
-	const Off = '00';
-	const Stop = '02';
-	const UpStepBit = '03';
-	const DownStepBit = '04';
-	const ManuMode = '05';
-	const AutoMode = '06';
-	const ToggleMode = '07';
-	const Up3S = '08';
-	const Down3S = '09';
-	const DoubletapUp = '0A';
-	const DoubletapDown = '0B';
-	const StartLearning = '0C';
-	const OnPulseMove = '0D';
-	const OffPulseMove = '0E';
-	const ASClose = '0F';
-	const ASMove = '10';
+    const Type = 'ER';
+    const Down = '00';
+    const Up = '01';
+    const On = '01';
+    const Off = '00';
+    const Stop = '02';
+    const UpStepBit = '03';
+    const DownStepBit = '04';
+    const ManuMode = '05';
+    const AutoMode = '06';
+    const ToggleMode = '07';
+    const Up3S = '08';
+    const Down3S = '09';
+    const DoubletapUp = '0A';
+    const DoubletapDown = '0B';
+    const StartLearning = '0C';
+    const OnPulseMove = '0D';
+    const OffPulseMove = '0E';
+    const ASClose = '0F';
+    const ASMove = '10';
 }
 
 class EnOcean extends AIOGateway
 {
-	const Type = 'EO';
+    const Type = 'EO';
 }
 
 class FHT80B extends AIOGateway
 {
-	const Type = 'FHT80b';
+    const Type = 'FHT80b';
 }
 
 class GreenteqFunk extends AIOGateway
 {
-	const Type = 'GQ';
+    const Type = 'GQ';
 }
 
 /*
@@ -1228,32 +1204,32 @@ GET/cmd?XC_FNC=SendSC&type=GQ&data=6440C63455
 
 class HOMEeasy extends AIOGateway
 {
-	const Type = 'DY';
+    const Type = 'DY';
 }
 
 class Homematic extends AIOGateway
 {
-	const Type = 'HM';
+    const Type = 'HM';
 }
 
 class Instabus extends AIOGateway
 {
-	const Type = 'IA';
-	const Stop = '0000';
-	const DimDown = '0101';
-	const StepDown = '0102';
-	const Off = '0102';
-	const MoveDown = '0103';
-	const DimUp = '0201';
-	const StepUp = '0202';
-	const On = '0202';
-	const MoveUp = '0203';
-	const DoScene = '0302';
+    const Type = 'IA';
+    const Stop = '0000';
+    const DimDown = '0101';
+    const StepDown = '0102';
+    const Off = '0102';
+    const MoveDown = '0103';
+    const DimUp = '0201';
+    const StepUp = '0202';
+    const On = '0202';
+    const MoveUp = '0203';
+    const DoScene = '0302';
 }
 
 class Internorm extends AIOGateway
 {
-	const Type = 'IN';
+    const Type = 'IN';
     const InternormSearch = 'inSearchBlinds';
     // Command for shutter
     const Down = '000D'; // Down , Off
@@ -1280,78 +1256,84 @@ class Internorm extends AIOGateway
     const Blow_off_Mode_1 = '0057'; // Night Mode / Blow off Mode 1
     const Blow_off_Mode_2 = '0058'; // Night Mode / Blow off Mode 2
     const Blow_off_Mode_3 = '0059'; // Night Mode / Blow off Mode 3
-
-
 }
 
 class KoppFreeControl extends AIOGateway
 {
-	const Type = 'KOPP';
+    const Type = 'KOPP';
 }
 
 class LEDController extends AIOGateway
 {
-	const Type = 'LS';
+    const Type = 'LS';
 }
 
 class Nueva extends AIOGateway // Temperatur-/ Feuchtigkeitssensor
 {
-	const Type = 'NTH';
+    const Type = 'NTH';
 }
 
 class PCA301 extends AIOGateway
 {
-	const Type = 'PE';
+    const Type = 'PE';
 }
 
 class SchalkFX3 extends AIOGateway
 {
-	const Type = 'FX3';
+    const Type = 'FX3';
 }
-
-
 
 class systeQ extends AIOGateway // qleverADAPTER
 {
-	const Type = 'QA';
+    const Type = 'QA';
 }
 
 class Sygonix extends AIOGateway // Renkforce Sygonix
 {
-	const Type = 'R2';
-	const Switch = '40';
-	const Dimmer = '41';
-	const On = '0001';
-	const Off = '0002';
-	const Set10 = '0A';
-	const Set20 = '14';
-	const Set30 = '1E';
-	const Set40 = '28';
-	const Set50 = '32';
-	const Set60 = '3C';
-	const Set70 = '46';
-	const Set80 = '50';
-	const Set90 = '5A';
-	const Set100 = '0A';
+    const Type = 'R2';
+    const Switch = '40';
+    const Dimmer = '41';
+    const On = '0001';
+    const Off = '0002';
+    const Set10 = '0A';
+    const Set20 = '14';
+    const Set30 = '1E';
+    const Set40 = '28';
+    const Set50 = '32';
+    const Set60 = '3C';
+    const Set70 = '46';
+    const Set80 = '50';
+    const Set90 = '5A';
+    const Set100 = '0A';
+}
+
+class Warema_EWFS extends AIOGateway
+{
+    const Type = 'WA';
+    const Up = '74BD';
+    const Down = '02';
+    const On = '01';
+    const Off = '02';
+    const Stop = '03';
 }
 
 class WIR extends AIOGateway
 {
-	const Type = 'WR';
-	const MotorControl = '01';
-	const LightingControl = '02';
-	const Reserved = '01';
-	const On = '01';
-	const Off = '02';
-	const Stop = '03';
-	const OnEndpoint = '04';
-	const StopEndpoint = '05';
-	const OffEndpoint = '06';
-	const DrivePosition = '07';
-	const DrivePositionDusk = '08';
-	const DrivepositionSun = '09';
-	const DrivePositionVentilation = '0A';
-	const DrivePositionStorage = '0B';
-	const AutoOn = '0C';
-	const AutoOff = '0D';
+    const Type = 'WR';
+    const MotorControl = '01';
+    const LightingControl = '02';
+    const Reserved = '01';
+    const On = '01';
+    const Off = '02';
+    const Stop = '03';
+    const OnEndpoint = '04';
+    const StopEndpoint = '05';
+    const OffEndpoint = '06';
+    const DrivePosition = '07';
+    const DrivePositionDusk = '08';
+    const DrivepositionSun = '09';
+    const DrivePositionVentilation = '0A';
+    const DrivePositionStorage = '0B';
+    const AutoOn = '0C';
+    const AutoOff = '0D';
 }
